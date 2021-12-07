@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 from decouple import config
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -52,6 +53,9 @@ INSTALLED_APPS = [
     # swagger
     'drf_yasg',
     'django.contrib.sites',
+
+    # staticfiles for heroku
+    'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
@@ -65,7 +69,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ROOT_URLCONF = 'pjt_final_drf.urls'
 
@@ -95,7 +102,7 @@ DATABASES = {
     'default': {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'Movie-Curators',
         'USER': 'postgres',
         'PASSWORD': 'admin1234',
@@ -103,6 +110,7 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
 
 
 # Password validation
@@ -144,7 +152,7 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = BASE_DIR / 'staticfiles' 
 
 
 ######################## image media ########################
@@ -199,3 +207,8 @@ JWT_AUTH = {
 }
 
 SITE_ID = 1
+
+# Heroku: Update database configuration from $DATABASE_URL.
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
