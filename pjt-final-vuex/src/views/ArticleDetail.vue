@@ -121,15 +121,20 @@
                   <span class="article-detail-form-star-title">별점</span>
                   <div class="article-form-star stars">
                     <form action="" @change="rateStar">
-                      <input class="star star-5" id="star-5" type="radio" name="star" value="5"/>
+                      <input v-if="newArticleRate === 5" class="star star-5" id="star-5" type="radio" name="star" value="5" checked/>
+                      <input v-else class="star star-5" id="star-5" type="radio" name="star" value="5"/>
                       <label class="star star-5" for="star-5"></label>
-                      <input class="star star-4" id="star-4" type="radio" name="star" value="4"/>
+                      <input v-if="newArticleRate === 4" class="star star-4" id="star-4" type="radio" name="star" value="4" checked/>
+                      <input v-else class="star star-4" id="star-4" type="radio" name="star" value="4"/>
                       <label class="star star-4" for="star-4"></label>
-                      <input class="star star-3" id="star-3" type="radio" name="star" value="3"/>
+                      <input v-if="newArticleRate === 3" class="star star-3" id="star-3" type="radio" name="star" value="3" checked/>
+                      <input v-else class="star star-3" id="star-3" type="radio" name="star" value="3"/>
                       <label class="star star-3" for="star-3"></label>
-                      <input class="star star-2" id="star-2" type="radio" name="star" value="2"/>
+                      <input v-if="newArticleRate === 2" class="star star-2" id="star-2" type="radio" name="star" value="2" checked/>
+                      <input v-else class="star star-2" id="star-2" type="radio" name="star" value="2"/>
                       <label class="star star-2" for="star-2"></label>
-                      <input class="star star-1" id="star-1" type="radio" name="star" value="1"/>
+                      <input v-if="newArticleRate === 1" class="star star-1" id="star-1" type="radio" name="star" value="1" checked/>
+                      <input v-else class="star star-1" id="star-1" type="radio" name="star" value="1"/>
                       <label class="star star-1" for="star-1"></label>
                     </form>
                   </div>
@@ -329,6 +334,7 @@ import axios from 'axios'
 import swal from 'sweetalert2'
 import { mapGetters } from 'vuex'
 import { mapState } from 'vuex'
+import SERVER from '@/api/server'
 
 export default {
   name:'MovieDetail',
@@ -368,9 +374,8 @@ export default {
       // 사용자의 현 평가 좋아요 여부
       isLike: false,
       // 이미지 주소 조합용
-      SERVER_URL: 'http://127.0.0.1:8000'
-
-
+      //SERVER_URL: 'http://127.0.0.1:8000'
+      SERVER_URL : SERVER.URL
     }
   },
   computed: {
@@ -394,6 +399,7 @@ export default {
     // 별점 클릭
     rateStar($event) {
       this.articleRate = $event.target.value
+      this.newArticleRate = $event.target.value
     },
     // article 수정 버튼 누름
     selectUpdate: function() {
@@ -442,7 +448,8 @@ export default {
           }
         axios({
           method: 'PUT',
-          url: `http://127.0.0.1:8000/movies/${this.movie.id}/articles/`,
+          //url: `http://127.0.0.1:8000/movies/${this.movie.id}/articles/`,
+          url: SERVER.URL + SERVER.ROUTES.movies.home + String(this.movie.id) + SERVER.ROUTES.movies.articleDetail,
           headers: this.setToken(),
           data: contents,
         })
@@ -468,7 +475,8 @@ export default {
       }
       axios({
           method: 'DELETE',
-          url: `http://127.0.0.1:8000/movies/${this.movie.id}/articles/`,
+          //url: `http://127.0.0.1:8000/movies/${this.movie.id}/articles/`,
+          url: SERVER.URL + SERVER.ROUTES.movies.home + String(this.movie.id) + SERVER.ROUTES.movies.articleDetail,
           headers: this.setToken(),
           data: contents,
         })
@@ -578,7 +586,8 @@ export default {
       }
       axios({
         method: 'post',
-        url: `http://127.0.0.1:8000/movies/${this.articleId}/comments/`,
+        //url: `http://127.0.0.1:8000/movies/${this.articleId}/comments/`,
+        url: SERVER.URL + SERVER.ROUTES.movies.home + String(this.articleId) + SERVER.ROUTES.movies.commentDetail,
         headers: this.setToken(),
         data: contents,
       })      
@@ -600,7 +609,8 @@ export default {
     getComments: function () {
       axios({
         method: 'get',
-        url: `http://127.0.0.1:8000/movies/${this.$route.params.id}/comments/list/`,
+        //url: `http://127.0.0.1:8000/movies/${this.$route.params.id}/comments/list/`,
+        url: SERVER.URL + SERVER.ROUTES.movies.home + String(this.$route.params.id) + SERVER.ROUTES.movies.commentList,
         headers: this.setToken(),
       })
       .then((res)=>{
@@ -621,7 +631,8 @@ export default {
         }
         axios({
           method: 'post',
-          url: `http://127.0.0.1:8000/movies/${this.articleId}/comments/`,
+          //url: `http://127.0.0.1:8000/movies/${this.articleId}/comments/`,
+          url: SERVER.URL + SERVER.ROUTES.movies.home + String(this.articleId) + SERVER.ROUTES.movies.commentDetail,
           headers: this.setToken(),
           data: contents,
         })
@@ -664,7 +675,8 @@ export default {
         }
         axios({
           method: 'put',
-          url: `http://127.0.0.1:8000/movies/${this.articleId}/comments/`,
+          //url: `http://127.0.0.1:8000/movies/${this.articleId}/comments/`,
+          url: SERVER.URL + SERVER.ROUTES.movies.home + String(this.articleId) + SERVER.ROUTES.movies.commentDetail,
           headers: this.setToken(),
           data: contents,
         })
@@ -699,7 +711,8 @@ export default {
       }
       axios({
           method: 'DELETE',
-          url: `http://127.0.0.1:8000/movies/${this.articleId}/comments/`,
+          //url: `http://127.0.0.1:8000/movies/${this.articleId}/comments/`,
+          url: SERVER.URL + SERVER.ROUTES.movies.home + String(this.articleId) + SERVER.ROUTES.movies.commentDetail,
           headers: this.setToken(),
           data: contents,
         })
@@ -724,7 +737,8 @@ export default {
     addLikes: function () {
       axios({
         method: 'POST',
-        url: `http://127.0.0.1:8000/movies/${this.articleId}/likes/`,
+        //url: `http://127.0.0.1:8000/movies/${this.articleId}/likes/`,
+        url: SERVER.URL + SERVER.ROUTES.movies.home + String(this.articleId) + SERVER.ROUTES.movies.likes,
         headers: this.setToken(),
       })
       .then(() => {
@@ -743,7 +757,8 @@ export default {
     deleteLikes: function () {
       axios({
         method: 'DELETE',
-        url: `http://127.0.0.1:8000/movies/${this.articleId}/likes/`,
+        //url: `http://127.0.0.1:8000/movies/${this.articleId}/likes/`,
+        url: SERVER.URL + SERVER.ROUTES.movies.home + String(this.articleId) + SERVER.ROUTES.movies.likes,
         headers: this.setToken(),
       })
       .then(() => {
@@ -764,7 +779,8 @@ export default {
     // 사용자 평가 정보 가져오기
     axios ({
       method: 'get',
-      url: `http://127.0.0.1:8000/movies/${this.articleId}/article`,
+      //url: `http://127.0.0.1:8000/movies/${this.articleId}/article`,
+      url: SERVER.URL + SERVER.ROUTES.movies.home + String(this.articleId) + SERVER.ROUTES.movies.getArticle,
       headers: this.setToken(),
     })
     .then(res => {
@@ -780,7 +796,8 @@ export default {
     // 사용자 좋아요 여부 정보 가져오기
     axios ({
       method: 'get',
-      url: `http://127.0.0.1:8000/movies/${this.articleId}/likes/`,
+      //url: `http://127.0.0.1:8000/movies/${this.articleId}/likes/`,
+      url: SERVER.URL + SERVER.ROUTES.movies.home + String(this.articleId) + SERVER.ROUTES.movies.likes,
       headers: this.setToken(),
     })
     .then(res => {

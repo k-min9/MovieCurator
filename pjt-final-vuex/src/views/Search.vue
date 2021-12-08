@@ -42,6 +42,7 @@
 import axios from 'axios'
 import {mapState} from 'vuex'
 import MovieCard2 from '@/components/movie/MovieCard2'
+import SERVER from '@/api/server'
 
 export default {
   name: 'Search',
@@ -65,7 +66,8 @@ export default {
     searchMovies: function ($event) {
       axios({
         method: 'get',
-        url: 'http://127.0.0.1:8000/movies/search/',
+        //url: 'http://127.0.0.1:8000/movies/search/',
+        url: SERVER.URL + SERVER.ROUTES.movies.movieSearch,
         params: {
           searchKeyword: $event.target.value,
         },

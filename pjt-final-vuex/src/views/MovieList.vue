@@ -48,6 +48,7 @@
 import axios from 'axios'
 // import MovieListSelected from '@/components/movieList/MovieListSelected'
 import MovieCard2 from '@/components/movie/MovieCard2'
+import SERVER from '@/api/server'
 
 export default {
   name: 'MovieList',  
@@ -72,7 +73,8 @@ export default {
     selectFilter: function ($event) {
         axios({
         method: 'get',
-        url: 'http://127.0.0.1:8000/movies/list/',
+        //url: 'http://127.0.0.1:8000/movies/list/',
+        url: SERVER.URL + SERVER.ROUTES.movies.movieList,
         params: {
           filter: $event.target.value
         },

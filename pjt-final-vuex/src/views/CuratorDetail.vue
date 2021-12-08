@@ -120,6 +120,7 @@
 
 <script>
 import axios from 'axios'
+import SERVER from '@/api/server'
 
 export default {
   name:'CuratorDetail',
@@ -128,7 +129,8 @@ export default {
       curator: null,
       articlesCurator: [],
       // 이미지 주소 조합용
-      SERVER_URL: 'http://127.0.0.1:8000'
+      //SERVER_URL: 'http://127.0.0.1:8000'
+      SERVER_URL : SERVER.URL
     }
   },
 
@@ -144,7 +146,8 @@ export default {
     getCurator: function () {
       axios({
         method: 'get',
-        url: `http://127.0.0.1:8000/accounts/curators/${this.$route.params.id}`,
+        //url: `http://127.0.0.1:8000/accounts/curators/${this.$route.params.id}`,
+        url: SERVER.URL + SERVER.ROUTES.accounts.curatorDetail + String(this.$route.params.id)+ '/',
         headers: this.setToken()
       })
       .then((res)=>{
@@ -155,7 +158,8 @@ export default {
     getArticleCurator: function () {
       axios({
         method: 'get',
-        url: `http://127.0.0.1:8000/movies/${this.curator.id}/articles/curators/all/`,
+        //url: `http://127.0.0.1:8000/movies/${this.curator.id}/articles/curators/all/`,
+        url: SERVER.URL + SERVER.ROUTES.movies.home + String(this.curator.id) + SERVER.ROUTES.movies.articleCuratorAll,
         headers: this.setToken(),
       })
       .then((res)=>{

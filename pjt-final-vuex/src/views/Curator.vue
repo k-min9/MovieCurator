@@ -55,6 +55,7 @@
 import axios from 'axios'
 import CuratorSearchDetail from '@/components/curator/CuratorSearchDetail'
 import {mapState} from 'vuex'
+import SERVER from '@/api/server'
 
 export default {
   name:'Curator',
@@ -85,7 +86,8 @@ export default {
     searchCurators: function ($event) {
       axios({
         method: 'get',
-        url: 'http://127.0.0.1:8000/accounts/search/',
+        //url: 'http://127.0.0.1:8000/accounts/search/',
+        url: SERVER.URL + SERVER.ROUTES.accounts.curatorSearch,
         params: {
           searchKeyword: $event.target.value,
         },

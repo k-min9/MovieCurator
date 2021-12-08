@@ -201,7 +201,7 @@
 import axios from 'axios'
 import swal from 'sweetalert2'
 import { mapState } from 'vuex'
-
+import SERVER from '@/api/server'
 
 export default {
   name:'MovieDetailArticleForm',
@@ -222,7 +222,8 @@ export default {
       articleRate: 0, // 평가 평점
       isArticleWriten: false, // 영화 하나당 평가 하나
       // 이미지 주소 조합용
-      SERVER_URL: 'http://127.0.0.1:8000',
+      //SERVER_URL: 'http://127.0.0.1:8000',
+      SERVER_URL : SERVER.URL
     }
   },
   methods: {
@@ -242,7 +243,8 @@ export default {
     getArticles: function () {
       axios({
         method: 'get',
-        url: `http://127.0.0.1:8000/movies/${this.$route.params.id}/articles/list/`,
+        //url: `http://127.0.0.1:8000/movies/${this.$route.params.id}/articles/list/`,
+        url: SERVER.URL + SERVER.ROUTES.movies.home + String(this.$route.params.id) + SERVER.ROUTES.movies.articleList,
         headers: this.setToken(),
       })
       .then((res)=>{
@@ -274,11 +276,11 @@ export default {
         title: this.articleTitle,
         content: this.articleContent,
         rate: this.articleRate,
-        //date: newDate() // 장고에서 어떻게 처리할 지 조금 고민 필요
         }
         axios({
           method: 'post',
-          url: `http://127.0.0.1:8000/movies/${this.$route.params.id}/articles/`,
+          //url: `http://127.0.0.1:8000/movies/${this.$route.params.id}/articles/`,
+          url: SERVER.URL + SERVER.ROUTES.movies.home + String(this.$route.params.id) + SERVER.ROUTES.movies.articleDetail,
           headers: this.setToken(),
           data: contents,
         })
@@ -300,7 +302,8 @@ export default {
     // 사용자 평가 정보 가져오기
     axios ({
       method: 'get',
-      url: `http://127.0.0.1:8000/movies/${this.$route.params.id}/articles/`,
+      //url: `http://127.0.0.1:8000/movies/${this.$route.params.id}/articles/`,
+      url: SERVER.URL + SERVER.ROUTES.movies.home + String(this.$route.params.id) + SERVER.ROUTES.movies.articleDetail,
       headers: this.setToken(),
     })
     .then(res => {

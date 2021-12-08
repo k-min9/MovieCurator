@@ -23,6 +23,7 @@
 <script>
 import axios from 'axios'
 import swal from 'sweetalert2'
+import SERVER from '@/api/server'
 
 export default {
   name: 'SignUp',
@@ -63,8 +64,9 @@ export default {
         passwordConfirmation: this.credentials.passwordConfirmation,
         }
         axios({
-          method: 'post',
-          url: 'http://127.0.0.1:8000/accounts/signup/',
+          method: 'POST',
+          //url: 'http://127.0.0.1:8000/accounts/signup/',
+          url: SERVER.URL + SERVER.ROUTES.accounts.signup,
           data: contents,
         })
         .then(
@@ -74,12 +76,13 @@ export default {
           }              
         )
         .catch(err =>{
-        swal.fire ({
-            icon: 'error',
-            title: '가입 실패',
-            text: err.response.data.error
-            })      
-        })
+          console.log(err.response)
+          swal.fire ({
+              icon: 'error',
+              title: '가입 실패',
+              text: '가입 실패'//err.response.data.error
+              })      
+          })
         }
     },
   },

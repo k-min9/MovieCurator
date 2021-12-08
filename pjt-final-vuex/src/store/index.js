@@ -4,12 +4,13 @@ import axios from 'axios'
 import router from '@/router'
 import createPersistedState from "vuex-persistedstate";
 import swal from 'sweetalert2'
+import SERVER from '@/api/server'
 
 //all auth용
 import googleApi from '@/api/google'
 
 
-const SERVER_URL = 'http://127.0.0.1:8000/'
+//const SERVER_URL = 'http://127.0.0.1:8000/'
 
 Vue.use(Vuex)
 
@@ -95,7 +96,8 @@ export default new Vuex.Store({
       state.comments_count = res.comments_count
       state.articles_count = res.articles_count
       if (res.image) {
-        state.image = 'http://127.0.0.1:8000' + res.image         
+        //state.image = 'http://127.0.0.1:8000' + res.image  
+        state.image = SERVER.URL + res.image         
       } else {
         state.image = null
       }
@@ -123,7 +125,9 @@ export default new Vuex.Store({
     login({commit}, credentials) {
       axios({
         method: 'POST',
-        url: `${SERVER_URL}accounts/api-token-auth/`,
+        //url: `${SERVER_URL}accounts/api-token-auth/`,
+        //route: SERVER.ROUTES.accounts.login,
+        url: SERVER.URL + SERVER.ROUTES.accounts.login,
         data: credentials,
       })
       .then(res => {
@@ -154,7 +158,9 @@ export default new Vuex.Store({
     getUserInfo({commit}, username) {
       axios({
         method: 'GET',
-        url: `${SERVER_URL}accounts/${username}/get_user_info`,
+        //url: `${SERVER_URL}accounts/${username}/get_user_info`,
+        //url: `http://127.0.0.1:8000/accounts/${username}/get_user_info`,
+        url: SERVER.URL + SERVER.ROUTES.accounts.default + String(username) + SERVER.ROUTES.accounts.getUserInfo,
       })
       .then(res => {
         commit('GET_USER_INFO', res.data)
@@ -164,14 +170,17 @@ export default new Vuex.Store({
     getMyProfile: function ({ commit, state }) {
       axios({
         method: "GET",
-        url: `${SERVER_URL}profile/`,
+        //url: `${SERVER_URL}profile/`,
+        //route: SERVER.ROUTES.accounts.myProfileDetail
+        url: SERVER.URL + SERVER.ROUTES.accounts.myProfileDetail
       })
       .then((res) => {
         const nickname = res.data.nickname
         const introduction = res.data.introduction
         var image = ''
         if (res.data.image) {
-          image = 'http://127.0.0.1:8000' + res.data.image         
+          //image = 'http://127.0.0.1:8000' + res.data.image     
+          image = SERVER.URL + res.data.image       
         } else {
           image = state.image
         }
@@ -181,7 +190,9 @@ export default new Vuex.Store({
     updateProfile: function ({ commit, getters, state }, credentials) {
       axios({
         method: "PUT",
-        url: `${SERVER_URL}accounts/profile/`,
+        //url: `${SERVER_URL}accounts/profile/`,
+        //route: SERVER.ROUTES.accounts.myProfileDetail,
+        url: SERVER.URL + SERVER.ROUTES.accounts.myProfileDetail,
         data: credentials,
         headers: getters.token,
       })
@@ -191,7 +202,8 @@ export default new Vuex.Store({
         const introduction = res.data.introduction
         var image = ''
         if (res.data.image) {
-          image = 'http://127.0.0.1:8000' + res.data.image         
+          //image = 'http://127.0.0.1:8000' + res.data.image   
+          image = SERVER.URL + res.data.image         
         } else {
           image = state.image
         }
@@ -206,7 +218,9 @@ export default new Vuex.Store({
       }
       axios({
         method: "PUT",
-        url: `${SERVER_URL}accounts/mileage/`,
+        //url: `${SERVER_URL}accounts/mileage/`,
+        //route: SERVER.URL.accounts.mileageChange,
+        url: SERVER.URL + SERVER.ROUTES.accounts.mileageChange,
         data: credentials,
         headers: getters.token,
       })
@@ -237,7 +251,8 @@ export default new Vuex.Store({
       }
       axios({
         method: "PUT",
-        url: `${SERVER_URL}accounts/donate/${contexts.id}/`,
+        //url: `${SERVER_URL}accounts/donate/${contexts.id}/`,
+        url: SERVER.URL + SERVER.ROUTES.accounts.donate + String(contexts.id) + '/',
         data: credentials,
         headers: getters.token,
       })
@@ -249,27 +264,31 @@ export default new Vuex.Store({
       }
       axios({
         method: "PUT",
-        url: `${SERVER_URL}movies/donate/${contexts.id}/`,
+        //url: `${SERVER_URL}movies/donate/${contexts.id}/`,
+        //route: SERVER.ROUTES.movies.pointChange + String(contexts.id),
+        url: SERVER.URL + SERVER.ROUTES.movies.pointChange + String(contexts.id)+ '/',
         data: credentials,
         headers: getters.token,
       })
     },
+    // 이슈 사항
     // 프로필 이미지 갱신
-    updateProfileImage({commit}, nickname){
-      const credentials = {
-        id: this.state.userId,
-        username: this.state.username,
-        nickname: nickname
-      }
-      axios({
-        method: 'POST',
-        url: `${SERVER_URL}accounts/${this.state.userId}/profile/`,
-        data: credentials,
-      })
-      .then(() => {
-        commit('UPDATE_PROFILE')
-      })
-    },
+    // updateProfileImage({commit}, nickname){
+    //   const credentials = {
+    //     id: this.state.userId,
+    //     username: this.state.username,
+    //     nickname: nickname
+    //   }
+    //   axios({
+    //     method: 'POST',
+    //     //url: `${SERVER_URL}accounts/${this.state.userId}/profile/`, 응? 이거 왜 작동한거임??
+    //     route: SERVER.URL.ROUTES.
+    //     data: credentials,
+    //   })
+    //   .then(() => {
+    //     commit('UPDATE_PROFILE')
+    //   })
+    // },
     // logout
     logout({commit}) {
       localStorage.removeItem('jwt')
@@ -288,7 +307,9 @@ export default new Vuex.Store({
     getMovie({commit}, tokenId) {
       axios({
         method: 'GET',
-        url: `${SERVER_URL}movies/${tokenId.id}/`,
+        //url: `${SERVER_URL}movies/${tokenId.id}/`,
+        //route: SERVER.ROUTES.movies.movieDetail + String(tokenId.id),
+        url: SERVER.URL + SERVER.ROUTES.movies.movieDetail + String(tokenId.id) + '/',
         headers: tokenId.token,
       })
       .then(res => {
@@ -299,7 +320,9 @@ export default new Vuex.Store({
     getMovies({commit}, token) {
       axios({
         method: 'GET',
-        url: `${SERVER_URL}movies/`,
+        //url: `${SERVER_URL}movies/`,
+        //route: SERVER.ROUTES.movies.home,
+        url: SERVER.URL + SERVER.ROUTES.movies.home,
         headers: token,
       })
       .then(res => {
@@ -310,7 +333,8 @@ export default new Vuex.Store({
     getMoviesRecommend({commit}, tokenId) {
       axios({
         method: 'GET',
-        url: `${SERVER_URL}movies/${tokenId.id}/recommend/`,
+        //url: `${SERVER_URL}movies/${tokenId.id}/recommend/`,
+        url: SERVER.URL + '/movies/' + String(tokenId.id) + SERVER.ROUTES.movies.movieRecommend,
         headers: tokenId.token,
       })
       .then(res => {
