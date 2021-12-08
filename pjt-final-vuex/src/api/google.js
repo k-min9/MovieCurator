@@ -1,7 +1,7 @@
 import qs from 'qs'
 
-//const CLIENT_ID = process.env.VUE_APP_GOOGLE_CLIENT_ID
-const CLIENT_ID = ''
+const CLIENT_ID = process.env.VUE_APP_GOOGLE_CLIENT_ID
+//const CLIENT_ID = ''
 const ROOT_URL = 'https://accounts.google.com/o/oauth2/v2/auth'
 
 export default {
