@@ -28,6 +28,11 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+
+
+	// DB에 jsonb를 넣기 위해서
+	implementation group: 'com.vladmihalcea', name: 'hibernate-types-52', version: '1.0.0'
+
 }
 
 test {

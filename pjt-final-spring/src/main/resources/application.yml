@@ -13,7 +13,8 @@ spring:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: create # 애플리케이션 실행시점에 테이블 다 지우고 새로 생성
+      #ddl-auto: create # 애플리케이션 실행시점에 테이블 다 지우고 새로 생성
+      ddl-auto: update
     properties:
       hibernate:
         # show_sql: true
