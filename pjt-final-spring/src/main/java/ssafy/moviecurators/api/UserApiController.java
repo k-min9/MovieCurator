@@ -17,7 +17,7 @@ public class UserApiController {
 
     // 회원가입 (DTO 사용)
     @PostMapping("/accounts/signup/")
-    public CreateUserResponse saveMemberV1(@RequestBody @Validated CreateUserRequest request) {
+    public CreateUserResponse saveMember(@RequestBody @Validated CreateUserRequest request) {
 
         System.out.println("request = " + request);
 
@@ -30,7 +30,7 @@ public class UserApiController {
         return new CreateUserResponse(id);
     }
 
-    // DTO는 로직 없으니 @Data 편하게 사용
+    // DTO는 로직 없으니 @Data 편하게 사용, static 필수
     @Data
     static class CreateUserResponse {
         private Long id;
@@ -40,11 +40,11 @@ public class UserApiController {
     }
 
     @Data
-    private class CreateUserRequest {
+    static class CreateUserRequest {
         private String username;
         private String nickname;
         private String password;
-        private String passwordConfirmation;
+        //private String passwordConfirmation;
     }
 
 }
