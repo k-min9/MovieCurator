@@ -1,7 +1,9 @@
 package ssafy.moviecurators.domain.movies;
 
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -15,6 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "movies_movie")  // Django식 네이밍
 @Getter @Setter  // setter 나중에 이동
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class Movie {
 
@@ -49,11 +52,19 @@ public class Movie {
     @Column(columnDefinition = "jsonb")
     private List<Integer> movie_reference_overview;
 
+
+    // 연결
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "movie")
+    private Article article;
+
     // 예시용 다대다, 실무 금지!(일단 중간 테이블에 넣을 자료는 없음)
-//    @ManyToMany
-//    @JoinTable(name = "movies_movie_genre_ids",
-//        joinColumns = @JoinColumn(name= "movie_id"),
-//        inverseJoinColumns = @JoinColumn(name="genre_id"))
-//    private List<Genre> genre_ids = new ArrayList<>();
+    // 실제와는 다르다. 이 부분은 상담? 필요?
+    @ManyToMany
+    @JoinTable(name = "movies_movie_genre_ids2",
+        joinColumns = @JoinColumn(name= "movie_id"),
+        inverseJoinColumns = @JoinColumn(name="genre_id"))
+    private List<Genre> genre_ids = new ArrayList<>();
+
+
 
 }

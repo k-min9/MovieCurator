@@ -4,6 +4,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ssafy.moviecurators.domain.movies.Article;
+import ssafy.moviecurators.domain.movies.Comment;
+import ssafy.moviecurators.domain.movies.Likes;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -76,6 +79,15 @@ public class User {
 
     @OneToMany(mappedBy = "from_user")
     private List<Curator> from_user = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Article> articles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Likes> likes = new ArrayList<>();
 
     // 생성자
     public User(String username, String password, String nickname) {
