@@ -9,13 +9,14 @@ import org.hibernate.annotations.TypeDef;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "movies_movie")  // Django식 네이밍
 @Getter @Setter  // setter 나중에 이동
 @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
-public class movie {
+public class Movie {
 
     @Id @GeneratedValue
     //@Column(name = "movie_id")
@@ -47,4 +48,12 @@ public class movie {
     @Type(type="jsonb")
     @Column(columnDefinition = "jsonb")
     private List<Integer> movie_reference_overview;
+
+    // 예시용 다대다, 실무 금지!(일단 중간 테이블에 넣을 자료는 없음)
+//    @ManyToMany
+//    @JoinTable(name = "movies_movie_genre_ids",
+//        joinColumns = @JoinColumn(name= "movie_id"),
+//        inverseJoinColumns = @JoinColumn(name="genre_id"))
+//    private List<Genre> genre_ids = new ArrayList<>();
+
 }
