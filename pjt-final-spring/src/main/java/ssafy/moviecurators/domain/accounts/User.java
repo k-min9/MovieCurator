@@ -19,7 +19,7 @@ import java.util.List;
 @Entity
 @Table(name = "accounts_user")  // Django식 네이밍
 @Getter @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor//(access = AccessLevel.PROTECTED)
 public class User {
 
     @Id @GeneratedValue
@@ -91,7 +91,6 @@ public class User {
 
     // 생성자
     public User(String username, String password, String nickname) {
-        super();
         this.username = username;
         this.password = password;
         this.nickname = nickname;
