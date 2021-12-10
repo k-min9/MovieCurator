@@ -11,7 +11,7 @@ import java.util.List;
 // 삭제 예정
 @Repository
 @RequiredArgsConstructor
-public class UserRepositoryClass {
+public class UserJpaRepository {
 
     @Autowired
     private final EntityManager em;

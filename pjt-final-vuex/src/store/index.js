@@ -322,12 +322,12 @@ export default new Vuex.Store({
     getMovies({commit}, token) {
       axios({
         method: 'GET',
-        //url: `${SERVER_URL}movies/`,
-        //route: SERVER.ROUTES.movies.home,
+        // '/movies/'
         url: SERVER.URL + SERVER.ROUTES.movies.home,
         headers: token,
       })
       .then(res => {
+        console.log(res.data)
         commit('GET_MOVIES', res.data)
       })
       .catch(err => console.log(err))

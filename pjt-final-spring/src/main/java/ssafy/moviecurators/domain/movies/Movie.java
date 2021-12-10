@@ -54,8 +54,8 @@ public class Movie {
 
 
     // 연결
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "movie")
-    private Article article;
+    @OneToMany(mappedBy = "movie")
+    private List<Article> articles = new ArrayList<>();
 
     // 예시용 다대다, 실무 금지!(일단 중간 테이블에 넣을 자료는 없음)
     // 실제와는 다르다. 이 부분은 상담? 필요?

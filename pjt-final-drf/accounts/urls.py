@@ -5,7 +5,7 @@ from . import views
 app_name = 'accounts'
 
 urlpatterns = [
-    path('<str:username>/get_user_info', views.get_user_info),
+    path('<str:username>/get_user_info/', views.get_user_info),
     path('api-token-auth/', obtain_jwt_token),
     path('signup/', views.signup),
     path('profile/', views.my_profile_detail),

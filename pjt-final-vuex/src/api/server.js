@@ -1,13 +1,13 @@
 export default {
   //URL: 'https://moviecurators.herokuapp.com',
-  URL:'http://127.0.0.1:8000',  // drf
-  //URL: 'http://127.0.0.1:8080',  // spring
+  //URL:'http://127.0.0.1:8000',  // drf
+  URL: 'http://127.0.0.1:8080',  // spring
   ROUTES: {
       accounts: {
         // 회원 가임 등등 제어
         default: '/accounts/',
         //get_user_info: '/accounts/<str:username>/get_user_info',
-        getUserInfo: '/get_user_info',  // 뒤에 / 안붙인게 엄청난 차이임
+        getUserInfo: '/get_user_info/',  // 뒤에 / 안붙인게 엄청난 차이임. 붙였음!!!! 장고도 수정했음!!!!!!!
         login: '/accounts/api-token-auth/',
         signup: '/accounts/signup/',
         myProfileDetail: '/accounts/profile/',

@@ -50,7 +50,7 @@ public class Article {
     }
 
     // 연결
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="movie_id")
     private Movie movie;
 

@@ -62,7 +62,7 @@ public class UserApiController {
     }
 
     /**
-     * 로그인
+     * 로그인 ; Request 부분 DTO화 해야함
      * */
     @PostMapping("/accounts/api-token-auth/")
     public ResponseEntity<?> login(@RequestBody Map<String, String> user) {

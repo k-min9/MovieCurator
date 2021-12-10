@@ -105,7 +105,6 @@ export default {
       // 검색 아티클들
       articlesCurator: [],  
       // 이미지 주소 조합용
-      //SERVER_URL: 'http://127.0.0.1:8000',  
       SERVER_URL: SERVER.URL
     }
   },
