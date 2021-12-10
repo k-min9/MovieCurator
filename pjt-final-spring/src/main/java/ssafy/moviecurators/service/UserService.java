@@ -46,13 +46,13 @@ public class UserService {
 
     //회원 단 건 조회
     public User findOne(Long memberId) {
-        return userRepository.findOne(memberId);
+        return userRepository.findOneById(memberId);
     }
 
     //api용: @Transactional > 트랜잭션 시작 > 찾아서 영속성 컨텍스트에 > 트랜잭션 종료되면서 커밋되고 flush
     @Transactional
     public void update(Long id, String name) {
-        User member = userRepository.findOne(id);
+        User member = userRepository.findOneById(id);
         member.setUsername(name);
     }
 

@@ -1,21 +1,35 @@
 package ssafy.moviecurators.api;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import ssafy.moviecurators.config.auth.JwtTokenProvider;
 import ssafy.moviecurators.domain.accounts.User;
+import ssafy.moviecurators.repository.UserRepository;
 import ssafy.moviecurators.service.UserService;
+
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
 public class UserApiController {
 
     private final UserService userService;
+    private final UserRepository userRepository;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final PasswordEncoder passwordEncoder;
 
-    // 회원가입 (DTO 사용)
+    /**
+     * 회원가입 (DTO)
+     *
+     */
     @PostMapping("/accounts/signup/")
     public CreateUserResponse saveMember(@RequestBody @Validated CreateUserRequest request) {
 
@@ -46,5 +60,31 @@ public class UserApiController {
         private String password;
         //private String passwordConfirmation;
     }
+
+    /**
+     * 로그인
+     * */
+    @PostMapping("/accounts/api-token-auth/")
+    public ResponseEntity<?> login(@RequestBody Map<String, String> user) {
+        User member = userRepository.findOneByUsername(user.get("username"))
+                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이름 입니다."));
+        if (!passwordEncoder.matches(user.get("password"), member.getPassword())) {
+            throw new IllegalArgumentException("잘못된 비밀번호입니다.");
+        }
+        String token = jwtTokenProvider.createToken(member.getUsername());
+
+        return ResponseEntity.ok(new LoginUserResponse(token));
+    }
+
+    @Data
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public class LoginUserResponse {
+        private String token;
+        //private String tokenType = "Bearer ";
+        public LoginUserResponse(String accessToken) {
+            this.token = accessToken;
+        }
+    }
+
 
 }

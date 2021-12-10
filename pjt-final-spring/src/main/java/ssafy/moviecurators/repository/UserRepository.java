@@ -1,36 +1,22 @@
 package ssafy.moviecurators.repository;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import ssafy.moviecurators.domain.accounts.User;
 
-import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
-@Repository
-@RequiredArgsConstructor
-public class UserRepository {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Autowired
-    private final EntityManager em;
+    //public void save(User user);
 
-    public void save(User user){
-        em.persist(user);
-    }
+    User findOneById(Long id);
 
-    public User findOne(Long id){
-        return em.find(User.class, id);
-    }
+    //List<User> findAll();
 
-    public List<User> findAll() {
-        return em.createQuery("select u from User u", User.class)
-                .getResultList();
-    }
+    Optional<User> findOneByUsername(String username);
 
-    public List<User> findByUsername(String username) {
-        return em.createQuery("select u from User u where u.username = : username", User.class)
-                .setParameter("username", username)
-                .getResultList();
-    }
+    List<User> findByUsername(String username);
+
+
 }

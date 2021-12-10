@@ -13,15 +13,4 @@ public class MoviecuratorsApplication {
 		SpringApplication.run(MoviecuratorsApplication.class, args);
 	}
 
-//	// CORS 설정
-//	@Configuration
-//	public class WebConfig implements WebMvcConfigurer {
-//
-//		@Override
-//		public void addCorsMappings(CorsRegistry registry) {
-//			registry.addMapping("/**")  // 허락 URL 패턴
-//					.allowedOrigins("*");  // 허락 Origin
-//		}
-//	}
-
 }

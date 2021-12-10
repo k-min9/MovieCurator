@@ -132,6 +132,7 @@ export default new Vuex.Store({
         data: credentials,
       })
       .then(res => {
+        console.log(res.data)
         localStorage.setItem('jwt', res.data.token)
         commit('LOGIN', credentials)
         router.push({name: 'Home'})

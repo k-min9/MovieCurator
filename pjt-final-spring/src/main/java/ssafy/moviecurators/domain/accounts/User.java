@@ -1,9 +1,9 @@
 package ssafy.moviecurators.domain.accounts;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
@@ -17,16 +17,16 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "accounts_user")  // Django식 네이밍
+@Builder
 @Getter @Setter
 @NoArgsConstructor//(access = AccessLevel.PROTECTED)
-public class User {
+@AllArgsConstructor
+public class User implements UserDetails {
 
     @Id @GeneratedValue
 //    @Column(name = "user_id")  // 테이블 이름 변경됨
@@ -94,6 +94,43 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Likes> likes = new ArrayList<>();
+
+    // Security UserDetail 관련
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Builder.Default
+    private List<String> roles = new ArrayList<>();
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.roles.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
     // 생성자
     public User(String username, String password, String nickname) {
