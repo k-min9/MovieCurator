@@ -22,11 +22,11 @@ class UserTest {
 
     @Test
     public void 유저생성() {
-        User user1 = new User("강민구", "111","강민구");
-        User user2 = new User("임건호", "111","임건호");
+        User user1 = new User("강민구19", "1121","강민구");
+//        User user2 = new User("임건호15", "1112","임건호");
 
         em.persist(user1);
-        em.persist(user2);
+//        em.persist(user2);
 
         // 초기화
         em.flush();  // 쿼리 강제로 DB에 날리기

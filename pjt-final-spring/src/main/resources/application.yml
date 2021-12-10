@@ -2,6 +2,10 @@
 # 띄어쓰기 칸 수 주의
 
 spring:
+
+  main:
+    allow-bean-definition-overriding: true  # password Encoder pbkdf2 관련 이슈
+
   datasource:
     platform: postgres
     url: jdbc:postgresql://localhost:5432/Movie-Curators

@@ -127,6 +127,7 @@ export default new Vuex.Store({
         method: 'POST',
         //url: `${SERVER_URL}accounts/api-token-auth/`,
         //route: SERVER.ROUTES.accounts.login,
+        //url: 'https://moviecurators.herokuapp.com/accounts/api-token-auth/',
         url: SERVER.URL + SERVER.ROUTES.accounts.login,
         data: credentials,
       })

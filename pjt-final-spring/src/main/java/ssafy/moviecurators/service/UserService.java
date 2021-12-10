@@ -1,6 +1,7 @@
 package ssafy.moviecurators.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ssafy.moviecurators.domain.accounts.User;
@@ -16,12 +17,16 @@ public class UserService {
 
     // 주입 안될경우 컴파일 시점에서 체크하게 final 추가
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     // 회원 가입
     @Transactional
     public Long join(User user){
         // 중복 체크
         validateDuplicateUser(user);
+        user.setPassword(user.getPassword());
+        user.encodePassword(passwordEncoder);
+
         userRepository.save(user);
         return user.getId();
     }

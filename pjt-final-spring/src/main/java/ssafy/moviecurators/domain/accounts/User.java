@@ -4,6 +4,10 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import ssafy.moviecurators.domain.movies.Article;
 import ssafy.moviecurators.domain.movies.Comment;
 import ssafy.moviecurators.domain.movies.Likes;
@@ -14,7 +18,9 @@ import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "accounts_user")  // Django식 네이밍
@@ -61,7 +67,7 @@ public class User {
         //createdBy = Thread.currentThread().getName(); 필요하다면 추가
     }
 
-    @Column(columnDefinition = "TEXT default '영화 애호가'")
+    @Column(columnDefinition = "TEXT")
     private String introduction = "영화 애호가";
 
     @Size(max = 20)
@@ -94,5 +100,11 @@ public class User {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
+    }
+
+    // 패스워드 해싱
+    @Transactional
+    public void encodePassword(PasswordEncoder passwordEncoder){
+        password = passwordEncoder.encode(password);
     }
 }
