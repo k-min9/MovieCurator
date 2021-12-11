@@ -6,6 +6,10 @@ import ssafy.moviecurators.domain.movies.Article;
 import ssafy.moviecurators.domain.movies.Comment;
 import ssafy.moviecurators.domain.movies.Likes;
 import ssafy.moviecurators.domain.movies.Movie;
+import ssafy.moviecurators.dto.simple.SimpleCommentDto;
+import ssafy.moviecurators.dto.simple.SimpleLikesDto;
+import ssafy.moviecurators.dto.simple.SimpleMovieDto;
+import ssafy.moviecurators.dto.simple.SimpleUserDto;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -23,10 +27,10 @@ public class ArticleDto {
     private OffsetDateTime updated_at;
 
     // 연결
-    private Movie movie;
-    private User user;
-    private List<Comment> comments;
-    private List<Likes> likes;
+    private SimpleMovieDto movie;
+    private SimpleUserDto user;
+    private List<SimpleCommentDto> comments;
+    private List<SimpleLikesDto> likes;
 
     public ArticleDto(Article article) {
         this.id = article.getId();
@@ -36,9 +40,12 @@ public class ArticleDto {
         this.points = article.getPoints();
         this.created_at = article.getCreated();
         this.updated_at = article.getUpdated();
-//        this.movie = article.getMovie();
-//        this.user = article.getUser();
-//        this.comments = article.getComments().stream().collect(Collectors.toList());
-//        this.likes = article.getLikes().stream().collect(Collectors.toList());
+        this.movie = new SimpleMovieDto(article.getMovie());
+        this.user = new SimpleUserDto(article.getUser());
+        // 구현은 해 뒀음. 필요하면 사용
+//        this.comments = article.getComments()
+//                .stream().map(comment -> new SimpleCommentDto(comment)).collect(Collectors.toList());
+//        this.likes = article.getLikes()
+//                .stream().map(likes -> new SimpleLikesDto(likes)).collect(Collectors.toList());
     }
 }

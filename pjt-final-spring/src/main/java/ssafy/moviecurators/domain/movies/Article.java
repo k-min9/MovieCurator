@@ -7,7 +7,6 @@ import lombok.Setter;
 import ssafy.moviecurators.domain.accounts.User;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Size;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;

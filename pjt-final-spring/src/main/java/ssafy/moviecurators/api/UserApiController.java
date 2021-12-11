@@ -33,8 +33,6 @@ public class UserApiController {
     @PostMapping("/accounts/signup/")
     public CreateUserResponse saveMember(@RequestBody @Validated CreateUserRequest request) {
 
-        //System.out.println("request = " + request);
-
         User user = new User();
         user.setUsername(request.getUsername());
         user.setPassword(request.getPassword());

@@ -24,23 +24,23 @@ public class Comment {
     @Column(columnDefinition = "TEXT")
     private String thanksContent = null;
 
-    private Integer milleage = 0;
+    private Integer mileage = 0;
 
-    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
-    private OffsetDateTime created_at;
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    private OffsetDateTime created;
 
     //https://stackoverflow.com/questions/67870747/spring-boot-entity-how-to-add-createddate-utc-timezone-aware-lastmodified
     @PrePersist
     private void beforeSaving() {
-        created_at = OffsetDateTime.now();
+        created = OffsetDateTime.now();
     }
 
-    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
-    private OffsetDateTime updated_at;
+    @Column(name = "updated_at", columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    private OffsetDateTime updated;
 
     @PreUpdate
     private void beforeUpdating() {
-        updated_at = OffsetDateTime.now();
+        updated = OffsetDateTime.now();
     }
 
     // 연결
