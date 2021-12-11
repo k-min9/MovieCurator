@@ -7,11 +7,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ssafy.moviecurators.config.auth.JwtTokenProvider;
 import ssafy.moviecurators.domain.accounts.User;
+import ssafy.moviecurators.dto.UserProfileDto;
 import ssafy.moviecurators.repository.UserRepository;
 import ssafy.moviecurators.service.UserService;
 
@@ -82,6 +81,13 @@ public class UserApiController {
         public LoginUserResponse(String accessToken) {
             this.token = accessToken;
         }
+    }
+
+    @GetMapping("/accounts/{username}/get_user_info/")
+    public UserProfileDto getUserInfo(@PathVariable("username") String username) {
+        User user = userRepository.findOneByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저의 정보가 없습니다."));
+        return new UserProfileDto(user);
     }
 
 

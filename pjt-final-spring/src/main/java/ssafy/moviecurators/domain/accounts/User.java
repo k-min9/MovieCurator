@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 public class User implements UserDetails {
 
     @Id @GeneratedValue
-//    @Column(name = "user_id")  // 테이블 이름 변경됨
     private Long id;
 
     @Size(max=128)

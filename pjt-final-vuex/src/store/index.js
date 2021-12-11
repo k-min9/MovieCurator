@@ -160,11 +160,12 @@ export default new Vuex.Store({
     getUserInfo({commit}, username) {
       axios({
         method: 'GET',
-        //url: `${SERVER_URL}accounts/${username}/get_user_info`,
-        //url: `http://127.0.0.1:8000/accounts/${username}/get_user_info`,
+        //url: `URL + /accounts/${username}/get_user_info/`,
         url: SERVER.URL + SERVER.ROUTES.accounts.default + String(username) + SERVER.ROUTES.accounts.getUserInfo,
       })
       .then(res => {
+        console.log('getUserInfo')
+        console.log(res.data)
         commit('GET_USER_INFO', res.data)
       })
       .catch(err => console.log(err))
