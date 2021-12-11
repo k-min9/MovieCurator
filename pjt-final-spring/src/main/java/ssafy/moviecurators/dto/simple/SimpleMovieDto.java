@@ -31,12 +31,12 @@ public class SimpleMovieDto {
         this.backdrop_path = movie.getBackdrop_path();
         this.poster_path = movie.getPoster_path();
         this.overview = movie.getOverview();
-        this.release_date = movie.getRelease_date();
+        this.release_date = movie.getReleaseDate();
         this.original_title = movie.getOriginal_title();
         this.title = movie.getTitle();
         this.popularity = movie.getPopularity();
         this.vote_count = movie.getVote_count();
-        this.vote_average = movie.getVote_average();
+        this.vote_average = movie.getVoteAverage();
         this.movie_reference_overview = getMovie_reference_overview();
     }
 }

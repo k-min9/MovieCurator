@@ -46,7 +46,6 @@
 
 <script>
 import axios from 'axios'
-// import MovieListSelected from '@/components/movieList/MovieListSelected'
 import MovieCard2 from '@/components/movie/MovieCard2'
 import SERVER from '@/api/server'
 

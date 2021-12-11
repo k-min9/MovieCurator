@@ -34,7 +34,8 @@ public class Movie {
     @Column(columnDefinition = "TEXT")
     private String overview;
 
-    private Date release_date;
+    @Column(name="release_date")
+    private Date releaseDate;
 
     @Size(max=100)
     private String original_title;
@@ -46,7 +47,8 @@ public class Movie {
 
     private Integer vote_count;
 
-    private Double vote_average;
+    @Column(name = "vote_average")
+    private Double voteAverage;
 
     @Type(type="jsonb")
     @Column(columnDefinition = "jsonb")

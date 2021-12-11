@@ -22,5 +22,13 @@ public class MovieService {
         return movieRepository.findByIds(homeMovies);
     }
 
+    public List<Movie> movieListMain(String filter) {
+        if (filter.equals("popularity")){return movieRepository.findTop30ByOrderByPopularityDesc();}
+        else if(filter.equals("release_date")){return movieRepository.findTop30ByOrderByReleaseDateDesc();}
+        else {return movieRepository.findTop30ByOrderByVoteAverageDesc();}
+    }
 
+    public List<Movie> movieListGenre() {
+        return null;
+    }
 }
