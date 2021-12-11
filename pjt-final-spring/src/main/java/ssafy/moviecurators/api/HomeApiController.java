@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ssafy.moviecurators.domain.movies.Article;
 import ssafy.moviecurators.domain.movies.Movie;
+import ssafy.moviecurators.dto.ArticleDto;
+import ssafy.moviecurators.service.ArticleService;
 import ssafy.moviecurators.service.MovieService;
 
 import java.sql.Date;
@@ -18,12 +20,13 @@ import static java.util.stream.Collectors.toList;
 public class HomeApiController {
 
     private final MovieService movieService;
+    private final ArticleService articleService;
 
     @GetMapping("/movies/")
     public List<MovieDto> home() {
         List<Movie> movies = movieService.homeMovie();
         List<MovieDto> result = movies.stream()
-                .map(o -> new MovieDto(o))
+                .map(movie -> new MovieDto(movie))
                 .collect(toList());
 
         return result;
@@ -65,12 +68,26 @@ public class HomeApiController {
     }
 
     // 무한루프 방지 + 필요한 내용물만 꺼내기
-    @Data
-    static class ArticleDto {
-        private Long id;
+//    @Data
+//    static class ArticleDto {
+//        private Long id;
+//
+//        public ArticleDto(Article article) {
+//            this.id = article.getId();
+//        }
+//    }
 
-        public ArticleDto(Article article) {
-            this.id = article.getId();
-        }
+    /**
+     * home에 높은 점수의 상위 평가들 가져오기
+     **/
+    @GetMapping("/movies/articles/home/")
+    public List<ArticleDto> articleHome() {
+        List<Article> movies = articleService.articleHome();
+        List<ArticleDto> result = movies.stream()
+                .map(article -> new ArticleDto(article))
+                .collect(toList());
+        return result;
     }
+
+
 }

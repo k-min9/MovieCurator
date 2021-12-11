@@ -122,11 +122,13 @@ export default {
     getArticlesHome: function () {
       axios({
         method: 'GET',
-        //url: 'http://127.0.0.1:8000/movies/articles/home/',
+        //url: URL + '/movies/articles/home/',
         url: SERVER.URL + SERVER.ROUTES.movies.articleHome,
         headers: this.setToken()
       })
-      .then((res)=>{
+      .then((res) => {
+        console.log('HomeReferenceExtra')
+        console.log(res.data)
         this.articlesHome = res.data
       }) 
     },
