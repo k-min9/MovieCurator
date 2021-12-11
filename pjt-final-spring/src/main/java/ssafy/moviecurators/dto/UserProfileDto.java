@@ -44,8 +44,8 @@ public class UserProfileDto {
     private Integer exp;
 
     // 연결
-    private List<Curator> followers;  // Curator to_user
-    private List<Curator> following;  // Curator from_user
+    private List<SimpleUserDto> followers;  // Curator to_user
+    private List<SimpleUserDto> following;  // Curator from_user
 //    private List<Article> articles;
 //    private List<Comment> comments;
 //    private List<Likes> likes;
@@ -64,8 +64,8 @@ public class UserProfileDto {
         this.exp = user.getExp();
 
         // 연결
-        this.followers = user.getTo_user();//.stream().map(u -> new SimpleUserDto(u)).collect(toList());
-        this.following = user.getFrom_user();
+        this.followers = user.getTo_user().stream().map(curator -> new SimpleUserDto(curator.getFrom_user())).collect(toList());
+        this.following = user.getFrom_user().stream().map(curator -> new SimpleUserDto(curator.getTo_user())).collect(toList());
 
 //        this.articles = articles;
 //        this.comments = comments;
