@@ -32,4 +32,8 @@ public class MovieService {
     public List<Movie> movieListGenre(String name) {
         return movieRepository.movieListGenre(name, PageRequest.of(0,30));
     }
+
+    public List<Movie> movieSearch(String searchKeyword) {
+        return movieRepository.findTop25ByTitleContainingOrOriginalTitleContainingIgnoreCase(searchKeyword, searchKeyword);
+    }
 }

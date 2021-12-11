@@ -74,6 +74,8 @@ export default {
         headers: this.setToken()
       })
       .then((res)=>{
+        console.log('search')
+        console.log(res.data)
         this.searchedMovies = res.data
       })
     },

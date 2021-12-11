@@ -32,7 +32,7 @@ public class SimpleMovieDto {
         this.poster_path = movie.getPoster_path();
         this.overview = movie.getOverview();
         this.release_date = movie.getReleaseDate();
-        this.original_title = movie.getOriginal_title();
+        this.original_title = movie.getOriginalTitle();
         this.title = movie.getTitle();
         this.popularity = movie.getPopularity();
         this.vote_count = movie.getVote_count();

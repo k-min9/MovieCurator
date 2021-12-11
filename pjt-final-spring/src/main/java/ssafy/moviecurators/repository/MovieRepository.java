@@ -38,4 +38,5 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     List<Movie> movieListGenre(@Param("name") String name, Pageable pageable);
 
 
+    List<Movie> findTop25ByTitleContainingOrOriginalTitleContainingIgnoreCase(String searchKeyword, String searchKeyword2);
 }

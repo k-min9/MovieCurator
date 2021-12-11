@@ -38,7 +38,8 @@ public class Movie {
     private Date releaseDate;
 
     @Size(max=100)
-    private String original_title;
+    @Column(name = "original_title")
+    private String originalTitle;
 
     @Size(max=100)
     private String title;

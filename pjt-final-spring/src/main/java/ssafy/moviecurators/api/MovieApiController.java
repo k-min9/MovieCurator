@@ -48,12 +48,19 @@ public class MovieApiController {
         return result;
     }
 
-
     /**
-     * 내부 DTO
-     */
-    @Data
-    static class MovieListRequest {
-        private String filter;
+     * 영화 검색
+     **/
+    @GetMapping("/movies/search/")
+    public List<MovieDto> movieSearch(HttpServletRequest request) {
+        String searchKeyword = request.getParameter("searchKeyword");
+        List<Movie> movies = movieService.movieSearch(searchKeyword);
+
+        List<MovieDto> result = movies.stream()
+                .map(movie -> new MovieDto(movie))
+                .collect(toList());
+
+        return result;
     }
+
 }
