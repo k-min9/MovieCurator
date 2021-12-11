@@ -38,7 +38,7 @@ public class MovieApiController {
         if (main.contains(filter)) {
             movies = movieService.movieListMain(filter);
         } else {
-            movies = movieService.movieListGenre();
+            movies = movieService.movieListGenre(filter);
         }
 
         List<MovieDto> result = movies.stream()

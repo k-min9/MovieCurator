@@ -3,6 +3,7 @@ package ssafy.moviecurators.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import ssafy.moviecurators.domain.movies.Movie;
@@ -33,6 +34,14 @@ class MovieServiceTest {
     @Test
     public void 영화전부() {
         List<Movie> results = movieRepository.findAll();
+        for (Movie result : results) {
+            System.out.println("result.getTitle() = " + result.getId());
+        }
+    }
+
+    @Test
+    public void 영화장르() {
+        List<Movie> results = movieRepository.movieListGenre("Action", PageRequest.of(0,30));
         for (Movie result : results) {
             System.out.println("result.getTitle() = " + result.getId());
         }

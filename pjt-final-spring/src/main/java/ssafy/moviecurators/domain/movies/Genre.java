@@ -17,12 +17,15 @@ import java.util.List;
 public class Genre {
 
     @Id @GeneratedValue
-    private Integer id;
+    private Long id;
 
     @Size(max=50)
     private String name;
 
-    @ManyToMany(mappedBy = "genre_ids")
-    private List<Movie> movies = new ArrayList<>();
+//    @ManyToMany(mappedBy = "genre_ids")
+//    private List<Movie> movies = new ArrayList<>();
+
+    @OneToMany(mappedBy = "genre")
+    private List<MovieGenre> movieGenres = new ArrayList<>();
 
 }

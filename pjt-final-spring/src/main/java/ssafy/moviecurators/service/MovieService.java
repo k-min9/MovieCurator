@@ -1,6 +1,7 @@
 package ssafy.moviecurators.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ssafy.moviecurators.domain.movies.Movie;
@@ -28,7 +29,7 @@ public class MovieService {
         else {return movieRepository.findTop30ByOrderByVoteAverageDesc();}
     }
 
-    public List<Movie> movieListGenre() {
-        return null;
+    public List<Movie> movieListGenre(String name) {
+        return movieRepository.movieListGenre(name, PageRequest.of(0,30));
     }
 }
