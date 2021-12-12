@@ -21,7 +21,7 @@ public class Comment {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "thanks_content", columnDefinition = "TEXT")
     private String thanksContent = null;
 
     private Integer mileage = 0;

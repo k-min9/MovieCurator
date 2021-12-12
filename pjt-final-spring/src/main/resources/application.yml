@@ -19,6 +19,12 @@ spring:
     hibernate:
       #ddl-auto: create # 애플리케이션 실행시점에 테이블 다 지우고 새로 생성
       ddl-auto: update
+
+      # DB column 네이밍시 자동으로 snake case로 전환하는것을 막아줌
+#      naming:
+#        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
     properties:
       hibernate:
         # show_sql: true

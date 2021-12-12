@@ -51,7 +51,7 @@ class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='comments')
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='comments')
     content = models.TextField(max_length=50)
-    thanksContent = models.TextField(null=True, blank=True, max_length=50)
+    thanks_content = models.TextField(null=True, blank=True, max_length=50)
     mileage = models.PositiveIntegerField(null=True, blank=True, default=0)  # 댓글 작성시 후원 금액
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

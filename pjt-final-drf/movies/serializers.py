@@ -21,7 +21,7 @@ class CommentDonateSerializer(serializers.ModelSerializer):
     user = UserProfileSerializer(read_only=True)
     class Meta:
         model = Comment
-        fields = ('id', 'user', 'article', 'content', 'mileage', 'thanksContent', 'created_at', 'updated_at',)
+        fields = ('id', 'user', 'article', 'content', 'mileage', 'thanks_content', 'created_at', 'updated_at',)
         read_only_fields = ('article',)
 
 class ArticleSerializer(serializers.ModelSerializer):

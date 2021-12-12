@@ -241,7 +241,7 @@
               <div class="col-11" v-if="!selectCommentUpdateBtn || comment.id !== selectedCommentId">
                 <div class="article-comment-list-item-content">
                   <div>
-                    <span class="article-comment-list-item-content-span">{{comment.thanksContent}}</span>  
+                    <span class="article-comment-list-item-content-span">{{comment.thanks_content}}</span>  
                     <hr>     
                   </div>
                 
@@ -582,7 +582,7 @@ export default {
         superCommentContent = '좋은 평가입니다!'
       }
       const contents = {
-        thanksContent : mileageChange + ' 마일리지 후원 감사합니다!',
+        thanks_content : mileageChange + ' 마일리지 후원 감사합니다!',
         content: superCommentContent,
         mileage: mileageChange
       }
@@ -611,11 +611,13 @@ export default {
     getComments: function () {
       axios({
         method: 'get',
-        //url: `http://127.0.0.1:8000/movies/${this.$route.params.id}/comments/list/`,
+        //url: URL + `/movies/${this.$route.params.id}/comments/list/`,
         url: SERVER.URL + SERVER.ROUTES.movies.home + String(this.$route.params.id) + SERVER.ROUTES.movies.commentList,
         headers: this.setToken(),
       })
       .then((res)=>{
+        console.log("getComments")
+        console.log(res.data)
         this.comments = res.data
       })
     },
