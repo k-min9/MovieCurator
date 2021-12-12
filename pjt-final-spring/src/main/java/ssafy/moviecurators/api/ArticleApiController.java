@@ -1,11 +1,15 @@
 package ssafy.moviecurators.api;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
+import ssafy.moviecurators.domain.accounts.User;
 import ssafy.moviecurators.domain.movies.Movie;
+import ssafy.moviecurators.dto.simple.SimpleArticleDto;
 import ssafy.moviecurators.dto.simple.SimpleMovieDto;
+import ssafy.moviecurators.repository.ArticleRepository;
+import ssafy.moviecurators.repository.MovieRepository;
+import ssafy.moviecurators.repository.UserRepository;
 import ssafy.moviecurators.service.JwtTokenProvider;
 import ssafy.moviecurators.domain.movies.Article;
 import ssafy.moviecurators.dto.ArticleDto;
@@ -20,24 +24,59 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class ArticleApiController {
 
+    private final ArticleRepository articleRepository;
     private final ArticleService articleService;
     private final JwtTokenProvider jwtTokenProvider;
 
     /**
-     * 영화에 사용자가 적은 평가 가져오기
+     * 평가 상세 페이지 메인 정보
+     * */
+    @GetMapping("/movies/{articleId}/article/")
+    public ArticleDto getArticle(@PathVariable("articleId") Long articleId, HttpServletRequest request) {
+
+        Article article = articleRepository.getById(articleId);
+        return new ArticleDto(article);
+    }
+
+    /**
+     * 영화에 사용자가 적은 평가 CRUD
+     * get : 가져오기
+     * post : 평가 작성
+     * put : 평가 수정
      * */
     @GetMapping("/movies/{movieId}/articles/")
     public ArticleDto articleDetail(@PathVariable("movieId") Long movieId, HttpServletRequest request) {
 
         String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
-        int userId = jwtTokenProvider.getUserIdFromJwt(token);
-
-        System.out.println("userId = " + userId);
+        Long userId = jwtTokenProvider.getUserIdFromJwt(token);
 
         Article article = articleService.articleDetail(movieId, userId);
-        return new ArticleDto(article);
+        if (article != null) { return new ArticleDto(article);}
+        else {return null;}
     }
 
+    @PostMapping("/movies/{movieId}/articles/")
+    public ArticleDto articleDetailPost(@PathVariable("movieId") Long movieId,
+                                        @RequestBody Article article,
+                                        HttpServletRequest request) {
+
+        String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
+        Long userId = jwtTokenProvider.getUserIdFromJwt(token);
+
+        Article articleSaved = articleService.articleDetailPost(article, movieId, userId);
+        return new ArticleDto(articleSaved);
+    }
+
+    @PutMapping("/movies/{movieId}/articles/")
+    public SimpleArticleDto articleDetailPut(@PathVariable("movieId") Long movieId,
+                                        @RequestBody Article articleChange,
+                                        HttpServletRequest request) {
+
+        String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
+        Long userId = jwtTokenProvider.getUserIdFromJwt(token);
+
+        return new SimpleArticleDto(articleService.articleDetailPut(articleChange, movieId, userId));
+    }
 
     /**
      * 영화에 적힌 평가 다 가져오기

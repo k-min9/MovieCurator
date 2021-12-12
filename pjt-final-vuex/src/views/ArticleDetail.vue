@@ -448,12 +448,14 @@ export default {
           }
         axios({
           method: 'PUT',
-          //url: `http://127.0.0.1:8000/movies/${this.movie.id}/articles/`,
+          //url: URL + `/movies/${this.movie.id}/articles/`,
           url: SERVER.URL + SERVER.ROUTES.movies.home + String(this.movie.id) + SERVER.ROUTES.movies.articleDetail,
           headers: this.setToken(),
           data: contents,
         })
         .then(res => {
+          console.log("articledetailput")
+          console.log(res.data)
           this.selectUpdateBtn = !this.selectUpdateBtn
           this.articleTitle = res.data.title
           this.articleContent = res.data.content
@@ -779,7 +781,7 @@ export default {
     // 사용자 평가 정보 가져오기
     axios ({
       method: 'get',
-      //url: `http://127.0.0.1:8000/movies/${this.articleId}/article`,
+      //url: URL + `/movies/${this.articleId}/article`,
       url: SERVER.URL + SERVER.ROUTES.movies.home + String(this.articleId) + SERVER.ROUTES.movies.getArticle,
       headers: this.setToken(),
     })

@@ -287,6 +287,8 @@ export default {
           data: contents,
         })
         .then(res => {
+          console.log('articleFormWrite')
+          console.log(res.data)
           this.isArticleWriten = true
           this.articleId = res.data.id
           this.articles.unshift(res.data)

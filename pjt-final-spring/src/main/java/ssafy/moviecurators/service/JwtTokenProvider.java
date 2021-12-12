@@ -3,6 +3,7 @@ package ssafy.moviecurators.service;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,8 +22,9 @@ import java.util.List;
 @Component
 public class JwtTokenProvider {
 
-    //@Value("${spring.jwt.secret}")
-    private String secretKey = "webfirewood";
+    // 나중에 key 변경 후, application.yml gitgnore하기
+    @Value("${jwt.secret}")
+    private String secretKey;
 
     // 토큰 유효시간 하루
     private long tokenValidTime = 24 * 60 * 60 * 1000L;
@@ -78,9 +80,9 @@ public class JwtTokenProvider {
     }
 
     // JWT 복호화 해서 id 얻기
-    public Integer getUserIdFromJwt(String token) {
+    public Long getUserIdFromJwt(String token) {
         Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-        return (Integer) claims.getBody().get("user_id");
+        return Long.parseLong(String.valueOf(claims.getBody().get("user_id")));
     }
 
     // JWT 토큰에서 인증 정보 조회

@@ -33,6 +33,7 @@ public class Comment {
     @PrePersist
     private void beforeSaving() {
         created = OffsetDateTime.now();
+        updated = OffsetDateTime.now();
     }
 
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP WITH TIME ZONE")

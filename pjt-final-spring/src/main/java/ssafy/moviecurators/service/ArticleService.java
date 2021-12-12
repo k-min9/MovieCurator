@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ssafy.moviecurators.domain.movies.Article;
 import ssafy.moviecurators.repository.ArticleRepository;
+import ssafy.moviecurators.repository.MovieRepository;
+import ssafy.moviecurators.repository.UserRepository;
 
 import java.time.OffsetDateTime;
 import java.util.Date;
@@ -17,6 +19,8 @@ import java.util.Optional;
 public class ArticleService {
 
     private final ArticleRepository articleRepository;
+    private final MovieRepository movieRepository;
+    private final UserRepository userRepository;
 
     public List<Article> articleHome() {
         // 1week
@@ -30,7 +34,30 @@ public class ArticleService {
         return articleRepository.articleList(id);
     }
 
-    public Article articleDetail(Long movieId, int userId) {
+    public Article articleDetail(Long movieId, Long userId) {
         return articleRepository.articleDetail(movieId, userId);
     }
+
+    @Transactional
+    public Article articleDetailPost(Article article, Long movieId, Long userId) {
+
+        article.setMovie(movieRepository.getById(movieId));
+        article.setUser(userRepository.getById(userId));
+        articleRepository.save(article);
+        return article;
+    }
+
+    @Transactional
+    public Article articleDetailPut(Article articleChange, Long movieId, Long userId) {
+
+        Article article = articleRepository.articleDetail(movieId, userId);
+        article.setTitle(articleChange.getTitle());
+        article.setContent(articleChange.getContent());
+        article.setRate(articleChange.getRate());
+        return article;
+
+    }
+
+
+
 }

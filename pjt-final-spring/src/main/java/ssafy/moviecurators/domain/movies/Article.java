@@ -29,7 +29,7 @@ public class Article {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    private Integer points;
+    private Integer points = 0;
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private OffsetDateTime created;
@@ -38,6 +38,7 @@ public class Article {
     @PrePersist
     private void beforeSaving() {
         created = OffsetDateTime.now();
+        updated = OffsetDateTime.now();
     }
 
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP WITH TIME ZONE")

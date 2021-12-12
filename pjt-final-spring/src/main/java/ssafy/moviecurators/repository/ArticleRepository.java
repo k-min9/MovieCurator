@@ -26,5 +26,5 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
             "join fetch a.movie m " +
             "join fetch a.user u " +
             "where m.id = :movieId and u.id = :userId")
-    Article articleDetail(Long movieId, int userId);
+    Article articleDetail(@Param("movieId") Long movieId, @Param("userId") Long userId);
 }
