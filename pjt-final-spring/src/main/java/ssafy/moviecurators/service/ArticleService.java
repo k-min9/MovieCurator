@@ -25,4 +25,7 @@ public class ArticleService {
         return articleRepository.findTop6ByCreatedBetweenOrderByPointsDesc(start, end);
     }
 
+    public List<Article> articleList(Long id) {
+        return articleRepository.articleList(id);
+    }
 }

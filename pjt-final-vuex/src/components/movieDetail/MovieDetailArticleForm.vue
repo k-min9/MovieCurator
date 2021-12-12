@@ -243,11 +243,13 @@ export default {
     getArticles: function () {
       axios({
         method: 'get',
-        //url: `http://127.0.0.1:8000/movies/${this.$route.params.id}/articles/list/`,
+        //url: URL + `/movies/${this.$route.params.id}/articles/list/`,
         url: SERVER.URL + SERVER.ROUTES.movies.home + String(this.$route.params.id) + SERVER.ROUTES.movies.articleList,
         headers: this.setToken(),
       })
       .then((res)=>{
+        console.log('articleList')
+        console.log(res.data)
         this.articles = res.data
       })
     },
@@ -307,6 +309,8 @@ export default {
       headers: this.setToken(),
     })
     .then(res => {
+      console.log('articleDetail')
+      console.log(res.data)
       // 내용이 비어있음 = 평가 적은 적이 없음
       if (Object.keys(res.data.content).length) {
         this.isArticleWriten = true
