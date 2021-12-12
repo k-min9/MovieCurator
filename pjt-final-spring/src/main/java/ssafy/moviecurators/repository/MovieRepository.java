@@ -5,20 +5,23 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.parameters.P;
+import ssafy.moviecurators.domain.accounts.User;
 import ssafy.moviecurators.domain.movies.Movie;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 
-    Movie findOneById(Long id);
+    // 영화 단일 조회
+    Optional<Movie> findOneById(Long id);
 
     // 최신순, 평점순, 인기순
     List<Movie> findTop30ByOrderByReleaseDateDesc();
     List<Movie> findTop30ByOrderByVoteAverageDesc();
     List<Movie> findTop30ByOrderByPopularityDesc();
 
-    // Home용 리스트파라미터 바인딩
+    // Home, 추천 영화 등 ID들 in절로 리스트 바인딩
     @Query("select m from Movie m where m.id in :ids") // in 절
     List<Movie> findByIds(@Param("ids") List<Long> ids);
 
@@ -37,6 +40,6 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
             "order by m.popularity desc")
     List<Movie> movieListGenre(@Param("name") String name, Pageable pageable);
 
-
+    // 검색 기능
     List<Movie> findTop25ByTitleContainingOrOriginalTitleContainingIgnoreCase(String searchKeyword, String searchKeyword2);
 }

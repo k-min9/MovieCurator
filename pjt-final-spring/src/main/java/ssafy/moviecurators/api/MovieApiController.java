@@ -2,14 +2,20 @@ package ssafy.moviecurators.api;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import ssafy.moviecurators.domain.accounts.User;
 import ssafy.moviecurators.domain.movies.Article;
 import ssafy.moviecurators.domain.movies.Movie;
 import ssafy.moviecurators.dto.ArticleDto;
 import ssafy.moviecurators.dto.MovieDto;
+import ssafy.moviecurators.dto.UserProfileDto;
+import ssafy.moviecurators.dto.simple.SimpleMovieDto;
+import ssafy.moviecurators.repository.MovieRepository;
 import ssafy.moviecurators.service.MovieService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +30,30 @@ import static java.util.stream.Collectors.toList;
 public class MovieApiController {
 
     private final MovieService movieService;
+    private final MovieRepository movieRepository;
+
+    /**
+     * 단일 영화 가져오기
+     * */
+    @GetMapping("/movies/{id}/")
+    public SimpleMovieDto getMovie(@PathVariable("id") Long id) {
+        Movie movie = movieRepository.findOneById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 영화의 정보가 없습니다."));
+        return new SimpleMovieDto(movie);
+    }
+
+    /**
+     * 추천 영화 가져오기
+     * */
+    @GetMapping("/movies/{id}/recommend/")
+    public List<SimpleMovieDto> getMoviesRecommend(@PathVariable("id") Long id) {
+        List<Movie> recommendMovies = movieService.moviesRecommend(id);
+
+        List<SimpleMovieDto> result = recommendMovies.stream()
+                .map(m -> new SimpleMovieDto(m))
+                .collect(toList());
+        return result;
+    }
 
     /**
      * 장르별 영화가져오기

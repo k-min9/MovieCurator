@@ -310,8 +310,7 @@ export default new Vuex.Store({
     getMovie({commit}, tokenId) {
       axios({
         method: 'GET',
-        //url: `${SERVER_URL}movies/${tokenId.id}/`,
-        //route: SERVER.ROUTES.movies.movieDetail + String(tokenId.id),
+        //url: URL + '/movies/${tokenId.id}/',
         url: SERVER.URL + SERVER.ROUTES.movies.movieDetail + String(tokenId.id) + '/',
         headers: tokenId.token,
       })
@@ -336,7 +335,7 @@ export default new Vuex.Store({
     getMoviesRecommend({commit}, tokenId) {
       axios({
         method: 'GET',
-        //url: `${SERVER_URL}movies/${tokenId.id}/recommend/`,
+        //url: URL + '/movies/${tokenId.id}/recommend/',
         url: SERVER.URL + '/movies/' + String(tokenId.id) + SERVER.ROUTES.movies.movieRecommend,
         headers: tokenId.token,
       })

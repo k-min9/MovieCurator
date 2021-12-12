@@ -27,12 +27,12 @@ export default {
     MovieDetailRecommend,
     MovieDetailArticleForm,
   },
-  data: function () {
-    return {
-      // 현재, 직접 사용은 안함
-      id : this.$route.params.id,
-    }
-  },
+  // data: function () {
+  //   return {
+  //     // 현재, 직접 사용은 안함
+  //     id : this.$route.params.id,
+  //   }
+  // },
   methods: {
     setToken() {
       const token = localStorage.getItem('jwt')
