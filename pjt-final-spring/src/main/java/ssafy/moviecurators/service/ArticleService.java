@@ -58,6 +58,8 @@ public class ArticleService {
 
     }
 
-
-
+    @Transactional
+    public void articleDetailDelete(Long movieId, Long userId) {
+        articleRepository.delete(articleRepository.articleDetail(movieId, userId));
+    }
 }

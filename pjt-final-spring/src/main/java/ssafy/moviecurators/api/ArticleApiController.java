@@ -1,6 +1,8 @@
 package ssafy.moviecurators.api;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ssafy.moviecurators.domain.accounts.User;
@@ -43,6 +45,7 @@ public class ArticleApiController {
      * get : 가져오기
      * post : 평가 작성
      * put : 평가 수정
+     * delete : 평가 삭제
      * */
     @GetMapping("/movies/{movieId}/articles/")
     public ArticleDto articleDetail(@PathVariable("movieId") Long movieId, HttpServletRequest request) {
@@ -76,6 +79,17 @@ public class ArticleApiController {
         Long userId = jwtTokenProvider.getUserIdFromJwt(token);
 
         return new SimpleArticleDto(articleService.articleDetailPut(articleChange, movieId, userId));
+    }
+
+    @DeleteMapping("/movies/{movieId}/articles/")
+    public ResponseEntity<Long> articleDetailDelete(@PathVariable("movieId") Long movieId, HttpServletRequest request) {
+
+        String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
+        Long userId = jwtTokenProvider.getUserIdFromJwt(token);
+
+        articleService.articleDetailDelete(movieId, userId);
+
+        return new ResponseEntity<>(movieId, HttpStatus.OK);
     }
 
     /**
