@@ -9,6 +9,7 @@ import ssafy.moviecurators.repository.ArticleRepository;
 import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)  // 기본적으로 트랜잭션 안에서만 데이터 변경하게 설정(그만큼 최적화 되어 읽는게 빨라짐)
@@ -27,5 +28,9 @@ public class ArticleService {
 
     public List<Article> articleList(Long id) {
         return articleRepository.articleList(id);
+    }
+
+    public Article articleDetail(Long movieId, int userId) {
+        return articleRepository.articleDetail(movieId, userId);
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ssafy.moviecurators.config.auth.JwtTokenProvider;
+import ssafy.moviecurators.service.JwtTokenProvider;
 import ssafy.moviecurators.domain.accounts.User;
 import ssafy.moviecurators.dto.UserProfileDto;
 import ssafy.moviecurators.repository.UserRepository;
@@ -68,7 +68,7 @@ public class UserApiController {
         if (!passwordEncoder.matches(user.get("password"), member.getPassword())) {
             throw new IllegalArgumentException("잘못된 비밀번호입니다.");
         }
-        String token = jwtTokenProvider.createToken(member.getUsername());
+        String token = jwtTokenProvider.createToken(member.getUsername(), member.getId());
 
         return ResponseEntity.ok(new LoginUserResponse(token));
     }
