@@ -48,6 +48,8 @@ class Article(models.Model):
 
 # 댓글
 class Comment(models.Model):
+    #id = models.BigAutoField(primary_key=True)
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='comments')
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='comments')
     content = models.TextField(max_length=50)

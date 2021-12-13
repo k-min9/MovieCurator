@@ -51,7 +51,7 @@ def movie_recommend(request, movie_pk):
 @permission_classes([AllowAny])
 def home(request):
     # 선정 알고리즘은 동봉된 01.ML_recommend.py와 기술서 참조
-    movies = Movie.objects.filter(pk__in=[588228, 508943, 438631, 566525, 436969, 550988, 522402, 497698, 451048, 459151, 370172, 482373])
+    movies = Movie.objects.filter(pk__in=[588228, 508943, 438631,  436969, 566525, 550988, 522402, 497698, 451048, 370172, 459151, 482373])
     # 만약을 위한 대비코드
     # movies = Movie.objects.order_by('-popularity')[:12]
 

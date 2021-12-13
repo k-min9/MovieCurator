@@ -11,7 +11,7 @@ public class SimpleCommentDto {
 
     private Long id;
     private String content;
-    private String thanksContent;
+    private String thanks_content;
     private Integer mileage;
     private OffsetDateTime created_at;
     private OffsetDateTime updated_at;
@@ -19,7 +19,7 @@ public class SimpleCommentDto {
     public SimpleCommentDto(Comment comment) {
         this.id = comment.getId();
         this.content = comment.getContent();
-        this.thanksContent = comment.getThanksContent();
+        this.thanks_content = comment.getThanksContent();
         this.mileage = comment.getMileage();
         this.created_at = comment.getCreated();
         this.updated_at = comment.getUpdated();

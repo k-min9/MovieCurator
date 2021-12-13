@@ -55,7 +55,6 @@ public class ArticleService {
         article.setContent(articleChange.getContent());
         article.setRate(articleChange.getRate());
         return article;
-
     }
 
     @Transactional

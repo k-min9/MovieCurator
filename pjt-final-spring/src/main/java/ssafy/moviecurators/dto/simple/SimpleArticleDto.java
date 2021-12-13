@@ -18,7 +18,7 @@ public class SimpleArticleDto {
 
     public SimpleArticleDto(Article article) {
         this.id = article.getId();
-        this.rate = getRate();
+        this.rate = article.getRate();
         this.title = article.getTitle();
         this.content = article.getContent();
         this.points = article.getPoints();

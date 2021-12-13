@@ -23,8 +23,7 @@ public class MovieService {
 
     //home 용 영화 조회 12편, 선정 알고리즘은 동봉된 01.ML_recommend.py와 기술서 참조
     public List<Movie> homeMovie() {
-        List<Long> homeMovies = Arrays.asList(588228L, 508943L, 438631L, 566525L, 436969L, 550988L, 522402L, 497698L, 451048L, 459151L, 370172L, 482373L);
-        log.info("음? : " + homeMovies);
+        List<Long> homeMovies = Arrays.asList(588228L, 508943L, 438631L, 436969L, 566525L, 550988L, 522402L, 497698L, 451048L, 370172L, 459151L, 482373L);
         return movieRepository.findByIds(homeMovies);
     }
 
