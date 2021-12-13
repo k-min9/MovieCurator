@@ -1,12 +1,11 @@
 <template>
   <div>
-    <div class="movie-item col-mb-6">
+    <div class="col-mb-6 movie-item">
       <router-link :to="{ name: 'MovieDetail', params: { id: this.movie.id }}" >
         <v-img id="poster" :src="imgSrc2" alt="영화 백드롭"></v-img>
         <figcaption>
           <span>{{this.movie.title}}</span>
         </figcaption>
-
       </router-link>
     </div>
   </div>

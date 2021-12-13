@@ -6,8 +6,7 @@
   <movie-detail-info :movie="movie"></movie-detail-info>
   <movie-detail-recommend :movie="movie"></movie-detail-recommend>
   <movie-detail-article-form :movie="movie"></movie-detail-article-form>
-
-  <div class="col-md-6 mb-4">
+  <div>
     <img :src="imgSrc2" class="backdrop-bg img-fluid d-none d-md-block" alt="메인 포스터"><!--:style="{ width: windowWidth }">-->
   </div>
 

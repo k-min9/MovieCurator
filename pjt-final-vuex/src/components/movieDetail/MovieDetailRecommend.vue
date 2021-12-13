@@ -5,7 +5,7 @@
         <h2>이 영화를 좋아하신다면... (빅데이터 기반 영화 추천)</h2>
       </div>
         
-      <div class="movie-detail-recommend-list row-cols-1 row-cols-md-4 gy-3">
+      <div class="movie-detail-recommend-list row row-cols-2 row-cols-md-5 gy-3">
         <MovieDetailRecommendCard 
           id="poster"
           v-for="(movie, idx) in moviesRecommend"
@@ -74,9 +74,9 @@ export default {
 }
 
 .movie-detail-recommend-list {
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  padding-bottom: 2rem;
+  padding-bottom: 2rem; */
   box-sizing: border-box;
   height: 100%;
   padding: 0% 7%;
