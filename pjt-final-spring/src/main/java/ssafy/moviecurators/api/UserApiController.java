@@ -8,12 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ssafy.moviecurators.dto.simple.SimpleUserDto;
 import ssafy.moviecurators.service.JwtTokenProvider;
 import ssafy.moviecurators.domain.accounts.User;
 import ssafy.moviecurators.dto.UserProfileDto;
 import ssafy.moviecurators.repository.UserRepository;
 import ssafy.moviecurators.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @RestController
@@ -89,6 +91,35 @@ public class UserApiController {
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저의 정보가 없습니다."));
         return new UserProfileDto(user);
     }
+
+    /**
+     * 마일리지 충전
+     * */
+    @PutMapping("/accounts/mileage/")
+    public SimpleUserDto mileageChange(@RequestBody Map<String, String> obj, HttpServletRequest request) {
+
+        String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
+        Long userId = jwtTokenProvider.getUserIdFromJwt(token);
+
+        Integer mileageChange = Integer.parseInt(obj.get("mileage"));
+
+        return new SimpleUserDto(userService.mileageChange(userId, mileageChange));
+    }
+
+    @PutMapping("/accounts/donate/{userId}/")
+    public void donate(@PathVariable("userId") Long to_userId,
+                       @RequestBody Map<String, String> obj,
+                       HttpServletRequest request) {
+
+        String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
+        Long from_userId = jwtTokenProvider.getUserIdFromJwt(token);
+
+        Integer mileageChange = Integer.parseInt(obj.get("mileage"));
+
+        userService.donate(to_userId, from_userId, mileageChange);
+    }
+
+
 
 
 }

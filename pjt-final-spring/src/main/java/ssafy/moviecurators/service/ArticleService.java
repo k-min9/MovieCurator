@@ -95,4 +95,10 @@ public class ArticleService {
     public Likes likesGet(Long articleId, Long userId) {
         return likesRepository.likesDetail(articleId, userId);
     }
+
+    @Transactional
+    public void pointChange(Long articleId, Integer mileageChange) {
+        Article article = articleRepository.getById(articleId);
+        article.setPoints(article.getPoints() + mileageChange);
+    }
 }

@@ -64,8 +64,8 @@ public class UserProfileDto {
         this.exp = user.getExp();
 
         // 연결
-        this.followers = user.getTo_user().stream().map(curator -> new SimpleUserDto(curator.getFrom_user())).collect(toList());
-        this.following = user.getFrom_user().stream().map(curator -> new SimpleUserDto(curator.getTo_user())).collect(toList());
+        this.followers = user.getTo_user().stream().map(curator -> new SimpleUserDto(curator.getFromUser())).collect(toList());
+        this.following = user.getFrom_user().stream().map(curator -> new SimpleUserDto(curator.getToUser())).collect(toList());
 
 //        this.articles = articles;
 //        this.comments = comments;

@@ -79,10 +79,10 @@ public class User implements UserDetails {
     private Integer exp = 0;
     
     // 연결
-    @OneToMany(mappedBy = "to_user")
+    @OneToMany(mappedBy = "toUser")
     private List<Curator> to_user = new ArrayList<>();
 
-    @OneToMany(mappedBy = "from_user")
+    @OneToMany(mappedBy = "fromUser")
     private List<Curator> from_user = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")

@@ -221,7 +221,7 @@ export default new Vuex.Store({
       }
       axios({
         method: "PUT",
-        //url: `${SERVER_URL}accounts/mileage/`,
+        //url: URL + `/accounts/mileage/`,
         //route: SERVER.URL.accounts.mileageChange,
         url: SERVER.URL + SERVER.ROUTES.accounts.mileageChange,
         data: credentials,

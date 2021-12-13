@@ -4,8 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ssafy.moviecurators.domain.accounts.Curator;
 import ssafy.moviecurators.domain.accounts.User;
 
+import ssafy.moviecurators.domain.movies.Likes;
+import ssafy.moviecurators.repository.CuratorRepository;
 import ssafy.moviecurators.repository.UserRepository;
 
 import java.util.List;
@@ -18,6 +21,7 @@ public class UserService {
     // 주입 안될경우 컴파일 시점에서 체크하게 final 추가
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final CuratorRepository curatorRepository;
 
     // 회원 가입
     @Transactional
@@ -52,9 +56,32 @@ public class UserService {
     //api용: @Transactional > 트랜잭션 시작 > 찾아서 영속성 컨텍스트에 > 트랜잭션 종료되면서 커밋되고 flush
     @Transactional
     public void update(Long id, String name) {
-        User member = userRepository.findOneById(id);
-        member.setUsername(name);
+        User user = userRepository.findOneById(id);
+        user.setUsername(name);
     }
 
 
+    @Transactional
+    public User mileageChange(Long userId, Integer mileageChange) {
+        User user = userRepository.getById(userId);
+        user.setMileage(user.getMileage() + mileageChange);
+        return user;
+    }
+
+    @Transactional
+    public void donate(Long to_userId, Long from_userId, Integer mileageChange) {
+
+        Curator curator = curatorRepository.findCurator(to_userId, from_userId);
+        // 새로운 후원
+        if (curator == null) {
+            curator = new Curator();
+            curator.setToUser(userRepository.getById(to_userId));
+            curator.setFromUser(userRepository.getById(from_userId));
+            curator.setScore(mileageChange);
+            curatorRepository.save(curator);
+        } else {
+        // 기존 후원자 점수 갱신
+            curator.setScore(curator.getScore() + mileageChange);
+        }
+    }
 }

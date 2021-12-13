@@ -20,6 +20,7 @@ import ssafy.moviecurators.service.ArticleService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.stream.Collectors.toList;
 
@@ -146,9 +147,16 @@ public class ArticleApiController {
         return new ResponseEntity<>(articleId, HttpStatus.OK);
     }
 
+    /**
+     * 평가 포인트 갱신
+     * */
+    @PutMapping("/movies/donate/{articleId}/")
+    public void pointChange(@PathVariable("articleId") Long articleId,
+                           @RequestBody Map<String, String> obj) {
 
+        Integer mileageChange = Integer.parseInt(obj.get("mileage"));
 
-
-
+        articleService.pointChange(articleId, mileageChange);
+    }
 
 }

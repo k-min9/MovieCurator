@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "accounts_curator")  // Django식 네이밍
 @Getter @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor//(access = AccessLevel.PROTECTED)
 public class Curator {
 
     @Id @GeneratedValue
@@ -18,11 +18,11 @@ public class Curator {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="from_user_id")
-    private User from_user;
+    private User fromUser;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="to_user_id")
-    private User to_user;
+    private User toUser;
 
     private Integer score = 0;
 

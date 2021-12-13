@@ -49,8 +49,8 @@ public class CommentApiController {
      * */
     @PostMapping("/movies/{articleId}/comments/")
     public ResponseEntity<Long> commentDetailPost(@PathVariable("articleId") Long articleId,
-                                        @RequestBody Comment comment,
-                                        HttpServletRequest request) {
+                                                @RequestBody Comment comment,
+                                                HttpServletRequest request) {
 
         String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
         Long userId = jwtTokenProvider.getUserIdFromJwt(token);
