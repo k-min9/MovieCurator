@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ssafy.moviecurators.domain.accounts.User;
 import ssafy.moviecurators.domain.movies.Movie;
 import ssafy.moviecurators.dto.simple.SimpleArticleDto;
+import ssafy.moviecurators.dto.simple.SimpleLikesDto;
 import ssafy.moviecurators.dto.simple.SimpleMovieDto;
 import ssafy.moviecurators.repository.ArticleRepository;
 import ssafy.moviecurators.repository.MovieRepository;
@@ -104,6 +105,49 @@ public class ArticleApiController {
                 .collect(toList());
         return result;
     }
+
+    /**
+     * get : 좋아요 여부 확인
+     * post : 좋아요
+     * delete : 좋아요 해제
+     * */
+    @GetMapping("/movies/{articleId}/likes/")
+    public SimpleLikesDto likesGet(@PathVariable("articleId") Long articleId,
+                                   HttpServletRequest request){
+
+        String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
+        Long userId = jwtTokenProvider.getUserIdFromJwt(token);
+
+        return new SimpleLikesDto(articleService.likesGet(articleId, userId));
+    }
+
+
+    @PostMapping("/movies/{articleId}/likes/")
+    public ResponseEntity<Long> likes(@PathVariable("articleId") Long articleId,
+                                      HttpServletRequest request){
+
+        String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
+        Long userId = jwtTokenProvider.getUserIdFromJwt(token);
+
+        articleService.likes(articleId, userId);
+        
+        return new ResponseEntity<>(articleId, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/movies/{articleId}/likes/")
+    public ResponseEntity<Long> likesDelete(@PathVariable("articleId") Long articleId,
+                                      HttpServletRequest request){
+
+        String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
+        Long userId = jwtTokenProvider.getUserIdFromJwt(token);
+
+        articleService.likesDelete(articleId, userId);
+
+        return new ResponseEntity<>(articleId, HttpStatus.OK);
+    }
+
+
+
 
 
 

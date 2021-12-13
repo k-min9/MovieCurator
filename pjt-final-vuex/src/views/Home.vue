@@ -3,6 +3,7 @@
     <home-reference-movie></home-reference-movie>
     <home-reference-curator></home-reference-curator>
     <home-reference-extra></home-reference-extra>
+    <home-footer></home-footer>
   </div>
 </template>
 
@@ -10,6 +11,7 @@
 import HomeReferenceMovie from '@/components/home/HomeReferenceMovie'
 import HomeReferenceCurator from '@/components/home/HomeReferenceCurator'
 import HomeReferenceExtra from '@/components/home/HomeReferenceExtra'
+import HomeFooter from '@/components/home/HomeFooter'
 
 export default {
   name: 'Home',
@@ -17,6 +19,7 @@ export default {
     HomeReferenceMovie,
     HomeReferenceCurator,
     HomeReferenceExtra,
+    HomeFooter,
   },
 
 }

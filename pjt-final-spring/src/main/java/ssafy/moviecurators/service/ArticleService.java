@@ -4,7 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ssafy.moviecurators.domain.movies.Article;
+import ssafy.moviecurators.domain.movies.Likes;
+import ssafy.moviecurators.domain.movies.Movie;
 import ssafy.moviecurators.repository.ArticleRepository;
+import ssafy.moviecurators.repository.LikesRepository;
 import ssafy.moviecurators.repository.MovieRepository;
 import ssafy.moviecurators.repository.UserRepository;
 
@@ -21,6 +24,7 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
     private final MovieRepository movieRepository;
     private final UserRepository userRepository;
+    private final LikesRepository likesRepository;
 
     public List<Article> articleHome() {
         // 1week
@@ -60,5 +64,35 @@ public class ArticleService {
     @Transactional
     public void articleDetailDelete(Long movieId, Long userId) {
         articleRepository.delete(articleRepository.articleDetail(movieId, userId));
+    }
+
+    @Transactional
+    public void likes(Long articleId, Long userId) {
+        Article article = articleRepository.getById(articleId);
+        article.setPoints(article.getPoints() + 1000);
+
+        Movie movie = article.getMovie();
+
+        Likes likes = new Likes();
+        likes.setTitle(movie.getTitle());
+        likes.setBackdrop_path(movie.getBackdrop_path());
+        likes.setArticle(article);
+        likes.setUser(userRepository.getById(userId));
+        likesRepository.save(likes);
+
+
+    }
+
+    @Transactional
+    public void likesDelete(Long articleId, Long userId) {
+        Article article = articleRepository.getById(articleId);
+        article.setPoints(article.getPoints() - 1000);
+
+        Likes likes = likesRepository.likesDetail(articleId, userId);
+        likesRepository.delete(likes);
+    }
+
+    public Likes likesGet(Long articleId, Long userId) {
+        return likesRepository.likesDetail(articleId, userId);
     }
 }

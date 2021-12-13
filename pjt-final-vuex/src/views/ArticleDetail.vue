@@ -679,7 +679,7 @@ export default {
         }
         axios({
           method: 'put',
-          //url: `http://127.0.0.1:8000/movies/${this.articleId}/comments/`,
+          //url: URL + `/movies/${this.articleId}/comments/`,
           url: SERVER.URL + SERVER.ROUTES.movies.home + String(this.articleId) + SERVER.ROUTES.movies.commentDetail,
           headers: this.setToken(),
           data: contents,
@@ -741,7 +741,7 @@ export default {
     addLikes: function () {
       axios({
         method: 'POST',
-        //url: `http://127.0.0.1:8000/movies/${this.articleId}/likes/`,
+        //url: URL + `/movies/${this.articleId}/likes/`,
         url: SERVER.URL + SERVER.ROUTES.movies.home + String(this.articleId) + SERVER.ROUTES.movies.likes,
         headers: this.setToken(),
       })

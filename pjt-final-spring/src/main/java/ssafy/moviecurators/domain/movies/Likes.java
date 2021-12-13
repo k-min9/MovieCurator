@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "movies_likes")  // Django식 네이밍
 @Getter @Setter  // setter 나중에 이동
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor//(access = AccessLevel.PROTECTED)
 public class Likes {
 
     @Id @GeneratedValue
