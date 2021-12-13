@@ -119,6 +119,19 @@ public class UserApiController {
         userService.donate(to_userId, from_userId, mileageChange);
     }
 
+    @PutMapping("/accounts/profile/")
+    public void updateProfile(@RequestBody SimpleUserDto userChange,
+                                HttpServletRequest request) {
+
+        String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
+        Long userId = jwtTokenProvider.getUserIdFromJwt(token);
+
+        System.out.println("userChange = " + userChange);
+        System.out.println("userChange = " + userChange.getUsername());
+        System.out.println("userChange = " + userChange.getNickname());
+        System.out.println("userChange = " + userChange.getImage());
+    }
+
 
 
 

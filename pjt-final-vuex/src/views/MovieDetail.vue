@@ -1,7 +1,6 @@
 <template>
 <div class="movieDetailMain">
   <span class="movieDetailMainTitle">
-    <h1>{{movie.title}}</h1>
   </span>
   <movie-detail-info :movie="movie"></movie-detail-info>
   <movie-detail-recommend :movie="movie"></movie-detail-recommend>

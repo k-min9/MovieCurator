@@ -96,7 +96,6 @@ export default {
   background: radial-gradient( closest-corner at 50% 70%, #111115, #16151A, #26272F );    
   background-size: cover;
   min-height: 100vh;
-  padding-top: 70px;
   padding-bottom: 60px;
 }
 

@@ -1,8 +1,8 @@
 <template>
-  <nav class = "navbar fixed-top navbar-expand-lg">
+  <nav class = "navbar navbar-expand-lg">
     <div class = "container-fluid">
       <router-link class="navbar-brand" :to="{ name: 'Home'}">
-        <img id="navbar-logo" src="@/assets/images/real_bg.png" alt="movie_curators_logo">
+        <img id="navbar-logo" src="@/assets/images/MOVIECURATORS_LOGO_White.png" alt="movie_curators_logo">
       </router-link>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <button type="button" class="toggler-btn btn btn-outline-light">MENU</button>
@@ -84,6 +84,7 @@ export default {
 <style scoped>
 
 .navbar {
+  position: sticky;
   background: linear-gradient(to bottom, black, rgb(27, 26, 26));  
   padding: 0px;
   top: 0;

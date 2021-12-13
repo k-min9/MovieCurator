@@ -3,7 +3,7 @@
   <div v-if="isLogin || isSocialLogin" id="curator-search" @keyup.enter="searchCurators">
       <input id="curator-search-bar" class="form-control" type="text" v-model="searchKeyword" placeholder="유저 ID 또는 닉네임으로 검색하세요" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
     <div class="curator-info">  
-      <br><h3>Movie Curator이란?</h3><br>
+      <br><h3>Movie Curator란?</h3><br>
       <h5>
         Movie Curator은 영화를 추천해 다른 사용자들이 흥미로운 영화를 찾을 수 있도록 돕는 개인 또는 단체입니다.<br>
         유저들은 Curator의 평가에 [<i class="fas fa-thumbs-up mx-1"></i> 좋아요]나 [<i class="fas fa-bullhorn mx-1"></i> 후원하기]로 Curator들의 평가를 지원할 수 있고, 누구나 Curator가 될 수 있습니다.
@@ -118,7 +118,7 @@ export default {
   background: radial-gradient( closest-corner at 50% 70%, #111115, #16151A, #26272F );    
   background-size: cover;
   min-height: 100vh;
-  padding-top: 70px;
+  
   padding-bottom: 60px;
 
   color: white;

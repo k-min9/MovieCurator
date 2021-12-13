@@ -96,7 +96,7 @@ export default {
 }
 
 #movieListSelectBar {
-  padding-top: 80px;
+  padding-top: 50px;
   background-size: cover;
   color:white;
   margin-bottom: 25px;

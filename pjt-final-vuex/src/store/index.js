@@ -200,6 +200,8 @@ export default new Vuex.Store({
         headers: getters.token,
       })
       .then((res) => {
+        console.log('UpdateProfile')
+        console.log(res.data)
         // 대상 포함 여부
         const nickname = res.data.nickname
         const introduction = res.data.introduction
@@ -210,6 +212,7 @@ export default new Vuex.Store({
         } else {
           image = state.image
         }
+        console.log(image)
         commit("GET_MY_PROFILE", { nickname, introduction, image })
       })
       .catch((err) => {console.log(err.response.data.error)})

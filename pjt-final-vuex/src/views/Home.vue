@@ -31,6 +31,7 @@ export default {
   background-size: cover;
   min-height: 100vh;
   padding: 0% 12%;
-  padding-top: 105px;
+  padding-top: 75px;
+
 }
 </style>
