@@ -13,4 +13,10 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     @Query("select c from Comment c join fetch c.article a where a.id = :articleId order by c.mileage desc, c.id desc")
     List<Comment> commentList(@Param("articleId") Long id);
 
+    // 신청자의 댓글
+    @Query("select c from Comment c " +
+            "join fetch c.article a " +
+            "join fetch c.user u " +
+            "where a.id = :articleId and u.id = :userId")
+    Comment commentDetail(@Param("articleId") Long articleId, @Param("userId") Long userId);
 }

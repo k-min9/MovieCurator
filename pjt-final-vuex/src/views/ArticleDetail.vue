@@ -635,7 +635,7 @@ export default {
         }
         axios({
           method: 'post',
-          //url: `http://127.0.0.1:8000/movies/${this.articleId}/comments/`,
+          //url: URL + `/movies/${this.articleId}/comments/`,
           url: SERVER.URL + SERVER.ROUTES.movies.home + String(this.articleId) + SERVER.ROUTES.movies.commentDetail,
           headers: this.setToken(),
           data: contents,
@@ -715,7 +715,7 @@ export default {
       }
       axios({
           method: 'DELETE',
-          //url: `http://127.0.0.1:8000/movies/${this.articleId}/comments/`,
+          //url: URL + `/movies/${this.articleId}/comments/`,
           url: SERVER.URL + SERVER.ROUTES.movies.home + String(this.articleId) + SERVER.ROUTES.movies.commentDetail,
           headers: this.setToken(),
           data: contents,

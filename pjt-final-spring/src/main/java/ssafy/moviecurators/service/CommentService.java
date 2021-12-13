@@ -3,8 +3,11 @@ package ssafy.moviecurators.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ssafy.moviecurators.domain.movies.Article;
 import ssafy.moviecurators.domain.movies.Comment;
+import ssafy.moviecurators.repository.ArticleRepository;
 import ssafy.moviecurators.repository.CommentRepository;
+import ssafy.moviecurators.repository.UserRepository;
 
 import java.util.List;
 
@@ -14,8 +17,29 @@ import java.util.List;
 public class CommentService {
 
     private final CommentRepository commentRepository;
+    private final ArticleRepository articleRepository;
+    private final UserRepository userRepository;
 
     public List<Comment> commentList(Long id) {
         return commentRepository.commentList(id);
+    }
+
+    @Transactional
+    public void commentDetailPost(Comment comment, Long articleId, Long userId) {
+
+        comment.setArticle(articleRepository.getById(articleId));
+        comment.setUser(userRepository.getById(userId));
+        commentRepository.save(comment);
+    }
+
+    @Transactional
+    public void commentDetailPut(Long commentId, String newContent) {
+        Comment comment = commentRepository.getById(commentId);
+        comment.setContent(newContent);
+    }
+
+    @Transactional
+    public void commentDetailDelete(Long commentId) {
+        commentRepository.delete(commentRepository.getById(commentId));
     }
 }
