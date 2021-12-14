@@ -79,7 +79,7 @@ export default {
   padding-bottom: 2rem; */
   box-sizing: border-box;
   height: 100%;
-  padding: 0% 7%;
+  /* padding: 0% 0%; */
 }
 
 
