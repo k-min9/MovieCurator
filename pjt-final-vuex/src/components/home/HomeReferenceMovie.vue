@@ -13,14 +13,16 @@
           <v-carousel-item v-for="(movie,i) in movies" :key="i" >
             <div>
               <img class="bg-img" :src="`https://image.tmdb.org/t/p/original${movie.backdrop_path}`" alt="..." @click="goToDetail(movie.id)">
-              <p id="movie-title">
-                dsadasdsa
-              </p>
             </div>
+            <div id="movie-title">
+              {{ movie.title }}
+            </div>
+            
         </v-carousel-item>
       </v-carousel>
+      
     </v-app>
-
+      
   </div>
 </template>
   
@@ -76,6 +78,7 @@ h2 {
 }
 
 .bg-img{
+  position: relative;
   height: 430px;
   width: 100%;
 }
@@ -100,7 +103,10 @@ v-carousel > button {
 }
 
 #movie-title {
+  position: absolute;
   color: white;
+  top:40px;
+  left:80px;
 }
 
 </style>

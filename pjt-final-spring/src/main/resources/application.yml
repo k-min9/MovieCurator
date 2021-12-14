@@ -37,3 +37,6 @@ logging.level:
 
 jwt:
   secret: 1@*ft7m1e*47b4yzlppbx5=hmvy86!#f-4v$3g6wrotraqes64  # 나중에 교체하고 gitgnore한다는 전제하에 진행
+
+file:
+  dir:
