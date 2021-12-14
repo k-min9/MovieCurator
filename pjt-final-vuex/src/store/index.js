@@ -208,7 +208,8 @@ export default new Vuex.Store({
         var image = ''
         if (res.data.image) {
           //image = 'http://127.0.0.1:8000' + res.data.image   
-          image = SERVER.URL + res.data.image         
+          image = SERVER.URL + res.data.image         // drf
+          //image = state.image // 스프링
         } else {
           image = state.image
         }

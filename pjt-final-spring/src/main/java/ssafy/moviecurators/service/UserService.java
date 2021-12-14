@@ -84,4 +84,15 @@ public class UserService {
             curator.setScore(curator.getScore() + mileageChange);
         }
     }
+
+    @Transactional
+    public User updateProfile(Long userId, String nickname, String introduction, String image) {
+
+        User user = userRepository.getById(userId);
+        user.setNickname(nickname);
+        user.setIntroduction(introduction);
+        user.setImage(image);
+
+        return user;
+    }
 }
