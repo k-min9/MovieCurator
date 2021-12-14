@@ -4,11 +4,25 @@
        
         <v-carousel 
           class="home-reference-movie-img"
+          cycle
+          height="430"
           hide-delimiter-background
           show-arrows-on-hover
-          height="430"
-          cycle
           >
+          <template v-slot:prev="{ on, attrs }">
+            <v-btn
+              id="carousel-btn"
+              v-bind="attrs"
+              v-on="on"
+            >prev</v-btn>
+          </template>
+          <template v-slot:next="{ on, attrs }">
+            <v-btn
+              id="carousel-btn"
+              v-bind="attrs"
+              v-on="on"
+            >next</v-btn>
+          </template>
 
           <v-carousel-item v-for="(movie,i) in movies" :key="i" >
             <div>
@@ -98,7 +112,6 @@ v-carousel > button {
 .home-reference-movie-img:hover {
   cursor: pointer;
   border-radius: 4px;
-
   border: 2px solid white;
 }
 
@@ -116,6 +129,13 @@ v-carousel > button {
   padding-bottom: 0px;
   text-align: center;
   vertical-align: middle;
+}
+
+#carousel-btn{
+  color: white;
+  background-color: transparent;
+  border-radius: 100%;
+  
 }
 
 </style>
