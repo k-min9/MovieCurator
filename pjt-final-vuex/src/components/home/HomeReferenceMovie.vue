@@ -13,6 +13,9 @@
           <v-carousel-item v-for="(movie,i) in movies" :key="i" >
             <div>
               <img class="bg-img" :src="`https://image.tmdb.org/t/p/original${movie.backdrop_path}`" alt="..." @click="goToDetail(movie.id)">
+              <p id="movie-title">
+                dsadasdsa
+              </p>
             </div>
         </v-carousel-item>
       </v-carousel>
@@ -94,6 +97,10 @@ v-carousel > button {
   border-radius: 4px;
 
   border: 2px solid white;
+}
+
+#movie-title {
+  color: white;
 }
 
 </style>
