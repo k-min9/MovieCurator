@@ -126,11 +126,13 @@ export default {
     getLikes: function () {
       axios({
         method: 'GET',
-        //url: 'http://127.0.0.1:8000/movies/likes/',
+        //url: URL + '/movies/likes/',
         url: SERVER.URL + SERVER.ROUTES.movies.likesList,
         headers: this.setToken()
       })
       .then((res)=>{
+        console.log('getLikes')
+        console.log(res.data)
         this.Likes = res.data 
       }) 
     },

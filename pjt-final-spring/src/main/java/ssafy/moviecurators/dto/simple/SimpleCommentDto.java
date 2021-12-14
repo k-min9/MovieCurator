@@ -3,7 +3,6 @@ package ssafy.moviecurators.dto.simple;
 import lombok.Data;
 import ssafy.moviecurators.domain.movies.Comment;
 
-import javax.persistence.*;
 import java.time.OffsetDateTime;
 
 @Data

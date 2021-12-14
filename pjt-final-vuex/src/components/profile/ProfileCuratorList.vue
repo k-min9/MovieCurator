@@ -45,11 +45,13 @@ export default {
     getCurators: function () {
       axios({
         method: 'GET',
-        //url: 'http://127.0.0.1:8000/accounts/curators/likes/',
+        //url: URL + '/accounts/curators/likes/',
         url: SERVER.URL + SERVER.ROUTES.accounts.likesListCurator,
         headers: this.setToken()
       })
       .then((res)=>{
+        console.log('getCurators')
+        console.log(res.data)
         this.curators = res.data 
       }) 
     },

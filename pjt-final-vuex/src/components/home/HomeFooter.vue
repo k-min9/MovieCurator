@@ -52,7 +52,7 @@
         </div><!-- Row end -->
       </div><!-- Container end -->
     </div><!-- Footer main end -->
-    <div class="small text-center text-muted fst-italic">
+    <div id="copyright" class="small text-center text-muted fst-italic">
       Copyright &copy; Movie Curators 2021
     </div>
   </div>
@@ -119,5 +119,9 @@ export default {
   text-align: center;
 }
 
+#copyright{
+  background-color: black;
+  width: 100%;
+}
 
 </style>

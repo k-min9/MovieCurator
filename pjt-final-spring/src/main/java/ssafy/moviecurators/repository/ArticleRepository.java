@@ -3,6 +3,7 @@ package ssafy.moviecurators.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import ssafy.moviecurators.domain.accounts.User;
 import ssafy.moviecurators.domain.movies.Article;
 
 import java.time.OffsetDateTime;
@@ -27,4 +28,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
             "join fetch a.user u " +
             "where m.id = :movieId and u.id = :userId")
     Article articleDetail(@Param("movieId") Long movieId, @Param("userId") Long userId);
+
+    // 특정 유저가 적은 모든 평가들
+    List<Article> findByUserOrderByIdDesc(User byId);
 }

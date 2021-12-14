@@ -30,8 +30,7 @@ export default {
   background: radial-gradient( closest-corner at 50% 70%, #111115, #16151A, #26272F );    
   background-size: cover;
   min-height: 100vh;
-  padding: 0% 12%;
+  padding: 0% 8%;
   padding-top: 75px;
-
 }
 </style>

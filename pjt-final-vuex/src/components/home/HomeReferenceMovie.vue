@@ -79,7 +79,7 @@ h2 {
 
 .bg-img{
   position: relative;
-  height: 430px;
+  height: 450px;
   width: 100%;
 }
 
@@ -106,7 +106,16 @@ v-carousel > button {
   position: absolute;
   color: white;
   top:40px;
-  left:80px;
+  left:40px;
+  font-size: 1.7rem;
+  font-family: 'Black Han Sans', sans-serif;
+  background-color: rgb(187, 176, 176);
+  border-radius: 4px;
+  padding: 3px;
+  line-height: 110%;
+  padding-bottom: 0px;
+  text-align: center;
+  vertical-align: middle;
 }
 
 </style>

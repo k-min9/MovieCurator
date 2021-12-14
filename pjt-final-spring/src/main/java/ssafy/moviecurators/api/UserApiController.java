@@ -11,7 +11,14 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ssafy.moviecurators.domain.accounts.Curator;
+import ssafy.moviecurators.domain.movies.Article;
+import ssafy.moviecurators.domain.movies.Movie;
+import ssafy.moviecurators.dto.ArticleDto;
+import ssafy.moviecurators.dto.CuratorDto;
+import ssafy.moviecurators.dto.MovieDto;
 import ssafy.moviecurators.dto.simple.SimpleUserDto;
+import ssafy.moviecurators.repository.CuratorRepository;
 import ssafy.moviecurators.service.JwtTokenProvider;
 import ssafy.moviecurators.domain.accounts.User;
 import ssafy.moviecurators.dto.UserProfileDto;
@@ -26,7 +33,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.Map;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequiredArgsConstructor
@@ -37,7 +47,7 @@ public class UserApiController {
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
 
-    // application.yml 차후 수정 필요
+    // application.yml 차후 수정 필요... 안 쓰는 듯?
     @Value("${file.dir}")
     private String fileDir;
 
@@ -188,5 +198,45 @@ public class UserApiController {
 //
 //        return new SimpleUserDto(userService.updateProfile2(userId, nickname, introduction, image));
 //    }
-    
+
+    /**
+     * 신청자가 후원한 큐레이터들 가져오기
+     * */
+    @GetMapping("/accounts/curators/likes/")
+    public List<CuratorDto> likesListCurator(HttpServletRequest request) {
+
+        String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
+        Long from_userId = jwtTokenProvider.getUserIdFromJwt(token);
+
+        List<Curator> curators = userService.likesListCurator(from_userId);
+
+        List<CuratorDto> result = curators.stream()
+                .map(curator -> new CuratorDto(curator))
+                .collect(toList());
+        return result;
+    }
+
+    /**
+     * 유저 검색
+     **/
+    @GetMapping("/accounts/search/")
+    public List<SimpleUserDto> curatorSearch(HttpServletRequest request) {
+        String searchKeyword = request.getParameter("searchKeyword");
+        List<User> users = userService.curatorSearch(searchKeyword);
+
+        List<SimpleUserDto> result = users.stream()
+                .map(user -> new SimpleUserDto(user))
+                .collect(toList());
+
+        return result;
+    }
+
+    @GetMapping("/accounts/curators/{userId}/")
+    public SimpleUserDto getCurator(@PathVariable("userId") Long id) {
+        User user = userRepository.getById(id);
+
+        return new SimpleUserDto(user);
+    }
+
+
 }

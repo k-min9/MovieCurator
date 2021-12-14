@@ -1,25 +1,11 @@
 package ssafy.moviecurators.dto;
 
-import lombok.Builder;
 import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import ssafy.moviecurators.domain.accounts.Curator;
 import ssafy.moviecurators.domain.accounts.User;
-import ssafy.moviecurators.domain.movies.Article;
-import ssafy.moviecurators.domain.movies.Comment;
-import ssafy.moviecurators.domain.movies.Likes;
 import ssafy.moviecurators.dto.simple.SimpleUserDto;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Null;
-import javax.validation.constraints.Size;
-import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 import static java.util.stream.Collectors.toList;
 
@@ -46,13 +32,14 @@ public class UserProfileDto {
     // 연결
     private List<SimpleUserDto> followers;  // Curator to_user
     private List<SimpleUserDto> following;  // Curator from_user
-//    private List<Article> articles;
-//    private List<Comment> comments;
+//    private List<SimpleArticleDto> articles;
+//    private List<SimpleCommentDto> comments;
 //    private List<Likes> likes;
 
     // 추가
-    private Integer comments_count;
     private Integer articles_count;
+    private Integer comments_count;
+
 
     public UserProfileDto(User user) {
         this.id = user.getId();
@@ -67,12 +54,12 @@ public class UserProfileDto {
         this.followers = user.getTo_user().stream().map(curator -> new SimpleUserDto(curator.getFromUser())).collect(toList());
         this.following = user.getFrom_user().stream().map(curator -> new SimpleUserDto(curator.getToUser())).collect(toList());
 
-//        this.articles = articles;
-//        this.comments = comments;
+//        this.articles = user.getArticles().stream().map(article -> new SimpleArticleDto(article)).collect(Collectors.toList());
+//        this.comments = user.getComments().stream().map(comment -> new SimpleCommentDto(comment)).collect(Collectors.toList());
 //        this.likes = likes;
 
         // 추가
-        this.comments_count = 456;
-        this.articles_count = 123;
+        this.articles_count = user.getArticles().size();
+        this.comments_count = user.getComments().size();
     }
 }

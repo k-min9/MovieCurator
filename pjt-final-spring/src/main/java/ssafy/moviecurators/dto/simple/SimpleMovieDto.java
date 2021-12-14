@@ -1,13 +1,8 @@
 package ssafy.moviecurators.dto.simple;
 
 import lombok.Data;
-import org.hibernate.annotations.Type;
 import ssafy.moviecurators.domain.movies.Movie;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.validation.constraints.Size;
 import java.sql.Date;
 import java.util.List;
 

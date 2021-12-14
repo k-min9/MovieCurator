@@ -5,8 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ssafy.moviecurators.domain.movies.Likes;
 import ssafy.moviecurators.domain.movies.Movie;
+import ssafy.moviecurators.repository.LikesRepository;
 import ssafy.moviecurators.repository.MovieRepository;
+import ssafy.moviecurators.repository.UserRepository;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,6 +23,8 @@ import static java.util.stream.Collectors.toList;
 public class MovieService {
 
     private final MovieRepository movieRepository;
+    private final LikesRepository likesRepository;
+    private final UserRepository userRepository;
 
     //home 용 영화 조회 12편, 선정 알고리즘은 동봉된 01.ML_recommend.py와 기술서 참조
     public List<Movie> homeMovie() {
@@ -49,5 +54,11 @@ public class MovieService {
                 .stream().mapToLong(Integer::longValue).boxed().collect(toList());
 
         return movieRepository.findByIds(recommendIds);
+    }
+
+    public List<Likes> likesList(Long from_userId) {
+        return likesRepository.findTop12ByUserOrderByIdDesc(userRepository.getById(from_userId));
+
+
     }
 }

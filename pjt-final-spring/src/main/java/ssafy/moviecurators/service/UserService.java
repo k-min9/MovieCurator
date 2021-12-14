@@ -8,6 +8,7 @@ import ssafy.moviecurators.domain.accounts.Curator;
 import ssafy.moviecurators.domain.accounts.User;
 
 import ssafy.moviecurators.domain.movies.Likes;
+import ssafy.moviecurators.domain.movies.Movie;
 import ssafy.moviecurators.repository.CuratorRepository;
 import ssafy.moviecurators.repository.UserRepository;
 
@@ -94,5 +95,13 @@ public class UserService {
         user.setImage(image);
 
         return user;
+    }
+
+    public List<Curator> likesListCurator(Long from_userId) {
+        return curatorRepository.findTop6ByFromUserOrderByScoreDesc(userRepository.getById(from_userId));
+    }
+
+    public List<User> curatorSearch(String searchKeyword) {
+        return userRepository.findTop6ByNicknameContainingOrUsernameContainingIgnoreCase(searchKeyword, searchKeyword);
     }
 }

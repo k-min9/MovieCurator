@@ -8,15 +8,11 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    //public void save(User user);
-
     User findOneById(Long id);
-
-    //List<User> findAll();
 
     Optional<User> findOneByUsername(String username);
 
     List<User> findByUsername(String username);
 
-
+    List<User> findTop6ByNicknameContainingOrUsernameContainingIgnoreCase(String searchKeyword, String searchKeyword1);
 }

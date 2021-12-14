@@ -3,6 +3,7 @@ package ssafy.moviecurators.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ssafy.moviecurators.domain.accounts.Curator;
 import ssafy.moviecurators.domain.movies.Article;
 import ssafy.moviecurators.domain.movies.Likes;
 import ssafy.moviecurators.domain.movies.Movie;
@@ -100,5 +101,9 @@ public class ArticleService {
     public void pointChange(Long articleId, Integer mileageChange) {
         Article article = articleRepository.getById(articleId);
         article.setPoints(article.getPoints() + mileageChange);
+    }
+
+    public List<Article> articleCuratorAll(Long id) {
+        return articleRepository.findByUserOrderByIdDesc(userRepository.getById(id));
     }
 }

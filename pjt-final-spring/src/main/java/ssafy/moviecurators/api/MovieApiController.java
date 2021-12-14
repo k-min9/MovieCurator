@@ -8,14 +8,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import ssafy.moviecurators.domain.accounts.Curator;
 import ssafy.moviecurators.domain.accounts.User;
 import ssafy.moviecurators.domain.movies.Article;
+import ssafy.moviecurators.domain.movies.Likes;
 import ssafy.moviecurators.domain.movies.Movie;
-import ssafy.moviecurators.dto.ArticleDto;
-import ssafy.moviecurators.dto.MovieDto;
-import ssafy.moviecurators.dto.UserProfileDto;
+import ssafy.moviecurators.dto.*;
 import ssafy.moviecurators.dto.simple.SimpleMovieDto;
 import ssafy.moviecurators.repository.MovieRepository;
+import ssafy.moviecurators.service.JwtTokenProvider;
 import ssafy.moviecurators.service.MovieService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +32,7 @@ public class MovieApiController {
 
     private final MovieService movieService;
     private final MovieRepository movieRepository;
+    private final JwtTokenProvider jwtTokenProvider;
 
     /**
      * 단일 영화 가져오기
@@ -88,6 +90,24 @@ public class MovieApiController {
 
         List<MovieDto> result = movies.stream()
                 .map(movie -> new MovieDto(movie))
+                .collect(toList());
+
+        return result;
+    }
+
+    /**
+     * 좋아요 한 평가들 가져오기
+     * */
+    @GetMapping("/movies/likes/")
+    public List<LikesDto> likesList(HttpServletRequest request) {
+
+        String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
+        Long userId = jwtTokenProvider.getUserIdFromJwt(token);
+
+        List<Likes> likes = movieService.likesList(userId);
+
+        List<LikesDto> result = likes.stream()
+                .map(like -> new LikesDto(like))
                 .collect(toList());
 
         return result;

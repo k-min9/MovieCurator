@@ -108,6 +108,19 @@ public class ArticleApiController {
     }
 
     /**
+     * 해당 유저가 적은 평가 다 가져오기
+     * */
+    @GetMapping("/movies/{userId}/articles/curators/all/")
+    public List<ArticleDto> articleCuratorAll(@PathVariable("userId") Long id) {
+        List<Article> articles = articleService.articleCuratorAll(id);
+
+        List<ArticleDto> result = articles.stream()
+                .map(a -> new ArticleDto(a))
+                .collect(toList());
+        return result;
+    }
+
+    /**
      * get : 좋아요 여부 확인
      * post : 좋아요
      * delete : 좋아요 해제

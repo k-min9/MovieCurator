@@ -2,7 +2,6 @@ package ssafy.moviecurators.dto;
 
 import lombok.Data;
 import ssafy.moviecurators.domain.movies.Comment;
-import ssafy.moviecurators.dto.simple.SimpleArticleDto;
 import ssafy.moviecurators.dto.simple.SimpleUserDto;
 
 import java.time.OffsetDateTime;

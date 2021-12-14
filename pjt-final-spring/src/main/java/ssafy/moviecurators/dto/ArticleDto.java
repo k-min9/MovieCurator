@@ -1,11 +1,7 @@
 package ssafy.moviecurators.dto;
 
 import lombok.Data;
-import ssafy.moviecurators.domain.accounts.User;
 import ssafy.moviecurators.domain.movies.Article;
-import ssafy.moviecurators.domain.movies.Comment;
-import ssafy.moviecurators.domain.movies.Likes;
-import ssafy.moviecurators.domain.movies.Movie;
 import ssafy.moviecurators.dto.simple.SimpleCommentDto;
 import ssafy.moviecurators.dto.simple.SimpleLikesDto;
 import ssafy.moviecurators.dto.simple.SimpleMovieDto;
@@ -13,7 +9,6 @@ import ssafy.moviecurators.dto.simple.SimpleUserDto;
 
 import java.time.OffsetDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 public class ArticleDto {
