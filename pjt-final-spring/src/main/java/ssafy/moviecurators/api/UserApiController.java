@@ -56,7 +56,7 @@ public class UserApiController {
 
     /**
      * 회원가입 (DTO)
-     *
+     * 토큰 필요 없음
      */
     @PostMapping("/accounts/signup/")
     public ResponseEntity saveMember(@RequestBody @Validated CreateUserRequest request) {
@@ -98,6 +98,7 @@ public class UserApiController {
 
     /**
      * 로그인 ; Request 부분 DTO화 해야함
+     * 토큰 발급
      * */
     @PostMapping("/accounts/api-token-auth/")
     public ResponseEntity<?> login(@RequestBody Map<String, String> user) {
@@ -120,6 +121,11 @@ public class UserApiController {
             this.token = accessToken;
         }
     }
+
+
+    /**
+     * 해당 유저 이름을 가진 유저를 찾는 함수수
+     **/
 
     @GetMapping("/accounts/{username}/get_user_info/")
     public UserProfileDto getUserInfo(@PathVariable("username") String username) {
