@@ -18,7 +18,7 @@
             <h4 class="widget-title mb-4"><span class="bar">|</span> Developers</h4>
             <div class="working-hours">
               <div class="row">
-                  <!-- <div class="team-member col-sm-6">
+                  <div class="team-member col-sm-6">
                     <a href="https://github.com/k-min9">
                       <img id="developer-img" class="mx-auto rounded-circle mb-3" src="@/assets/images/userB.jpg" alt="kangmingu"/>
                       <h5 id="developer-name">KANG MIN GU</h5>
@@ -30,7 +30,7 @@
                       <img id="developer-img" class="mx-auto rounded-circle mb-3" src="@/assets/images/userA.jpg" alt="limgeonho"/>
                       <h5 id="developer-name">LIM GEON HO</h5>
                     </a>
-                  </div>  -->
+                  </div> 
               </div>
             </div>
           </div><!-- Col end -->
@@ -43,9 +43,9 @@
               <li><router-link :to="{ name: 'Curator' }" class="list-item">Curators</router-link></li>
               <li><router-link :to="{ name: 'Search' }" class="list-item">Search Movie</router-link></li>
             </ul>
-            <!-- <div>
+            <div>
               <img id="coffee" class="mx-auto mt-3" src="@/assets/images/buyMeCoffee.png" alt="limgeonho"/>
-            </div> -->
+            </div>
 
           </div><!-- Col end -->
           

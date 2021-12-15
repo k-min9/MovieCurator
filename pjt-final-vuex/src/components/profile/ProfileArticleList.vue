@@ -35,7 +35,11 @@
           <div class="col-md-10">
             <p class="text-primary"></p>
               <!-- 작성자 이름 -->
-              <a class="review-writer float-left" href="#"><strong>{{like.article.user.username}}</strong></a>
+              <router-link :to="{ name: 'CuratorDetail', params: { id: like.article.user.id }}" class="fw-bold">
+              {{like.article.user.username}}
+              </router-link>
+
+
               <div class="review-form-star-box">
 
                 <!-- 별 갯수-->
