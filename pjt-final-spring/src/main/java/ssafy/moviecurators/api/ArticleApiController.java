@@ -1,12 +1,15 @@
 package ssafy.moviecurators.api;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ssafy.moviecurators.domain.accounts.User;
 import ssafy.moviecurators.domain.movies.Movie;
+import ssafy.moviecurators.dto.error.ErrorResponse;
 import ssafy.moviecurators.dto.simple.SimpleArticleDto;
 import ssafy.moviecurators.dto.simple.SimpleLikesDto;
 import ssafy.moviecurators.dto.simple.SimpleMovieDto;
@@ -32,6 +35,8 @@ public class ArticleApiController {
     private final ArticleService articleService;
     private final JwtTokenProvider jwtTokenProvider;
 
+    private final MessageSource messageSource;
+
     /**
      * 평가 상세 페이지 메인 정보
      * */
@@ -45,21 +50,49 @@ public class ArticleApiController {
 
     /**
      * 영화에 사용자가 적은 평가 CRUD
-     * get : 가져오기
+     * get : 내가 적은 평가 가져오기
      * post : 평가 작성
      * put : 평가 수정
      * delete : 평가 삭제
+     * 토큰 필요
      * */
     @GetMapping("/movies/{movieId}/articles/")
-    public ArticleDto articleDetail(@PathVariable("movieId") Long movieId, HttpServletRequest request) {
+    public ResponseEntity articleDetail(@PathVariable("movieId") Long movieId, HttpServletRequest request) {
 
         String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
+        if(!jwtTokenProvider.validateToken(token)) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorResponse(messageSource.getMessage("error.valid.jwt", null, LocaleContextHolder.getLocale())));
+        }
         Long userId = jwtTokenProvider.getUserIdFromJwt(token);
 
         Article article = articleService.articleDetail(movieId, userId);
-        if (article != null) { return new ArticleDto(article);}
-        else {return null;}
+        if (article == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        return ResponseEntity.ok().body(new ArticleDto(article));
     }
+
+
+
+//    @GetMapping("/movies/{movieId}/articles/")
+//    public ArticleDto articleDetail(@PathVariable("movieId") Long movieId, HttpServletRequest request) {
+//
+//        String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
+//        if(!jwtTokenProvider.validateToken(token)) {
+//            return
+//        }
+//
+//
+//
+//        Long userId = jwtTokenProvider.getUserIdFromJwt(token);
+//
+//        Article article = articleService.articleDetail(movieId, userId);
+//        if (article != null) { return new ArticleDto(article);}
+//        else {return null;}
+//    }
 
     @PostMapping("/movies/{movieId}/articles/")
     public ArticleDto articleDetailPost(@PathVariable("movieId") Long movieId,
