@@ -80,7 +80,8 @@ export default {
           swal.fire ({
               icon: 'error',
               title: '가입 실패',
-              text: '가입 실패'//err.response.data.error
+              text: err.response.data.error
+              // text: '가입 실패'
               })      
           })
         }

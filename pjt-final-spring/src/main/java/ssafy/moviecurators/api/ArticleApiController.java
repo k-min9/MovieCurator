@@ -36,10 +36,11 @@ public class ArticleApiController {
      * 평가 상세 페이지 메인 정보
      * */
     @GetMapping("/movies/{articleId}/article/")
-    public ArticleDto getArticle(@PathVariable("articleId") Long articleId, HttpServletRequest request) {
+    public ResponseEntity<ArticleDto> getArticle(@PathVariable("articleId") Long articleId, HttpServletRequest request) {
 
         Article article = articleRepository.getById(articleId);
-        return new ArticleDto(article);
+
+        return ResponseEntity.ok().body(new ArticleDto(article));
     }
 
     /**

@@ -788,6 +788,8 @@ export default {
       headers: this.setToken(),
     })
     .then(res => {
+      console.log('getArticle')
+      console.log(res.data)
       this.movieTitle = res.data.movie.title
       this.articleUserId = res.data.user.id
       this.articleUsername = res.data.user.username

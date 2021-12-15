@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ssafy.moviecurators.domain.accounts.Curator;
 import ssafy.moviecurators.dto.CuratorDto;
+import ssafy.moviecurators.dto.error.ErrorResponse;
 import ssafy.moviecurators.dto.simple.SimpleUserDto;
 import ssafy.moviecurators.service.JwtTokenProvider;
 import ssafy.moviecurators.domain.accounts.User;
@@ -43,6 +47,8 @@ public class UserApiController {
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
 
+    private final MessageSource messageSource;
+
     // application.yml 차후 수정 필요... 안 쓰는 듯?
     @Value("${file.dir}")
     private String fileDir;
@@ -53,15 +59,24 @@ public class UserApiController {
      *
      */
     @PostMapping("/accounts/signup/")
-    public CreateUserResponse saveMember(@RequestBody @Validated CreateUserRequest request) {
+    public ResponseEntity saveMember(@RequestBody @Validated CreateUserRequest request) {
 
         User user = new User();
         user.setUsername(request.getUsername());
         user.setPassword(request.getPassword());
         user.setNickname(request.getNickname());
 
-        Long id = userService.join(user);
-        return new CreateUserResponse(id);
+        try {
+            Long id = userService.join(user);
+            //ResponseEntity<CreateUserResponse>
+            return ResponseEntity.status(HttpStatus.CREATED).body(new CreateUserResponse(id));
+        }
+        catch (IllegalStateException e) {
+            //ResponseEntity<ErrorResponse>
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorResponse(messageSource.getMessage("same.id", null, LocaleContextHolder.getLocale())));
+        }
     }
 
     // DTO는 로직 없으니 @Data 편하게 사용, static 필수
