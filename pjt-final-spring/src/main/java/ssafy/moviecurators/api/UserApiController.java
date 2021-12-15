@@ -35,6 +35,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
@@ -55,41 +56,23 @@ public class UserApiController {
      * 토큰 필요 없음
      */
     @PostMapping("/accounts/signup/")
-    public ResponseEntity signup(@RequestBody @Validated User user) {
+    public ResponseEntity signup(@RequestBody @Validated CreateUserRequest request) {
+
+        User user = new User();
+        user.setUsername(request.getUsername());
+        user.setPassword(request.getPassword());
+        user.setNickname(request.getNickname());
 
         try {
             Long id = userService.join(user);
-            //ResponseEntity<CreateUserResponse>
             return ResponseEntity.status(HttpStatus.CREATED).body(new CreateUserResponse(id));
         }
         catch (IllegalStateException e) {
-            //ResponseEntity<ErrorResponse>
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
                     .body(new ErrorResponse(messageSource.getMessage("error.same.id", null, LocaleContextHolder.getLocale())));
         }
     }
-
-//    @PostMapping("/accounts/signup/")
-//    public ResponseEntity signup(@RequestBody @Validated CreateUserRequest request) {
-//
-//        User user = new User();
-//        user.setUsername(request.getUsername());
-//        user.setPassword(request.getPassword());
-//        user.setNickname(request.getNickname());
-//
-//        try {
-//            Long id = userService.join(user);
-//            //ResponseEntity<CreateUserResponse>
-//            return ResponseEntity.status(HttpStatus.CREATED).body(new CreateUserResponse(id));
-//        }
-//        catch (IllegalStateException e) {
-//            //ResponseEntity<ErrorResponse>
-//            return ResponseEntity
-//                    .status(HttpStatus.BAD_REQUEST)
-//                    .body(new ErrorResponse(messageSource.getMessage("error.same.id", null, LocaleContextHolder.getLocale())));
-//        }
-//    }
 
     // DTO는 로직 없으니 @Data 편하게 사용, static 필수
     @Data
@@ -113,13 +96,18 @@ public class UserApiController {
      * 토큰 발급
      * */
     @PostMapping("/accounts/api-token-auth/")
-    public ResponseEntity<?> login(@RequestBody Map<String, String> user) {
-        User member = userRepository.findOneByUsername(user.get("username"))
-                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이름 입니다."));
-        if (!passwordEncoder.matches(user.get("password"), member.getPassword())) {
-            throw new IllegalArgumentException("잘못된 비밀번호입니다.");
+    public ResponseEntity<?> login(@RequestBody Map<String, String> userInfo) {
+        User user = userRepository.getByUsername(userInfo.get("username"));
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ErrorResponse(messageSource.getMessage("error.none.user", null, LocaleContextHolder.getLocale())));
         }
-        String token = jwtTokenProvider.createToken(member.getUsername(), member.getId());
+
+        if (!passwordEncoder.matches(userInfo.get("password"), user.getPassword())) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ErrorResponse(messageSource.getMessage("error.wrong.password", null, LocaleContextHolder.getLocale())));
+        }
+        String token = jwtTokenProvider.createToken(user.getUsername(), user.getId());
 
         return ResponseEntity.ok(new LoginUserResponse(token));
     }
@@ -140,49 +128,74 @@ public class UserApiController {
      **/
 
     @GetMapping("/accounts/{username}/get_user_info/")
-    public UserProfileDto getUserInfo(@PathVariable("username") String username) {
-        User user = userRepository.findOneByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저의 정보가 없습니다."));
-        return new UserProfileDto(user);
+    public ResponseEntity getUserInfo(@PathVariable("username") String username) {
+        User user = userRepository.getByUsername(username);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ErrorResponse(messageSource.getMessage("error.none.user", null, LocaleContextHolder.getLocale())));
+        }
+
+        return ResponseEntity.ok().body(new UserProfileDto(user));
     }
 
     /**
      * 마일리지 충전
      * */
     @PutMapping("/accounts/mileage/")
-    public SimpleUserDto mileageChange(@RequestBody Map<String, String> obj, HttpServletRequest request) {
+    public ResponseEntity mileageChange(@RequestBody Map<String, String> obj, HttpServletRequest request) {
 
         String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
+        if(!jwtTokenProvider.validateToken(token)) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorResponse(messageSource.getMessage("error.valid.jwt", null, LocaleContextHolder.getLocale())));
+        }
         Long userId = jwtTokenProvider.getUserIdFromJwt(token);
 
         Integer mileageChange = Integer.parseInt(obj.get("mileage"));
 
-        return new SimpleUserDto(userService.mileageChange(userId, mileageChange));
+        return ResponseEntity.ok().body(new SimpleUserDto(userService.mileageChange(userId, mileageChange)));
     }
 
     @PutMapping("/accounts/donate/{userId}/")
-    public void donate(@PathVariable("userId") Long to_userId,
+    public ResponseEntity donate(@PathVariable("userId") Long to_userId,
                        @RequestBody Map<String, String> obj,
                        HttpServletRequest request) {
 
         String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
+        if(!jwtTokenProvider.validateToken(token)) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorResponse(messageSource.getMessage("error.valid.jwt", null, LocaleContextHolder.getLocale())));
+        }
         Long from_userId = jwtTokenProvider.getUserIdFromJwt(token);
 
         Integer mileageChange = Integer.parseInt(obj.get("mileage"));
 
         userService.donate(to_userId, from_userId, mileageChange);
+
+        return ResponseEntity.ok().body(null);
     }
 
     @PutMapping("/accounts/profile/")
-    public SimpleUserDto updateProfile(@RequestPart(value = "image", required = false) MultipartFile file,
+    public ResponseEntity updateProfile(@RequestPart(value = "image", required = false) MultipartFile file,
                               @RequestPart("nickname") String nickname,
                               @RequestPart("introduction") String introduction,
                               HttpServletRequest request) throws IOException {
 
         String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
+        if(!jwtTokenProvider.validateToken(token)) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorResponse(messageSource.getMessage("error.valid.jwt", null, LocaleContextHolder.getLocale())));
+        }
         Long userId = jwtTokenProvider.getUserIdFromJwt(token);
 
         User user = userRepository.getById(userId);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ErrorResponse(messageSource.getMessage("error.none.user", null, LocaleContextHolder.getLocale())));
+        }
 
         // image = "" 에서 기존 이미지 가져오기로 변경
         String image = user.getImage();
@@ -220,7 +233,7 @@ public class UserApiController {
             image = "/media/profile/" + user.getId() + "/" + fileName;
         }
 
-        return new SimpleUserDto(userService.updateProfile(userId, nickname, introduction, image));
+        return ResponseEntity.ok().body(new SimpleUserDto(userService.updateProfile(userId, nickname, introduction, image)));
     }
 
 
@@ -229,9 +242,14 @@ public class UserApiController {
      * 신청자가 후원한 큐레이터들 가져오기
      * */
     @GetMapping("/accounts/curators/likes/")
-    public List<CuratorDto> likesListCurator(HttpServletRequest request) {
+    public ResponseEntity likesListCurator(HttpServletRequest request) {
 
         String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
+        if(!jwtTokenProvider.validateToken(token)) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorResponse(messageSource.getMessage("error.valid.jwt", null, LocaleContextHolder.getLocale())));
+        }
         Long from_userId = jwtTokenProvider.getUserIdFromJwt(token);
 
         List<Curator> curators = userService.likesListCurator(from_userId);
@@ -239,29 +257,37 @@ public class UserApiController {
         List<CuratorDto> result = curators.stream()
                 .map(curator -> new CuratorDto(curator))
                 .collect(toList());
-        return result;
+
+        return ResponseEntity.ok().body(result);
     }
 
     /**
      * 유저 검색
      **/
     @GetMapping("/accounts/search/")
-    public List<SimpleUserDto> curatorSearch(HttpServletRequest request) {
+    public ResponseEntity<List<SimpleUserDto>> curatorSearch(HttpServletRequest request) {
         String searchKeyword = request.getParameter("searchKeyword");
         List<User> users = userService.curatorSearch(searchKeyword);
+        if(users.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
 
         List<SimpleUserDto> result = users.stream()
                 .map(user -> new SimpleUserDto(user))
                 .collect(toList());
 
-        return result;
+        return ResponseEntity.ok().body(result);
     }
 
     @GetMapping("/accounts/curators/{userId}/")
-    public SimpleUserDto getCurator(@PathVariable("userId") Long id) {
+    public ResponseEntity getCurator(@PathVariable("userId") Long id) {
         User user = userRepository.getById(id);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ErrorResponse(messageSource.getMessage("error.none.user", null, LocaleContextHolder.getLocale())));
+        }
 
-        return new SimpleUserDto(user);
+        return ResponseEntity.ok().body(new SimpleUserDto(user));
     }
 
 

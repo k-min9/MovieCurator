@@ -44,24 +44,6 @@ public class UserService {
         }
     }
 
-    //회원 전체 조회
-    public List<User> findMembers() {
-        return userRepository.findAll();
-    }
-
-    //회원 단 건 조회
-    public User findOne(Long memberId) {
-        return userRepository.findOneById(memberId);
-    }
-
-    //api용: @Transactional > 트랜잭션 시작 > 찾아서 영속성 컨텍스트에 > 트랜잭션 종료되면서 커밋되고 flush
-    @Transactional
-    public void update(Long id, String name) {
-        User user = userRepository.findOneById(id);
-        user.setUsername(name);
-    }
-
-
     @Transactional
     public User mileageChange(Long userId, Integer mileageChange) {
         User user = userRepository.getById(userId);
