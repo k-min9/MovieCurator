@@ -44,14 +44,10 @@ public class UserApiController {
 
     private final UserService userService;
     private final UserRepository userRepository;
+
     private final JwtTokenProvider jwtTokenProvider;
-    private final PasswordEncoder passwordEncoder;
-
     private final MessageSource messageSource;
-
-    // application.yml 차후 수정 필요... 안 쓰는 듯?
-    @Value("${file.dir}")
-    private String fileDir;
+    private final PasswordEncoder passwordEncoder;
 
 
     /**
@@ -59,12 +55,7 @@ public class UserApiController {
      * 토큰 필요 없음
      */
     @PostMapping("/accounts/signup/")
-    public ResponseEntity saveMember(@RequestBody @Validated CreateUserRequest request) {
-
-        User user = new User();
-        user.setUsername(request.getUsername());
-        user.setPassword(request.getPassword());
-        user.setNickname(request.getNickname());
+    public ResponseEntity signup(@RequestBody @Validated User user) {
 
         try {
             Long id = userService.join(user);
@@ -78,6 +69,27 @@ public class UserApiController {
                     .body(new ErrorResponse(messageSource.getMessage("error.same.id", null, LocaleContextHolder.getLocale())));
         }
     }
+
+//    @PostMapping("/accounts/signup/")
+//    public ResponseEntity signup(@RequestBody @Validated CreateUserRequest request) {
+//
+//        User user = new User();
+//        user.setUsername(request.getUsername());
+//        user.setPassword(request.getPassword());
+//        user.setNickname(request.getNickname());
+//
+//        try {
+//            Long id = userService.join(user);
+//            //ResponseEntity<CreateUserResponse>
+//            return ResponseEntity.status(HttpStatus.CREATED).body(new CreateUserResponse(id));
+//        }
+//        catch (IllegalStateException e) {
+//            //ResponseEntity<ErrorResponse>
+//            return ResponseEntity
+//                    .status(HttpStatus.BAD_REQUEST)
+//                    .body(new ErrorResponse(messageSource.getMessage("error.same.id", null, LocaleContextHolder.getLocale())));
+//        }
+//    }
 
     // DTO는 로직 없으니 @Data 편하게 사용, static 필수
     @Data

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ssafy.moviecurators.domain.accounts.User;
+import ssafy.moviecurators.domain.movies.Likes;
 import ssafy.moviecurators.domain.movies.Movie;
 import ssafy.moviecurators.dto.error.ErrorResponse;
 import ssafy.moviecurators.dto.simple.SimpleArticleDto;
@@ -33,8 +34,8 @@ public class ArticleApiController {
 
     private final ArticleRepository articleRepository;
     private final ArticleService articleService;
-    private final JwtTokenProvider jwtTokenProvider;
 
+    private final JwtTokenProvider jwtTokenProvider;
     private final MessageSource messageSource;
 
     /**
@@ -44,6 +45,10 @@ public class ArticleApiController {
     public ResponseEntity<ArticleDto> getArticle(@PathVariable("articleId") Long articleId, HttpServletRequest request) {
 
         Article article = articleRepository.getById(articleId);
+
+        if (article == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
 
         return ResponseEntity.ok().body(new ArticleDto(article));
     }
@@ -75,83 +80,87 @@ public class ArticleApiController {
         return ResponseEntity.ok().body(new ArticleDto(article));
     }
 
-
-
-//    @GetMapping("/movies/{movieId}/articles/")
-//    public ArticleDto articleDetail(@PathVariable("movieId") Long movieId, HttpServletRequest request) {
-//
-//        String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
-//        if(!jwtTokenProvider.validateToken(token)) {
-//            return
-//        }
-//
-//
-//
-//        Long userId = jwtTokenProvider.getUserIdFromJwt(token);
-//
-//        Article article = articleService.articleDetail(movieId, userId);
-//        if (article != null) { return new ArticleDto(article);}
-//        else {return null;}
-//    }
-
     @PostMapping("/movies/{movieId}/articles/")
-    public ArticleDto articleDetailPost(@PathVariable("movieId") Long movieId,
+    public ResponseEntity articleDetailPost(@PathVariable("movieId") Long movieId,
                                         @RequestBody Article article,
                                         HttpServletRequest request) {
 
         String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
+        if(!jwtTokenProvider.validateToken(token)) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorResponse(messageSource.getMessage("error.valid.jwt", null, LocaleContextHolder.getLocale())));
+        }
         Long userId = jwtTokenProvider.getUserIdFromJwt(token);
 
         Article articleSaved = articleService.articleDetailPost(article, movieId, userId);
-        return new ArticleDto(articleSaved);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ArticleDto(articleSaved));
     }
 
     @PutMapping("/movies/{movieId}/articles/")
-    public SimpleArticleDto articleDetailPut(@PathVariable("movieId") Long movieId,
+    public ResponseEntity articleDetailPut(@PathVariable("movieId") Long movieId,
                                         @RequestBody Article articleChange,
                                         HttpServletRequest request) {
 
         String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
+        if(!jwtTokenProvider.validateToken(token)) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorResponse(messageSource.getMessage("error.valid.jwt", null, LocaleContextHolder.getLocale())));
+        }
         Long userId = jwtTokenProvider.getUserIdFromJwt(token);
 
-        return new SimpleArticleDto(articleService.articleDetailPut(articleChange, movieId, userId));
+        return ResponseEntity.ok().body(new SimpleArticleDto(articleService.articleDetailPut(articleChange, movieId, userId)));
     }
 
     @DeleteMapping("/movies/{movieId}/articles/")
-    public ResponseEntity<Long> articleDetailDelete(@PathVariable("movieId") Long movieId, HttpServletRequest request) {
+    public ResponseEntity articleDetailDelete(@PathVariable("movieId") Long movieId, HttpServletRequest request) {
 
         String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
+        if(!jwtTokenProvider.validateToken(token)) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorResponse(messageSource.getMessage("error.valid.jwt", null, LocaleContextHolder.getLocale())));
+        }
         Long userId = jwtTokenProvider.getUserIdFromJwt(token);
 
         articleService.articleDetailDelete(movieId, userId);
 
-        return new ResponseEntity<>(movieId, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
     /**
      * 영화에 적힌 평가 다 가져오기
      * */
     @GetMapping("/movies/{movieId}/articles/list/")
-    public List<ArticleDto> articleList(@PathVariable("movieId") Long id) {
+    public ResponseEntity<List<ArticleDto>> articleList(@PathVariable("movieId") Long id) {
         List<Article> articles = articleService.articleList(id);
+        if(articles.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
 
         List<ArticleDto> result = articles.stream()
                 .map(a -> new ArticleDto(a))
                 .collect(toList());
-        return result;
+
+        return ResponseEntity.ok().body(result);
     }
 
     /**
      * 해당 유저가 적은 평가 다 가져오기
      * */
     @GetMapping("/movies/{userId}/articles/curators/all/")
-    public List<ArticleDto> articleCuratorAll(@PathVariable("userId") Long id) {
+    public ResponseEntity<List<ArticleDto>> articleCuratorAll(@PathVariable("userId") Long id) {
         List<Article> articles = articleService.articleCuratorAll(id);
+        if(articles.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
 
         List<ArticleDto> result = articles.stream()
                 .map(a -> new ArticleDto(a))
                 .collect(toList());
-        return result;
+
+        return ResponseEntity.ok().body(result);
     }
 
     /**
@@ -160,38 +169,58 @@ public class ArticleApiController {
      * delete : 좋아요 해제
      * */
     @GetMapping("/movies/{articleId}/likes/")
-    public SimpleLikesDto likesGet(@PathVariable("articleId") Long articleId,
+    public ResponseEntity likesGet(@PathVariable("articleId") Long articleId,
                                    HttpServletRequest request){
 
         String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
+        if(!jwtTokenProvider.validateToken(token)) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorResponse(messageSource.getMessage("error.valid.jwt", null, LocaleContextHolder.getLocale())));
+        }
         Long userId = jwtTokenProvider.getUserIdFromJwt(token);
 
-        return new SimpleLikesDto(articleService.likesGet(articleId, userId));
+        Likes likes = articleService.likesGet(articleId, userId);
+        if (likes == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        return ResponseEntity.ok().body(new SimpleLikesDto(likes));
     }
 
 
     @PostMapping("/movies/{articleId}/likes/")
-    public ResponseEntity<Long> likes(@PathVariable("articleId") Long articleId,
+    public ResponseEntity likes(@PathVariable("articleId") Long articleId,
                                       HttpServletRequest request){
 
         String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
+        if(!jwtTokenProvider.validateToken(token)) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorResponse(messageSource.getMessage("error.valid.jwt", null, LocaleContextHolder.getLocale())));
+        }
         Long userId = jwtTokenProvider.getUserIdFromJwt(token);
 
         articleService.likes(articleId, userId);
-        
-        return new ResponseEntity<>(articleId, HttpStatus.OK);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
 
     @DeleteMapping("/movies/{articleId}/likes/")
-    public ResponseEntity<Long> likesDelete(@PathVariable("articleId") Long articleId,
+    public ResponseEntity likesDelete(@PathVariable("articleId") Long articleId,
                                       HttpServletRequest request){
 
         String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
+        if(!jwtTokenProvider.validateToken(token)) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorResponse(messageSource.getMessage("error.valid.jwt", null, LocaleContextHolder.getLocale())));
+        }
         Long userId = jwtTokenProvider.getUserIdFromJwt(token);
 
         articleService.likesDelete(articleId, userId);
 
-        return new ResponseEntity<>(articleId, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
     /**

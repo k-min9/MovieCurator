@@ -47,10 +47,13 @@ public class MovieService {
     }
 
     public List<Movie> moviesRecommend(Long id) {
-        Movie movie = movieRepository.findOneById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 영화의 정보가 없습니다."));
+        Movie movie = movieRepository.getById(id);
+        if(movie == null) {
+            throw new IllegalStateException("대상 영화가 없습니다.");
+        }
 
-        List<Long> recommendIds = movie.getMovie_reference_overview()  // 무슨 짓을 해도 여기까지 List<Integer>
+        // jsonb -> List<Integer> -> List<Long>
+        List<Long> recommendIds = movie.getMovie_reference_overview()
                 .stream().mapToLong(Integer::longValue).boxed().collect(toList());
 
         return movieRepository.findByIds(recommendIds);

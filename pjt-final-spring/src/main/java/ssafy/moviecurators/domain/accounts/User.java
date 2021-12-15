@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @Table(name = "accounts_user")  // Django식 네이밍
 @Builder
 @Getter @Setter
-@NoArgsConstructor//(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class User implements UserDetails {
 
