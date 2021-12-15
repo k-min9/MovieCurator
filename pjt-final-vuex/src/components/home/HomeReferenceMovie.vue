@@ -14,14 +14,14 @@
               id="carousel-btn"
               v-bind="attrs"
               v-on="on"
-            >prev</v-btn>
+            >&lt;</v-btn>
           </template>
           <template v-slot:next="{ on, attrs }">
             <v-btn
               id="carousel-btn"
               v-bind="attrs"
               v-on="on"
-            >next</v-btn>
+            >&gt;</v-btn>
           </template>
 
           <v-carousel-item v-for="(movie,i) in movies" :key="i" >

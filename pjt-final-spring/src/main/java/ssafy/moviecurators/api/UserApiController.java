@@ -12,23 +12,19 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ssafy.moviecurators.domain.accounts.Curator;
-import ssafy.moviecurators.domain.movies.Article;
-import ssafy.moviecurators.domain.movies.Movie;
-import ssafy.moviecurators.dto.ArticleDto;
 import ssafy.moviecurators.dto.CuratorDto;
-import ssafy.moviecurators.dto.MovieDto;
 import ssafy.moviecurators.dto.simple.SimpleUserDto;
-import ssafy.moviecurators.repository.CuratorRepository;
 import ssafy.moviecurators.service.JwtTokenProvider;
 import ssafy.moviecurators.domain.accounts.User;
 import ssafy.moviecurators.dto.UserProfileDto;
 import ssafy.moviecurators.repository.UserRepository;
 import ssafy.moviecurators.service.UserService;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -153,11 +149,13 @@ public class UserApiController {
         String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
         Long userId = jwtTokenProvider.getUserIdFromJwt(token);
 
-        String image = "";
+        User user = userRepository.getById(userId);
+
+        // image = "" 에서 기존 이미지 가져오기로 변경
+        String image = user.getImage();
         if (file != null) {
             String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
-            User user = userRepository.getById(userId);
             String uploadDir = "media/profile/" + user.getId();
 
             Path uploadPath = Paths.get(uploadDir);
@@ -166,8 +164,22 @@ public class UserApiController {
             }
 
             try (InputStream inputStream = file.getInputStream()) {
+                // 장고 설정 200, 200, 화질 100
+                Image processedImage = ImageIO.read(inputStream);
+
+                BufferedImage scaledBI = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
+                Graphics2D g = scaledBI.createGraphics();
+                g.drawImage(processedImage, 0, 0, 200, 200, null);
+                g.dispose();
+
+                ByteArrayOutputStream os = new ByteArrayOutputStream();
+                ImageIO.write(scaledBI, "jpg", os);
+
+                InputStream processedInputStream = new ByteArrayInputStream(os.toByteArray());
+
                 Path filePath = uploadPath.resolve(fileName);
-                Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(processedInputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+
             } catch (IOException ioe) {
                 throw new IOException("이미지 저장 불가: " + fileName, ioe);
             }
@@ -178,26 +190,7 @@ public class UserApiController {
         return new SimpleUserDto(userService.updateProfile(userId, nickname, introduction, image));
     }
 
-//    12/14 업로드 참조 원본
-//    @PutMapping("/accounts/profile/")
-//    public SimpleUserDto updateProfile2(@RequestPart(value = "image", required = false) MultipartFile file,
-//                                       @RequestPart("nickname") String nickname,
-//                                       @RequestPart("introduction") String introduction,
-//                                       HttpServletRequest request) throws IOException {
-//
-//        String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
-//        Long userId = jwtTokenProvider.getUserIdFromJwt(token);
-//
-//        String image = "";
-//        if (file != null) {
-//            String fullPath = fileDir + file.getOriginalFilename();
-//            image = fullPath;
-//            System.out.println("주소 : " + fullPath);
-//            file.transferTo(new File(fullPath));
-//        }
-//
-//        return new SimpleUserDto(userService.updateProfile2(userId, nickname, introduction, image));
-//    }
+
 
     /**
      * 신청자가 후원한 큐레이터들 가져오기
