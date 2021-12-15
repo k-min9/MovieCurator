@@ -75,7 +75,7 @@ public class UserApiController {
             //ResponseEntity<ErrorResponse>
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
-                    .body(new ErrorResponse(messageSource.getMessage("same.id", null, LocaleContextHolder.getLocale())));
+                    .body(new ErrorResponse(messageSource.getMessage("error.same.id", null, LocaleContextHolder.getLocale())));
         }
     }
 

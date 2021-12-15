@@ -460,9 +460,9 @@ a:link {
 
 
 /*=========================================== 동적요소 ===========================================*/
-.theme--light.v-input, .theme--light.v-input input, .theme--light.v-input textarea {
+/* .theme--light.v-input, .theme--light.v-input input, .theme--light.v-input textarea {
   color: white;
-}
+} */
 
 input.star{
   display: none;
