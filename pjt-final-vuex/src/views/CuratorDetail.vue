@@ -1,7 +1,7 @@
 <template>
   <div class="curatorDetailMain">
     <div class="curator-detail-main row">
-      <h2 class="curator-title">About <strong>{{curator.nickname}}</strong></h2>
+      <h2 class="curator-title">About <strong>[{{curator.nickname}}]</strong></h2>
       <div class="curator-profile col-md-2">
         <div v-if="curator.image === null">
           <img class="img-fluid rounded" src="@/assets/images/profile_basic.jpg" alt="profileImage">                   
