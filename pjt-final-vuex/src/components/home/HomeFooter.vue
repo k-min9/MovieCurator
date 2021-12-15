@@ -5,7 +5,7 @@
         <div class="row justify-content-between">
           <div class="col-lg-3 col-md-6 footer-widget footer-about">
             <h4 class="widget-title mb-3"><span class="bar">|</span> About Our Project</h4>
-            <img loading="lazy" width="200px" class="footer-logo" src="@/assets/images/MOVIECURATORS_LOGO_Trans.png" alt="Constra">
+            <!-- <img loading="lazy" width="200px" class="footer-logo" src="@/assets/images/MOVIECURATORS_LOGO_Trans.png" alt="Constra"> -->
             <p>영화 평가 후원 커뮤니티</p>
             <p>프로젝트 기술 스택 및 자세한 내용</p>
             <div>
@@ -18,19 +18,19 @@
             <h4 class="widget-title mb-4"><span class="bar">|</span> Developers</h4>
             <div class="working-hours">
               <div class="row">
-                  <div class="team-member col-6">
+                  <!-- <div class="team-member col-sm-6">
                     <a href="https://github.com/k-min9">
-                      <v-img id="developer-img" class="mx-auto rounded-circle mb-3" src="@/assets/images/userB.jpg" alt="kangmingu"/>
+                      <img id="developer-img" class="mx-auto rounded-circle mb-3" src="@/assets/images/userB.jpg" alt="kangmingu"/>
                       <h5 id="developer-name">KANG MIN GU</h5>
                     </a>
                   </div>
 
-                  <div class="team-member col-6">
+                  <div class="team-member col-sm-6">
                     <a href="https://github.com/limgeonho">
-                      <v-img id="developer-img" class="mx-auto rounded-circle mb-3" src="@/assets/images/userA.jpg" alt="limgeonho"/>
+                      <img id="developer-img" class="mx-auto rounded-circle mb-3" src="@/assets/images/userA.jpg" alt="limgeonho"/>
                       <h5 id="developer-name">LIM GEON HO</h5>
                     </a>
-                  </div>  
+                  </div>  -->
               </div>
             </div>
           </div><!-- Col end -->
@@ -43,9 +43,9 @@
               <li><router-link :to="{ name: 'Curator' }" class="list-item">Curators</router-link></li>
               <li><router-link :to="{ name: 'Search' }" class="list-item">Search Movie</router-link></li>
             </ul>
-            <div>
+            <!-- <div>
               <img id="coffee" class="mx-auto mt-3" src="@/assets/images/buyMeCoffee.png" alt="limgeonho"/>
-            </div>
+            </div> -->
 
           </div><!-- Col end -->
           
