@@ -45,7 +45,7 @@
             </ul>
           
               <div>
-                <img id="coffee" class="mx-auto mt-3" src="@/assets/images/buyMeCoffee.png" alt="limgeonho"/>
+                <img id="coffee" class="mx-auto mt-3" @click="kakaoBuyPremium" src="@/assets/images/buyMeCoffee.png" alt="getPremium"/>
               </div>
 
           </div><!-- Col end -->
@@ -60,8 +60,34 @@
 </template>
 
 <script>
+import axios from 'axios'
+import swal from 'sweetalert2'
+
 export default {
   name: 'HomeFooter',
+  methods: {
+    kakaoBuyPremium: function (){
+      // 이미 프리미엄 유저인지 확인하는 것 나중에 필요함
+    axios({
+        method: 'GET',
+        url: `http://127.0.0.1:8080/kakaoPay/`,
+        //url: SERVER.URL + SERVER.ROUTES.movies.home + String(this.movie.id) + SERVER.ROUTES.movies.articleDetail,
+        //headers: this.setToken(),
+      })
+      .then((res) => {
+        console.log(res.data)
+        //window.open(res.data)
+        window.location.href = res.data  // 결제 화면 전환        
+      })
+      .catch (() => {
+        swal.fire ({
+          icon: 'error',
+          title: '결제 실패',
+          text: '서버가 혼잡합니다. 다시 시도해 주세요.'
+        })
+      })
+    },
+  }
 }
 </script>
 

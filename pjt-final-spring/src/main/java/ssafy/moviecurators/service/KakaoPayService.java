@@ -45,9 +45,9 @@ public class KakaoPayService {
         params.add("tax_free_amount", "100");
 
         // 백엔드 쪽 리턴 주소 설정
-        params.add("approval_url", "http://localhost:8080/kakaoPaySuccess");
-        params.add("cancel_url", "http://localhost:8080/kakaoPayCancel");
-        params.add("fail_url", "http://localhost:8080/kakaoPaySuccessFail");
+        params.add("approval_url", "http://localhost:8081/kakaoPay/success");  // 모든 절차가 끝나면 저기로 보냄. 체크
+        params.add("cancel_url", "http://localhost:8081/kakaoPayCancel");  // 안쓰임; 시험환경에서 확인 방도가 없음
+        params.add("fail_url", "http://localhost:8081/kakaoPaySuccessFail");  // 안쓰임; 시험환경에서 확인 방도가 없음
 
         // 헤더 + 바디
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
@@ -56,7 +56,7 @@ public class KakaoPayService {
         try {
             kakaoPayReadyVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/ready"), body, KakaoPayReadyVO.class);
 
-            //log.info("받은 정보" + kakaoPayReadyVO);
+//            log.info("받은 정보 : " + kakaoPayReadyVO);
 
             return kakaoPayReadyVO.getNext_redirect_pc_url();
 
@@ -74,6 +74,8 @@ public class KakaoPayService {
     public KakaoPayApprovalVO kakaoPaySuccess(String pg_token) {
 
         RestTemplate restTemplate = new RestTemplate();
+
+//        log.info("기존 정보 : " + kakaoPayReadyVO);
 
         // 서버로 요청할 Header
         HttpHeaders headers = new HttpHeaders();
@@ -95,7 +97,7 @@ public class KakaoPayService {
 
         try {
             kakaoPayApprovalVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/approve"), body, KakaoPayApprovalVO.class);
-            log.info("카카오 성공" + kakaoPayApprovalVO);
+//            log.info("카카오 성공" + kakaoPayApprovalVO);
 
             return kakaoPayApprovalVO;
 

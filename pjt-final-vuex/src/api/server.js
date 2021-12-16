@@ -1,7 +1,7 @@
 export default {
   //URL: 'https://moviecurators.herokuapp.com',
-  URL:'http://127.0.0.1:8000',  // drf
-  //URL: 'http://127.0.0.1:8080',  // spring
+  //URL:'http://127.0.0.1:8000',  // drf
+  URL: 'http://127.0.0.1:8080',  // spring
   //URL: 'http://localhost:8080', // spring 2
   ROUTES: {
       accounts: {

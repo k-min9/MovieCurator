@@ -7,7 +7,8 @@ import MovieList from '../views/MovieList.vue'
 import Profile from '../views/Profile.vue'
 import Curator from '../views/Curator.vue'
 import Search from '../views/Search.vue'
-import AuthHandler from '../views/AuthHandler.vue'
+import AuthHandler from '../views/Handler/AuthHandler.vue'
+import KakaoPaySuccess from '../views/Handler/KakaoPaySuccess.vue'
 import MovieDetail from '../views/MovieDetail.vue'
 import ArticleDetail from '../views/ArticleDetail.vue'
 import CuratorDetail from '../views/CuratorDetail.vue'
@@ -25,6 +26,11 @@ const routes = [
     path: '/oauth2/google/callback',
     name: 'AuthHandler',
     component: AuthHandler,
+  },
+  {
+    path: '/kakaoPay/success',
+    name: 'KakaoPaySuccess',
+    component: KakaoPaySuccess
   },
   {
     path: '/curator/',

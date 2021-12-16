@@ -13,6 +13,7 @@ import ssafy.moviecurators.domain.payments.KakaoPayApprovalVO;
 import ssafy.moviecurators.dto.simple.SimpleMovieDto;
 import ssafy.moviecurators.service.KakaoPayService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -23,7 +24,7 @@ public class KakaoApiController {
 
     private final KakaoPayService kakaoPayService;
 
-    @GetMapping("/kakao/")
+    @GetMapping("/kakaoPay/")
     public String kakaoPaymentReady() {
 
         String result = kakaoPayService.kakaoPayReady();
@@ -31,8 +32,8 @@ public class KakaoApiController {
         return result;
     }
 
-    @GetMapping("/kakaoPaySuccess")
-    public ResponseEntity kakaoPaySuccess(@RequestParam("pg_token") String pg_token) {
+    @PostMapping("/kakaoPay/success/")
+    public ResponseEntity kakaoPaySuccess(@RequestParam("pgToken") String pg_token) {
 
         try {
             KakaoPayApprovalVO kakaoPayApprovalVO = kakaoPayService.kakaoPaySuccess(pg_token);
