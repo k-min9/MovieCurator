@@ -5,7 +5,8 @@
         <div class="row justify-content-between">
           <div class="col-lg-3 col-md-6 footer-widget footer-about">
             <h4 class="widget-title mb-3"><span class="bar">|</span> About Our Project</h4>
-            <!-- <img loading="lazy" width="200px" class="footer-logo" src="@/assets/images/MOVIECURATORS_LOGO_Trans.png" alt="Constra"> -->
+            <v-img class="footer-logo" contain=true :src="require('@/assets/images/MOVIECURATORS_LOGO_Trans.png')" alt="Logo"/>
+            
             <p>영화 평가 후원 커뮤니티</p>
             <p>프로젝트 기술 스택 및 자세한 내용</p>
             <div>
@@ -15,7 +16,7 @@
           </div><!-- Col end -->
 
           <div class="col-lg-6 col-md-6 footer-widget mt-5 mt-md-0">
-            <h4 class="widget-title mb-4"><span class="bar">|</span> Developers</h4>
+            <h4 class="widget-title mb-4"><span class="bar">|</span> Developers / Contact Us</h4>
             <div class="working-hours">
               <div class="row">
                   <div class="team-member col-sm-6">
@@ -45,7 +46,7 @@
             </ul>
           
               <div>
-                <img id="coffee" class="mx-auto mt-3" @click="kakaoBuyPremium" src="@/assets/images/buyMeCoffee.png" alt="getPremium"/>
+                <v-img id="coffee" class="mx-auto mt-3" aspect-ratio="1" contain=true max-height="100px" @click="kakaoBuyPremium" :src="require('@/assets/images/buyMeCoffee.png')" alt="getPremium"/>
               </div>
 
           </div><!-- Col end -->
@@ -133,9 +134,13 @@ export default {
   color: yellow;
 }
 
-#coffee {
+/* #coffee {
   width: 8rem;
   height: 2.5rem;
+} */
+
+#coffee:hover {
+  cursor: pointer;
 }
 
 .footer-logo {
