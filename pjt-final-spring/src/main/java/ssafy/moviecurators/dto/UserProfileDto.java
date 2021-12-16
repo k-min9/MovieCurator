@@ -46,7 +46,11 @@ public class UserProfileDto {
         this.username = user.getUsername();
         this.introduction = user.getIntroduction();
         this.nickname = user.getNickname();
-        this.image = user.getImage();
+        if (user.getImage().equals("")) {
+            this.image = null;
+        } else {
+            this.image = user.getImage();
+        }
         this.mileage = user.getMileage();
         this.exp = user.getExp();
 

@@ -227,12 +227,22 @@ public class ArticleApiController {
      * 평가 포인트 갱신
      * */
     @PutMapping("/movies/donate/{articleId}/")
-    public void pointChange(@PathVariable("articleId") Long articleId,
-                           @RequestBody Map<String, String> obj) {
+    public ResponseEntity pointChange(@PathVariable("articleId") Long articleId,
+                           @RequestBody Map<String, String> obj,
+                            HttpServletRequest request) {
+
+        String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
+        if(!jwtTokenProvider.validateToken(token)) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorResponse(messageSource.getMessage("error.valid.jwt", null, LocaleContextHolder.getLocale())));
+        }
 
         Integer mileageChange = Integer.parseInt(obj.get("mileage"));
 
         articleService.pointChange(articleId, mileageChange);
+
+        return ResponseEntity.ok().body(null);
     }
 
 }

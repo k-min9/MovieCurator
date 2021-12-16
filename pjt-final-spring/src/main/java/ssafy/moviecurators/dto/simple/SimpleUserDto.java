@@ -39,7 +39,11 @@ public class SimpleUserDto {
 //        this.date_joined = user.getDate_joined();
         this.introduction = user.getIntroduction();
         this.nickname = user.getNickname();
-        this.image = user.getImage();
+        if (user.getImage().equals("")) {
+            this.image = null;
+        } else {
+            this.image = user.getImage();
+        }
         this.mileage = user.getMileage();
         this.exp = user.getExp();
     }
