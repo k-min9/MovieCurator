@@ -9,6 +9,7 @@
 import axios from 'axios'
 import swal from 'sweetalert2'
 import router from '@/router'
+import SERVER from '@/api/server'
 
 export default {
   name: 'KakaoPaySuccess',
@@ -18,7 +19,8 @@ export default {
       // 결제 내용 저장
     axios({
         method: 'POST',
-        url: `http://127.0.0.1:8080/kakaoPay/success/`,
+        //url: `http://127.0.0.1:8080/kakaoPay/success/`,
+        url: SERVER.URL + '/kakaoPay/success/',
         params: {
           pgToken: pg_token,
         },

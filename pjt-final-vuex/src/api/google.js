@@ -1,4 +1,5 @@
 import qs from 'qs'
+import SERVER from '@/api/server'
 
 const CLIENT_ID = process.env.VUE_APP_GOOGLE_CLIENT_ID
 //const CLIENT_ID = ''
@@ -10,7 +11,8 @@ export default {
       client_id: CLIENT_ID,
       // redirect_uri: window.location.href,
       //redirect_uri: 'http://localhost:8080/oauth2/google/callback',
-      redirect_uri: 'https://moviecurators.netlify.app/oauth2/google/callback',
+      //redirect_uri: 'https://moviecurators.netlify.app/oauth2/google/callback',
+      redirect_uri: SERVER.URL + '/oauth2/google/callback',
       response_type: 'token',
       //scope: 'https://www.googleapis.com/auth/contacts.readonly',
       scope: 'https://www.googleapis.com/auth/userinfo.email'

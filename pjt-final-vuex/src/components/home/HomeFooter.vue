@@ -63,6 +63,7 @@
 <script>
 import axios from 'axios'
 import swal from 'sweetalert2'
+import SERVER from '@/api/server'
 
 export default {
   name: 'HomeFooter',
@@ -71,7 +72,8 @@ export default {
       // 이미 프리미엄 유저인지 확인하는 것 나중에 필요함
     axios({
         method: 'GET',
-        url: `http://127.0.0.1:8080/kakaoPay/`,
+        // url: `http://127.0.0.1:8080/kakaoPay/`,
+        url: SERVER.URL + '/kakaoPay/'
         //url: SERVER.URL + SERVER.ROUTES.movies.home + String(this.movie.id) + SERVER.ROUTES.movies.articleDetail,
         //headers: this.setToken(),
       })
