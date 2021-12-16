@@ -33,20 +33,21 @@ def signup(request):
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         user = serializer.save()
-        user.set_password(request.data.get('password'))  # 비밀번호 해상 
+        user.set_password(request.data.get('password'))  # 비밀번호 해싱
         user.save()
         # password는 표현(response)할 때 보내지 않기(write_only)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response({'error': '유효하지 않은 요청입니다.'}, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET', 'PUT', 'DELETE'])
+# @api_view(['GET', 'PUT', 'DELETE'])
+@api_view(['PUT'])
 @authentication_classes([JSONWebTokenAuthentication])
 @permission_classes([IsAuthenticated])
 def my_profile_detail(request):
-    if request.method == 'GET':
-        serializer = UserProfileSerializer(request.user)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    elif request.method == 'PUT':
+    # if request.method == 'GET':
+    #     serializer = UserProfileSerializer(request.user)
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
+    if request.method == 'PUT':
         image = request.data.get('image')
         # 이미지 여부에 따라 시리얼라이저를 바꾼다.
         if image:    
@@ -59,33 +60,33 @@ def my_profile_detail(request):
             else:
                 serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
-    elif request.method == 'DELETE':
-        user_pk = request.user.pk
-        request.user.delete()
-        return Response({ 'delete': f'{user_pk}번 회원이 탈퇴했습니다.' }, status=status.HTTP_204_NO_CONTENT)
+    # elif request.method == 'DELETE':
+    #     user_pk = request.user.pk
+    #     request.user.delete()
+    #     return Response({ 'delete': f'{user_pk}번 회원이 탈퇴했습니다.' }, status=status.HTTP_204_NO_CONTENT)
 
 
-@api_view(['GET', 'PUT', 'DELETE'])
-# @authentication_classes([JSONWebTokenAuthentication])
-# @permission_classes([IsAuthenticated])
-@permission_classes([AllowAny])
-def profile_detail(request, user_pk):
-    user = get_object_or_404(get_user_model(), pk=user_pk)
-    if request.method == 'GET':
-        serializer = UserProfileSerializer(user)
-        return Response(serializer.data)
-    if request.user == user.user:
-        if request.method == 'PUT':
-            image = request.data.get('image')
-            serializer = UserProfileSerializer(user, data=request.data)
-            if serializer.is_valid(raise_exception=True):
-                serializer.save(image=image)
-                return Response(serializer.data)
-        elif request.method == 'DELETE':
-            user_pk = request.user.pk
-            request.user.delete()
-            return Response({ 'delete': f'{user_pk}번 회원이 탈퇴했습니다.' }, status=status.HTTP_204_NO_CONTENT)
-    return Response({ 'Unauthorized': '본인이 아닙니다.'}, status=status.HTTP_403_FORBIDDEN)
+# @api_view(['GET', 'PUT', 'DELETE'])
+# # @authentication_classes([JSONWebTokenAuthentication])
+# # @permission_classes([IsAuthenticated])
+# @permission_classes([AllowAny])
+# def profile_detail(request, user_pk):
+#     user = get_object_or_404(get_user_model(), pk=user_pk)
+#     if request.method == 'GET':
+#         serializer = UserProfileSerializer(user)
+#         return Response(serializer.data)
+#     if request.user == user.user:
+#         if request.method == 'PUT':
+#             image = request.data.get('image')
+#             serializer = UserProfileSerializer(user, data=request.data)
+#             if serializer.is_valid(raise_exception=True):
+#                 serializer.save(image=image)
+#                 return Response(serializer.data)
+#         elif request.method == 'DELETE':
+#             user_pk = request.user.pk
+#             request.user.delete()
+#             return Response({ 'delete': f'{user_pk}번 회원이 탈퇴했습니다.' }, status=status.HTTP_204_NO_CONTENT)
+#     return Response({ 'Unauthorized': '본인이 아닙니다.'}, status=status.HTTP_403_FORBIDDEN)
 
 @api_view(['GET'])
 # @authentication_classes([JSONWebTokenAuthentication])

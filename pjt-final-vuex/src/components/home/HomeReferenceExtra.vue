@@ -1,97 +1,102 @@
 <template>
 <div id="home-reference-extra">
   <br>
-  <h3>이번 주의 HOT한 평가들 <i class="fas fa-burn"></i></h3>
-
+  <h3>이번 분기의 HOT한 평가들 <i class="fas fa-burn"></i></h3>
+<!-- if문으로 없을때 => 아직 올라온 평가가 없습니다. -->
   <!-- MovieDetailArticleForm 참조 -->
-  <div v-for="(article, idx) in articlesHome" :key="idx">
-    <v-main
-    :style="`background-image: url(https://image.tmdb.org/t/p/original${article.movie.backdrop_path})`"
-    class="fill-height bg-image">
+  <div v-if="articlesHome.length > 0">
+    <div v-for="(article, idx) in articlesHome" :key="idx">
+        <v-main
+        :style="`background-image: url(https://image.tmdb.org/t/p/original${article.movie.backdrop_path})`"
+        class="fill-height bg-image">
 
-    <div class="container">
-      <h4>[{{article.user.nickname}}]님이 [{{article.movie.title}}]에 작성하신 평가</h4>
-      <div class="card">
-        <div class="card-body">
-          <div class="row">
-            
-            <!-- 사진과 작성 시간-->
-            <div class="col-md-2">
-              <div v-if="article.user.image === null">
-                <router-link :to="{ name: 'CuratorDetail', params: { id: article.user.id }}">
-                  <img src="@/assets/images/profile_basic.jpg" class="review-form-profile img-fluid rounded" alt="profileImage">
-                </router-link>
-                <div class="review-form-time">
-                  <p class="text-secondary text-center">{{article.updated_at.split('T')[0]}}</p>
-                </div>                        
-              </div>
-              <div v-else>
-                <router-link :to="{ name: 'CuratorDetail', params: { id: article.user.id }}">
-                  <img :src="SERVER_URL+article.user.image" class="review-form-profile img-fluid rounded" alt="profileImage">
-                </router-link>
-                <div class="review-form-time">
-                  <p class="text-secondary text-center">{{article.updated_at.split('T')[0]}}</p>
-                </div>
-              </div>
-            </div>
-            
-            <div class="col-md-10">
-              <p class="text-primary"></p>
-                <!-- 작성자 이름 -->
-                <router-link :to="{ name: 'CuratorDetail', params: { id: article.user.id }}">
-                  <strong>{{article.user.nickname}}</strong>
-                </router-link>
-                <div class="review-form-star-box">
-
-                  <!-- 별 갯수-->
-                  <div v-if="article.rate === 1">
-                    <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
-                  </div>
-                  <div v-else-if="article.rate === 2">
-                    <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
-                    <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
-                  </div>
-                  <div v-else-if="article.rate === 3">
-                    <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
-                    <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
-                    <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
-                  </div>
-                  <div v-else-if="article.rate === 4">
-                    <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
-                    <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
-                    <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
-                    <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
+        <div class="container">
+          <h4>[{{article.user.nickname}}]님이 [{{article.movie.title}}]에 작성하신 평가</h4>
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                
+                <!-- 사진과 작성 시간-->
+                <div class="col-md-2">
+                  <div v-if="article.user.image === null">
+                    <router-link :to="{ name: 'CuratorDetail', params: { id: article.user.id }}">
+                      <img src="@/assets/images/profile_basic.jpg" class="review-form-profile img-fluid rounded" alt="profileImage">
+                    </router-link>
+                    <div class="review-form-time">
+                      <p class="text-secondary text-center">{{article.updated_at.split('T')[0]}}</p>
+                    </div>                        
                   </div>
                   <div v-else>
-                    <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
-                    <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
-                    <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
-                    <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
-                    <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
+                    <router-link :to="{ name: 'CuratorDetail', params: { id: article.user.id }}">
+                      <img :src="SERVER_URL+article.user.image" class="review-form-profile img-fluid rounded" alt="profileImage">
+                    </router-link>
+                    <div class="review-form-time">
+                      <p class="text-secondary text-center">{{article.updated_at.split('T')[0]}}</p>
+                    </div>
                   </div>
-              
                 </div>
-              <!-- 제목 -->
-              <p class="text-secondary">제목 : {{article.title}}</p>
+                
+                <div class="col-md-10">
+                  <p class="text-primary"></p>
+                    <!-- 작성자 이름 -->
+                    <router-link :to="{ name: 'CuratorDetail', params: { id: article.user.id }}">
+                      <strong>{{article.user.nickname}}</strong>
+                    </router-link>
+                    <div class="review-form-star-box">
 
-              <div class="clearfix"></div>
-              
-              <!-- 내용 -->
-              <p class="text-secondary">{{article.content}}</p>
-              
-              <!-- 평가 상세 버튼 -->
-              <router-link :to="{ name: 'ArticleDetail', params: { id: article.id }}">
-                <v-btn class="review-form-btn font-weight-bold aaa" depressed small light><i class="fa fa-reply"></i>평가 상세</v-btn>
-              </router-link>   
+                      <!-- 별 갯수-->
+                      <div v-if="article.rate === 1">
+                        <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
+                      </div>
+                      <div v-else-if="article.rate === 2">
+                        <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
+                        <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
+                      </div>
+                      <div v-else-if="article.rate === 3">
+                        <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
+                        <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
+                        <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
+                      </div>
+                      <div v-else-if="article.rate === 4">
+                        <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
+                        <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
+                        <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
+                        <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
+                      </div>
+                      <div v-else>
+                        <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
+                        <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
+                        <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
+                        <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
+                        <span class="review-form-star"><i class="text-warning fa fa-star"></i></span>
+                      </div>
+                  
+                    </div>
+                  <!-- 제목 -->
+                  <p class="text-secondary">제목 : {{article.title}}</p>
 
+                  <div class="clearfix"></div>
+                  
+                  <!-- 내용 -->
+                  <p class="text-secondary">{{article.content}}</p>
+                  
+                  <!-- 평가 상세 버튼 -->
+                  <router-link :to="{ name: 'ArticleDetail', params: { id: article.id }}">
+                    <v-btn class="review-form-btn font-weight-bold aaa" depressed small light><i class="fa fa-reply"></i>평가 상세</v-btn>
+                  </router-link>   
+
+                </div>
+              </div>
             </div>
           </div>
         </div>
+        </v-main>
+        <hr class="separator-line">
       </div>
     </div>
-    </v-main>
-        
+  <div v-else>
     <hr class="separator-line">
+    <h3>현재 평가가 없습니다.</h3>
   </div>
 </div>
 </template>
