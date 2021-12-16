@@ -9,7 +9,7 @@ urlpatterns = [
     path('api-token-auth/', obtain_jwt_token),
     path('signup/', views.signup),
     path('profile/', views.my_profile_detail),
-    path('profile/<int:user_pk>/', views.profile_detail),
+    # path('profile/<int:user_pk>/', views.profile_detail),
 
     # 마일리지 충전, 후원받기
     path('mileage/', views.mileage_change),

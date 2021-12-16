@@ -43,9 +43,10 @@
               <li><router-link :to="{ name: 'Curator' }" class="list-item">Curators</router-link></li>
               <li><router-link :to="{ name: 'Search' }" class="list-item">Search Movie</router-link></li>
             </ul>
-            <div>
-              <img id="coffee" class="mx-auto mt-3" src="@/assets/images/buyMeCoffee.png" alt="limgeonho"/>
-            </div>
+          
+              <div>
+                <img id="coffee" class="mx-auto mt-3" src="@/assets/images/buyMeCoffee.png" alt="limgeonho"/>
+              </div>
 
           </div><!-- Col end -->
           
@@ -107,8 +108,8 @@ export default {
 }
 
 #coffee {
-  width: 15rem;
-  height: 5rem;
+  width: 8rem;
+  height: 2.5rem;
 }
 
 .footer-logo {
