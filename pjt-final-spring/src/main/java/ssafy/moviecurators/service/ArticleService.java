@@ -103,6 +103,10 @@ public class ArticleService {
         article.setPoints(article.getPoints() + mileageChange);
     }
 
+    public List<Article> articleCurator(Long id) {
+        return articleRepository.findTop3ByUserOrderByIdDesc(userRepository.getById(id));
+    }
+
     public List<Article> articleCuratorAll(Long id) {
         return articleRepository.findByUserOrderByIdDesc(userRepository.getById(id));
     }

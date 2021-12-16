@@ -280,7 +280,7 @@ public class UserApiController {
     }
 
     @GetMapping("/accounts/curators/{userId}/")
-    public ResponseEntity getCurator(@PathVariable("userId") Long id) {
+    public ResponseEntity curatorDetail(@PathVariable("userId") Long id) {
         User user = userRepository.getById(id);
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)

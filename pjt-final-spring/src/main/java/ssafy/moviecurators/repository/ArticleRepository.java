@@ -29,6 +29,9 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
             "where m.id = :movieId and u.id = :userId")
     Article articleDetail(@Param("movieId") Long movieId, @Param("userId") Long userId);
 
-    // 특정 유저가 적은 모든 평가들
-    List<Article> findByUserOrderByIdDesc(User byId);
+    // 특정 유저가 적은 최신 평가 셋
+    List<Article> findTop3ByUserOrderByIdDesc(User Id);
+
+    // 특정 유저가 적은 모든 평가들 (Pageable로 전환 가능성 있음)
+    List<Article> findByUserOrderByIdDesc(User Id);
 }

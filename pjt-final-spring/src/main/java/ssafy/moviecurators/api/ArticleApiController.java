@@ -149,6 +149,25 @@ public class ArticleApiController {
     /**
      * 해당 유저가 적은 평가 다 가져오기
      * */
+    @GetMapping("/movies/{userId}/articles/curators/")
+    public ResponseEntity<List<ArticleDto>> articleCurator(@PathVariable("userId") Long id) {
+        List<Article> articles = articleService.articleCurator(id);
+        if(articles.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        List<ArticleDto> result = articles.stream()
+                .map(a -> new ArticleDto(a))
+                .collect(toList());
+
+        return ResponseEntity.ok().body(result);
+    }
+
+
+    /**
+     * 해당 유저가 적은 평가 다 가져오기
+     * 인피니티 스크롤(리턴값 Pageable 될 여지 있어서 분리)
+     * */
     @GetMapping("/movies/{userId}/articles/curators/all/")
     public ResponseEntity<List<ArticleDto>> articleCuratorAll(@PathVariable("userId") Long id) {
         List<Article> articles = articleService.articleCuratorAll(id);
