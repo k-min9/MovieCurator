@@ -38,3 +38,4 @@ out/
 
 ### Local - 개인 설정 ###
 /media
+application.yml

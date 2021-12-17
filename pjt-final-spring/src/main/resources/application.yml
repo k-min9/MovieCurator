@@ -13,12 +13,20 @@ spring:
     password: admin1234
     driverClassName: org.postgresql.Driver
 
+#  datasource:
+#    platform: postgres
+#    url: jdbc:postgresql://moviecurators-postgre.c78g64hoszcq.ap-northeast-2.rds.amazonaws.com:5432/postgres
+#    username: postgres
+#    password: kanglim114
+#    driverClassName: org.postgresql.Driver
+
   jpa:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       #ddl-auto: create # 애플리케이션 실행시점에 테이블 다 지우고 새로 생성
       ddl-auto: update
+#      ddl-auto: create-drop
 
       # DB column 네이밍시 자동으로 snake case로 전환하는것을 막아줌
 #      naming:
@@ -43,3 +51,8 @@ logging.level:
 
 jwt:
   secret: 1@*ft7m1e*47b4yzlppbx5=hmvy86!#f-4v$3g6wrotraqes64  # 나중에 교체하고 gitgnore한다는 전제하에 진행
+
+# 배포시 기존 8080으로는 충돌 발생
+server:
+#  port: 5000
+  port: 8080
