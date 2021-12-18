@@ -4,6 +4,9 @@ export default {
   URL: 'https://www.moviecurators.cf',  //https,
   //URL:'http://127.0.0.1:8000',  // drf
   // URL: 'http://127.0.0.1:8080',  // spring
+
+  URLFront: 'https://moviecurators-spring.netlify.app', // Front SERVER for callback
+
   ROUTES: {
       accounts: {
         // 회원 가임 등등 제어

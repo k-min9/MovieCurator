@@ -12,7 +12,7 @@ export default {
       // redirect_uri: window.location.href,
       //redirect_uri: 'http://localhost:8080/oauth2/google/callback',
       //redirect_uri: 'https://moviecurators.netlify.app/oauth2/google/callback',
-      redirect_uri: SERVER.URL + '/oauth2/google/callback',
+      redirect_uri: SERVER.URLFront + '/oauth2/google/callback',
       response_type: 'token',
       //scope: 'https://www.googleapis.com/auth/contacts.readonly',
       scope: 'https://www.googleapis.com/auth/userinfo.email'
