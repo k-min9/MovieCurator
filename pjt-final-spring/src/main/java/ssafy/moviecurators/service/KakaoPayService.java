@@ -1,6 +1,7 @@
 package ssafy.moviecurators.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -20,17 +21,26 @@ import java.net.URISyntaxException;
 public class KakaoPayService {
 
     private static final String HOST = "https://kapi.kakao.com";
+    // 카카오페이 내 어플리케이션 플랫폼에서 주소 관리
+//    private static final String FRONTSERVER = "https://moviecurators-spring.netlify.app";
+    private static final String FRONTSERVER = "http://localhost:8081";
+
+    @Value("${key.kakao.admin}")
+    String ADMIN_KEY;
 
     private KakaoPayReadyVO kakaoPayReadyVO;
     private KakaoPayApprovalVO kakaoPayApprovalVO;
 
     public String kakaoPayReady() {
 
+        System.out.println("KakaoAK " + ADMIN_KEY);
+        log.info("KakaoAK " + ADMIN_KEY);
+
         RestTemplate restTemplate = new RestTemplate();
 
         // 서버로 요청할 Header
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "KakaoAK " + "a85108cd9d4be6c7fbaff757e595564e");  // admin 키
+        headers.add("Authorization", "KakaoAK " + ADMIN_KEY);  // admin 키
         headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);  // ? 님 뭐임??
         headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
 
@@ -45,9 +55,9 @@ public class KakaoPayService {
         params.add("tax_free_amount", "100");
 
         // 백엔드 쪽 리턴 주소 설정
-        params.add("approval_url", "http://localhost:8081/kakaoPay/success");  // 모든 절차가 끝나면 저기로 보냄. 체크
-        params.add("cancel_url", "http://localhost:8081/kakaoPayCancel");  // 안쓰임; 시험환경에서 확인 방도가 없음
-        params.add("fail_url", "http://localhost:8081/kakaoPaySuccessFail");  // 안쓰임; 시험환경에서 확인 방도가 없음
+        params.add("approval_url", FRONTSERVER + "/kakaoPay/success");  // 모든 절차가 끝나면 저기로 보냄. 체크
+        params.add("cancel_url", FRONTSERVER + "/kakaoPayCancel");  // 안쓰임; 시험환경에서 확인 방도가 없음
+        params.add("fail_url", FRONTSERVER + "/kakaoPaySuccessFail");  // 안쓰임; 시험환경에서 확인 방도가 없음
 
         // 헤더 + 바디
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
@@ -79,7 +89,7 @@ public class KakaoPayService {
 
         // 서버로 요청할 Header
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "KakaoAK " + "a85108cd9d4be6c7fbaff757e595564e");  // admin 키
+        headers.add("Authorization", "KakaoAK " + ADMIN_KEY);  // admin 키
         headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
         headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
 

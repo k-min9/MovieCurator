@@ -1,8 +1,9 @@
 export default {
   //URL: 'https://moviecurators.herokuapp.com',
-  URL: 'http://moviecurators-env.eba-jnawskzd.ap-northeast-2.elasticbeanstalk.com',
+  // URL: 'http://moviecurators-env.eba-jnawskzd.ap-northeast-2.elasticbeanstalk.com',  // http
+  // URL: 'https://www.moviecurators.cf',  //https,
   //URL:'http://127.0.0.1:8000',  // drf
-  // URL: 'http://127.0.0.1:8080',  // spring
+  URL: 'http://127.0.0.1:8080',  // spring
   ROUTES: {
       accounts: {
         // 회원 가임 등등 제어
