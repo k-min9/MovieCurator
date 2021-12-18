@@ -129,7 +129,7 @@ export default {
       curator: null,
       articlesCurator: [],
       // 이미지 주소 조합용
-      SERVER_URL : SERVER.URL
+      SERVER_URL: SERVER.ROUTES.image
     }
   },
 
@@ -340,7 +340,7 @@ a:link {
 
 /*=========================================== 동적요소 ===========================================*/
 .theme--light.v-input, .theme--light.v-input input, .theme--light.v-input textarea {
-  color: white;
+  color: black;
 }
 
 input.star{

@@ -200,16 +200,10 @@ public class UserApiController {
                     .body(new ErrorResponse(messageSource.getMessage("error.none.user", null, LocaleContextHolder.getLocale())));
         }
 
-
+        // 파일 업로드
         String image = user.getImage(); // image = "" 에서 기존 이미지 가져오기로 변경
         if (file != null) {
-            image = fileService.imageUploadLocal(file, user); //로컬 상태에서 업로드 하는 방식
-
-
-
-
-
-
+            image = fileService.imageUploadGCS(file, user);
         }
 
         return ResponseEntity.ok().body(new SimpleUserDto(userService.updateProfile(userId, nickname, introduction, image)));

@@ -37,5 +37,7 @@ out/
 .vscode/
 
 ### Local - 개인 설정 ###
+/download
 /media
 application.yml
+**/src/main/resources/*.json

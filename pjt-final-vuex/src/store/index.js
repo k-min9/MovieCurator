@@ -97,7 +97,7 @@ export default new Vuex.Store({
       state.articles_count = res.articles_count
       if (res.image) {
         //state.image = 'http://127.0.0.1:8000' + res.image  
-        state.image = SERVER.URL + res.image         
+        state.image = SERVER.ROUTES.image + res.image         
       } else {
         state.image = null
       }
@@ -183,7 +183,7 @@ export default new Vuex.Store({
         var image = ''
         if (res.data.image) {
           //image = 'http://127.0.0.1:8000' + res.data.image     
-          image = SERVER.URL + res.data.image       
+          image = SERVER.ROUTES.image + res.data.image       
         } else {
           image = state.image
         }
@@ -208,13 +208,13 @@ export default new Vuex.Store({
         var image = ''
         if (res.data.image) {
           //image = 'http://127.0.0.1:8000' + res.data.image   
-          image = SERVER.URL + res.data.image         // drf
+          image = SERVER.ROUTES.image + res.data.image         // drf
           //image = state.image // 스프링
         } else {
           image = state.image
         }
         console.log(image)
-        commit("GET_MY_PROFILE", { nickname, introduction, image })
+        commit("GET_MY_PROFILE", { nickname, introduction, image })        
       })
       .catch((err) => {console.log(err.response.data.error)})
     },

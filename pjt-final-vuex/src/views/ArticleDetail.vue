@@ -375,7 +375,7 @@ export default {
       isLike: false,
       // 이미지 주소 조합용
       //SERVER_URL: 'http://127.0.0.1:8000'
-      SERVER_URL : SERVER.URL
+      SERVER_URL: SERVER.ROUTES.image
     }
   },
   computed: {
@@ -1167,7 +1167,7 @@ img.profile-photo-sm {
 
 /*=========================================== 동적요소 ===========================================*/
 .theme--light.v-input, .theme--light.v-input input, .theme--light.v-input textarea {
-  color: white;
+  color: black;
 }
 
 input.star{

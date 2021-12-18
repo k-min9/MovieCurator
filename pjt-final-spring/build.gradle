@@ -31,8 +31,13 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 
 
+	//SEARCH from mavenrepository : https://mvnrepository.com/
+
 	// 파일 및 업로드 GCP
 	//compile group: 'org.springframework.cloud', name: 'spring-cloud-gcp-starter-storage'
+	implementation group: 'org.springframework.cloud', name: 'spring-cloud-gcp-starter', version: '1.2.8.RELEASE'
+	implementation group: 'org.springframework.cloud', name: 'spring-cloud-gcp-storage', version: '1.2.8.RELEASE'
+
 
 	// DB에 jsonb를 넣기 위해서
 	implementation group: 'com.vladmihalcea', name: 'hibernate-types-52', version: '1.0.0'
@@ -44,14 +49,4 @@ dependencies {
 
 test {
 	useJUnitPlatform()
-}
-compileKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}
-compileTestKotlin {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
 }
