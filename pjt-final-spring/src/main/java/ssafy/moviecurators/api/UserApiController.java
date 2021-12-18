@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -18,6 +19,7 @@ import ssafy.moviecurators.domain.accounts.Curator;
 import ssafy.moviecurators.dto.CuratorDto;
 import ssafy.moviecurators.dto.error.ErrorResponse;
 import ssafy.moviecurators.dto.simple.SimpleUserDto;
+import ssafy.moviecurators.service.FileService;
 import ssafy.moviecurators.service.JwtTokenProvider;
 import ssafy.moviecurators.domain.accounts.User;
 import ssafy.moviecurators.dto.UserProfileDto;
@@ -45,6 +47,7 @@ public class UserApiController {
 
     private final UserService userService;
     private final UserRepository userRepository;
+    private final FileService fileService;
 
     private final JwtTokenProvider jwtTokenProvider;
     private final MessageSource messageSource;
@@ -197,45 +200,20 @@ public class UserApiController {
                     .body(new ErrorResponse(messageSource.getMessage("error.none.user", null, LocaleContextHolder.getLocale())));
         }
 
-        // image = "" 에서 기존 이미지 가져오기로 변경
-        String image = user.getImage();
+
+        String image = user.getImage(); // image = "" 에서 기존 이미지 가져오기로 변경
         if (file != null) {
-            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+            image = fileService.imageUploadLocal(file, user); //로컬 상태에서 업로드 하는 방식
 
-            String uploadDir = "media/profile/" + user.getId();
 
-            Path uploadPath = Paths.get(uploadDir);
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-            }
 
-            try (InputStream inputStream = file.getInputStream()) {
-                // 장고 설정 200, 200, 화질 100
-                Image processedImage = ImageIO.read(inputStream);
 
-                BufferedImage scaledBI = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
-                Graphics2D g = scaledBI.createGraphics();
-                g.drawImage(processedImage, 0, 0, 200, 200, null);
-                g.dispose();
 
-                ByteArrayOutputStream os = new ByteArrayOutputStream();
-                ImageIO.write(scaledBI, "jpg", os);
 
-                InputStream processedInputStream = new ByteArrayInputStream(os.toByteArray());
-
-                Path filePath = uploadPath.resolve(fileName);
-                Files.copy(processedInputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-
-            } catch (IOException ioe) {
-                throw new IOException("이미지 저장 불가: " + fileName, ioe);
-            }
-
-            image = "/media/profile/" + user.getId() + "/" + fileName;
         }
 
         return ResponseEntity.ok().body(new SimpleUserDto(userService.updateProfile(userId, nickname, introduction, image)));
     }
-
 
 
     /**
