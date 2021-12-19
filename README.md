@@ -31,6 +31,8 @@
 
 ### - 기술스택 / Requirements
 
+![기술스택](README.assets/기술스택.jpg)
+
 - back1 : Spring (Java 11) framework, Web, Spring Data JPA, Spring Security, Validation, Lombok
 - back2 : Django Restframework, imagekit
 - front : Vue.js, vuex, vue-router, vuetify, Bootstrap, sweetalert2
