@@ -75,7 +75,7 @@
               <div class="clearfix"></div>
 
               <!-- 내용 -->
-              <p class="text-secondary">{{this.articleContent}}</p><br>
+              <pre class="text-secondary">{{this.articleContent}}</pre><br>
 
               <!-- 버튼 -->
               <div class="article-detail-form-btns">

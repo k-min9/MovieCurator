@@ -109,9 +109,8 @@
                   <div class="card">
                     <div class="card-body">
                       <div class="row">
-                        
                         <!-- 사진과 작성 시간-->
-                        <div class="col-md-2">
+                        <div class="d-none col-sm-2 d-md-block col-md-2">
                           <div v-if="article.user.image === null">
                             <img src="@/assets/images/profile_basic.jpg" class="review-form-profile img-fluid rounded" alt="profileImage">
                             <div class="review-form-time">
@@ -125,8 +124,7 @@
                             </div>
                           </div>
                         </div>
-                        
-                        <div class="col-md-10">
+                        <div class="col-md-10 col-sm-10">
                           <p class="text-primary"></p>
                             <!-- 작성자 이름 -->
                             <router-link :to="{ name: 'CuratorDetail', params: { id: article.user.id }}">
@@ -168,7 +166,7 @@
                           <div class="clearfix"></div>
                           
                           <!-- 내용 -->
-                          <p class="text-secondary">{{article.content}}</p>
+                          <pre class="text-secondary">{{article.content}}</pre>
                           
                           <!-- 평가 상세 버튼 -->
                           <router-link :to="{ name: 'ArticleDetail', params: { id: article.id }}">

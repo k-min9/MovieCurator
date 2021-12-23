@@ -96,7 +96,7 @@
               <div class="clearfix"></div>
               
               <!-- 내용 -->
-              <p class="text-secondary">{{article.content}}</p>
+              <pre class="text-secondary">{{article.content}}</pre>
               
               <!-- 평가 상세 버튼 -->
               <router-link :to="{ name: 'ArticleDetail', params: { id: article.id }}">
