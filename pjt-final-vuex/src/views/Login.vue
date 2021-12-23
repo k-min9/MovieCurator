@@ -60,13 +60,15 @@ export default {
             swal.fire ({
             icon: 'error',
             title: '로그인 실패',
-            text: '유저 이름을 입력해주세요.'
+            text: '유저 이름을 입력해주세요.',
+            scrollbarPadding: false
         })
         } else if (!this.credentials.password) {
             swal.fire ({
             icon: 'error',
             title: '로그인 실패',
-            text: '비밀번호를 입력해주세요.'
+            text: '비밀번호를 입력해주세요.',
+            scrollbarPadding: false
         })
         } else {
             this.$store.dispatch('login', this.credentials)

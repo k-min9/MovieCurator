@@ -23,7 +23,13 @@
                   <router-link :to="{ name: 'CuratorDetail', params: { id: curator.id }}">
                     <span class="curator-detail-info">{{curator.nickname}}</span><br>
                   </router-link>
-                    <span class="curator-detail-info">경험치 : {{curator.exp}}</span><br>
+                    <span class="curator-detail-info">등급 : </span>
+                    <span v-if="curator.exp === 0" >
+                      <span class="badge silver mx-1">basic</span><br>
+                    </span>
+                    <span v-else> 
+                      <span class="badge gold mx-1">premium</span><br>
+                    </span>
                     <span class="curator-detail-info">ID : {{curator.id}}</span><br>
                 </div>
               
@@ -261,5 +267,26 @@ img.profile-photo-sm {
   border: 5px outset;
   color : black;
 }
+
+
+/*================================ badge ======================================*/
+.badge {
+  color: #fff !important;
+  border-radius: 0.125rem;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); }
+
+.badge-pill {
+  padding-right: 0.6em;
+  padding-left: 0.6em;
+  border-radius: 10rem; }
+
+.gold {
+  background-color: #FFD700 !important; }
+
+
+.silver {
+  background-color: #C0C0C0 !important; }
+
+
 
 </style>

@@ -17,7 +17,7 @@
           <div class="row">
 
             <!-- 프로필 -->
-            <div class="col-md-2">
+            <div class="d-none col-sm-2 d-md-block col-md-2">
               <div v-if="articleImage === null">
                 <router-link :to="{ name: 'CuratorDetail', params: { id: articleUserId }}">
                   <img src="@/assets/images/profile_basic.jpg" class="article-detail-profile img img-rounded img-fluid" alt="profileImage">
@@ -31,7 +31,7 @@
             </div>
 
             <!-- 작성자 + 별상자 -->
-            <div class="col-md-10">
+            <div class="col-md-10 col-sm-10">
               <!-- 작성자 -->
                 <span>작성자 : </span>
               <router-link :to="{ name: 'CuratorDetail', params: { id: articleUserId }}">
@@ -412,7 +412,8 @@ export default {
         swal.fire ({
           icon: 'error',
           title: '평가 수정 실패',
-          text: '작성자가 아닙니다.'
+          text: '작성자가 아닙니다.',
+          scrollbarPadding: false
       })
     }
     }, 
@@ -425,19 +426,22 @@ export default {
           swal.fire ({
             icon: 'error',
             title: '평가 수정 실패',
-            text: '별점을 입력해주세요.'
+            text: '별점을 입력해주세요.',
+            scrollbarPadding: false
         })
         } else if (this.newArticleTitle === '') {
           swal.fire ({
             icon: 'error',
             title: '평가 수정 실패',
-            text: '제목을 입력해주세요.'
+            text: '제목을 입력해주세요.',
+            scrollbarPadding: false
         })
         } else if (this.newArticleContent === '') {
           swal.fire ({
             icon: 'error',
             title: '평가 수정 실패',
-            text: '내용을 입력해주세요.'
+            text: '내용을 입력해주세요.',
+            scrollbarPadding: false
         })
         } else {
         const contents = {
@@ -454,8 +458,6 @@ export default {
           data: contents,
         })
         .then(res => {
-          console.log("articledetailput")
-          console.log(res.data)
           this.selectUpdateBtn = !this.selectUpdateBtn
           this.articleTitle = res.data.title
           this.articleContent = res.data.content
@@ -465,7 +467,8 @@ export default {
           swal.fire ({
             icon: 'error',
             title: '평가 수정 실패',
-            text: '수정 권한이 없습니다.'
+            text: '수정 권한이 없습니다.',
+            scrollbarPadding: false
           })
         })
       }
@@ -489,7 +492,8 @@ export default {
           swal.fire ({
             icon: 'error',
             title: '평가 삭제 실패',
-            text: '삭제 권한이 없습니다.'
+            text: '삭제 권한이 없습니다.',
+            scrollbarPadding: false
           })
         })
     },
@@ -499,7 +503,8 @@ export default {
         swal.fire ({
           icon: 'error',
           title: '후원하기 실패',
-          text: '자신의 평가에는 후원할 수 없습니다.'
+          text: '자신의 평가에는 후원할 수 없습니다.',
+          scrollbarPadding: false
       }) 
       } else {
       const Buttons = swal.mixin({
@@ -517,6 +522,7 @@ export default {
         showCancelButton: true,      
         html: '후원 마일리지를 정해주세요 : ' + this.donationMileage + '<br>보유 마일리지 : ' + this.mileage,       
         confirmButtonText: '후원하기',
+        scrollbarPadding: false,
         denyButtonText:'+500',
         cancelButtonText: '-500',
       }). then ( (result) => {
@@ -544,7 +550,8 @@ export default {
         swal.fire ({
           icon: 'error',
           title: '후원하기 실패',
-          text: '마일리지가 부족합니다.'
+          text: '마일리지가 부족합니다.',
+          scrollbarPadding: false
       })
       } else {
         swal.fire({
@@ -554,6 +561,7 @@ export default {
             autocapitalize: 'off'
           },
           confirmButtonText: '작성',
+          scrollbarPadding: false
         })
         .then ( (result) => {
         // 본인의 마일리지 감소
@@ -603,6 +611,7 @@ export default {
           title: '후원 감사합니다!',
           html: '당신의 후원이 더 밝은 영화 문화를 조성합니다.<br>프로필 [내가 후원한 평가]에 추가되었습니다.',
           showConfirmButton: false,
+          scrollbarPadding: false,
           timer: 1200
         })
       })            
@@ -616,8 +625,6 @@ export default {
         headers: this.setToken(),
       })
       .then((res)=>{
-        console.log("getComments")
-        console.log(res.data)
         this.comments = res.data
       })
     },
@@ -627,7 +634,8 @@ export default {
           swal.fire ({
             icon: 'error',
             title: '평가 작성 실패',
-            text: '내용을 입력해주세요.'
+            text: '내용을 입력해주세요.',
+            scrollbarPadding: false
         })
         } else {
         const contents = {
@@ -658,7 +666,8 @@ export default {
           swal.fire ({
           icon: 'error',
           title: '평가 수정 실패',
-          text: '작성자가 아닙니다.'
+          text: '작성자가 아닙니다.',
+          scrollbarPadding: false
       })
       }
     }, 
@@ -669,7 +678,8 @@ export default {
           swal.fire ({
             icon: 'error',
             title: '평가 작성 실패',
-            text: '내용을 입력해주세요.'
+            text: '내용을 입력해주세요.',
+            scrollbarPadding: false
         })
         } else {
         const contents = {
@@ -693,7 +703,8 @@ export default {
           swal.fire ({
             icon: 'error',
             title: '댓글 수정 실패',
-            text: '수정 권한이 없습니다.'
+            text: '수정 권한이 없습니다.',
+            scrollbarPadding: false
           })
           this.$router.go()
         })  
@@ -707,6 +718,7 @@ export default {
         showDenyButton: true,
         confirmButtonText: '네',
         denyButtonText: `아니오`,
+        scrollbarPadding: false,
       }).then((result) => {
       if (result.isConfirmed) {
               const contents = {
@@ -721,7 +733,11 @@ export default {
           data: contents,
         })
         .then(() => {
-          swal.fire('댓글이 삭제되었습니다.', '', 'success')
+          swal.fire({
+            icon : 'success',
+            title: '댓글이 삭제되었습니다.',
+            scrollbarPadding: false
+          })
           this.getComments()
           this.$router.push({ name: 'ArticleDetail', params: { id: this.articleId }})
         })
@@ -729,11 +745,17 @@ export default {
           swal.fire ({
             icon: 'error',
             title: '댓글 삭제 실패',
-            text: err.response.data.Unauthorized
+            text: err.response.data.Unauthorized,
+            scrollbarPadding: false
           })
         })        
       } else {
-        swal.fire('삭제를 취소하셨습니다.', '', 'info')
+        swal.fire({
+          icon: 'info',
+          title: '댓글 삭제 실패',
+          txt: '댓글 삭제를 취소했습니다.',
+          scrollbarPadding: false
+        })
       }
     })
     },
@@ -753,6 +775,7 @@ export default {
           title: '좋아요 추가',
           text: '프로필 [내가 좋아한 평가]에 추가되었습니다.',
           showConfirmButton: false,
+          scrollbarPadding: false,
           timer: 1200
         })
       })
@@ -772,6 +795,7 @@ export default {
           icon: 'info',
           title: '좋아요 취소',
           text: '프로필 [내가 좋아한 평가]에서 제거되었습니다.',
+          scrollbarPadding: false,
           showConfirmButton: false,
           timer: 1200
         })
@@ -788,8 +812,6 @@ export default {
       headers: this.setToken(),
     })
     .then(res => {
-      console.log('getArticle')
-      console.log(res.data)
       this.movieTitle = res.data.movie.title
       this.articleUserId = res.data.user.id
       this.articleUsername = res.data.user.username

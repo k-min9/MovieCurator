@@ -58,8 +58,6 @@ export default {
         headers: this.setToken()
       })
       .then((res)=>{
-        console.log('getCurators')
-        console.log(res.data)
         this.curators = res.data 
       }) 
     },

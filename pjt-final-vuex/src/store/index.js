@@ -132,7 +132,6 @@ export default new Vuex.Store({
         data: credentials,
       })
       .then(res => {
-        console.log(res.data)
         localStorage.setItem('jwt', res.data.token)
         commit('LOGIN', credentials)
         router.push({name: 'Home'})
@@ -141,7 +140,8 @@ export default new Vuex.Store({
         swal.fire ({
           icon: 'error',
           title: '로그인 실패',
-          text: '잘못된 아이디 또는 패스워드입니다.'
+          text: '잘못된 아이디 또는 패스워드입니다.',
+          scrollbarPadding: false
           })    
       })
     },
@@ -164,8 +164,6 @@ export default new Vuex.Store({
         url: SERVER.URL + SERVER.ROUTES.accounts.default + String(username) + SERVER.ROUTES.accounts.getUserInfo,
       })
       .then(res => {
-        console.log('getUserInfo')
-        console.log(res.data)
         commit('GET_USER_INFO', res.data)
       })
       .catch(err => console.log(err))
@@ -200,8 +198,6 @@ export default new Vuex.Store({
         headers: getters.token,
       })
       .then((res) => {
-        console.log('UpdateProfile')
-        console.log(res.data)
         // 대상 포함 여부
         const nickname = res.data.nickname
         const introduction = res.data.introduction
@@ -213,7 +209,6 @@ export default new Vuex.Store({
         } else {
           image = state.image
         }
-        console.log(image)
         commit("GET_MY_PROFILE", { nickname, introduction, image })        
       })
       .catch((err) => {console.log(err.response.data.error)})
@@ -239,7 +234,8 @@ export default new Vuex.Store({
         swal.fire ({
           icon: 'success',
           title: '마일리지 충전 성공',
-          text: changeMileage + ' 마일리지가 충전 되었습니다.'
+          text: changeMileage + ' 마일리지가 충전 되었습니다.',
+          scrollbarPadding: false
           }) 
         }  
       })
@@ -247,7 +243,8 @@ export default new Vuex.Store({
         swal.fire ({
           icon: 'error',
           title: '마일리지 충전 실패',
-          text: '잘못된 요청입니다.'
+          text: '잘못된 요청입니다.',
+          scrollbarPadding: false
           })    
       })
     },
@@ -331,7 +328,6 @@ export default new Vuex.Store({
         headers: token,
       })
       .then(res => {
-        console.log(res.data)
         commit('GET_MOVIES', res.data)
       })
       .catch(err => console.log(err))

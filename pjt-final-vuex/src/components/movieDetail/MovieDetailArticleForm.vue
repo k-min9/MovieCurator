@@ -15,7 +15,7 @@
         <div class="article-form-input-detail">
           <div v-if="isLogin">
             <!-- 프로필 -->
-            <div class="article-form-profile col-md-4">
+            <div class="article-form-profile d-none col-sm-2 d-md-block col-md-2">
               <div v-if="image === null">
                 <img src="@/assets/images/profile_basic.jpg" class="img-fluid rounded" alt="profileImage">
               </div>
@@ -246,8 +246,6 @@ export default {
         headers: this.setToken(),
       })
       .then((res)=>{
-        console.log('articleList')
-        console.log(res.data)
         this.articles = res.data
       })
     },
@@ -257,19 +255,22 @@ export default {
           swal.fire ({
             icon: 'error',
             title: '평가 작성 실패',
-            text: '별점을 입력해주세요.'
+            text: '별점을 입력해주세요.',
+            scrollbarPadding: false
         })
         } else if (this.articleTitle === '') {
           swal.fire ({
             icon: 'error',
             title: '평가 작성 실패',
-            text: '제목을 입력해주세요.'
+            text: '제목을 입력해주세요.',
+            scrollbarPadding: false
         })
         } else if (this.articleContent === '') {
           swal.fire ({
             icon: 'error',
             title: '평가 작성 실패',
-            text: '내용을 입력해주세요.'
+            text: '내용을 입력해주세요.',
+            scrollbarPadding: false
         })
         } else {
         const contents = {
@@ -285,8 +286,6 @@ export default {
           data: contents,
         })
         .then(res => {
-          console.log('articleFormWrite')
-          console.log(res.data)
           this.isArticleWriten = true
           this.articleId = res.data.id
           this.articles.unshift(res.data)
@@ -309,8 +308,6 @@ export default {
       headers: this.setToken(),
     })
     .then(res => {
-      console.log('articleDetail')
-      console.log(res.data)
       // 내용이 비어있음 = 평가 적은 적이 없음
       if (Object.keys(res.data.content).length) {
         this.isArticleWriten = true

@@ -2,7 +2,7 @@
   <div class="curatorDetailMain">
     <div class="curator-detail-main row">
       <h2 class="curator-title">About <strong>[{{curator.nickname}}]</strong></h2>
-      <div class="curator-profile col-md-2">
+      <div class="curator-profile col-md-2 col-sm-2">
         <div v-if="curator.image === null">
           <img class="img-fluid rounded" src="@/assets/images/profile_basic.jpg" alt="profileImage">                   
         </div>
@@ -11,9 +11,15 @@
         </div>
       </div> 
 
-      <div class="curator-about col-md-10">
+      <div class="curator-about col-md-10 col-sm-10">
         <span class="curator-about-span">닉네임 : {{curator.nickname}}</span><br>
-        <span class="curator-about-span">경험치 : {{curator.exp}}</span><br>
+        <span class="curator-about-span">등급 : </span>
+        <span v-if="curator.exp === 0" >
+          <span class="badge silver mx-1">basic</span><br>
+        </span>
+        <span v-else> 
+          <span class="badge gold mx-1">premium</span><br>
+        </span>
         <span class="curator-about-span">자기소개 : {{curator.introduction}}</span>
       </div>
       
@@ -41,7 +47,7 @@
           <div class="row">
             
             <!-- 사진과 작성 시간-->
-            <div class="col-md-2">
+            <div class="d-none col-sm-2 d-md-block col-md-2">
               <div v-if="article.user.image === null">
                 <img src="@/assets/images/profile_basic.jpg" class="review-form-profile img-fluid rounded" alt="profileImage">
                 <div class="review-form-time">
@@ -56,7 +62,7 @@
               </div>
             </div>
             
-            <div class="col-md-10 curator-assessment-details">
+            <div class="col-md-10 col-sm-10 curator-assessment-details">
               <p class="text-primary"></p>
                 <!-- 작성자 이름 -->
                 <a class="review-writer float-left" href="#"><strong>{{article.user.username}}</strong></a>
@@ -378,5 +384,24 @@ label.star:before{
   content:'\f005';
   font-family: FontAwesome;
 }
+
+/*================================ badge ======================================*/
+.badge {
+  color: #fff !important;
+  border-radius: 0.125rem;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); }
+
+.badge-pill {
+  padding-right: 0.6em;
+  padding-left: 0.6em;
+  border-radius: 10rem; }
+
+.gold {
+  background-color: #FFD700 !important; }
+
+
+.silver {
+  background-color: #C0C0C0 !important; }
+
 
 </style>

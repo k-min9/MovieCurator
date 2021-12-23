@@ -21,7 +21,8 @@
               <div class="row">
                   <div class="team-member col-6">
                     <a href="https://github.com/k-min9">
-                      <img id="developer-img" class="mx-auto rounded-circle mb-3" src="@/assets/images/userB.jpg" alt="kangmingu"/>
+                      <!-- <img id="developer-img" class="mx-auto rounded-circle mb-3" src="@/assets/images/userB.jpg" alt="kangmingu"/> -->
+                      <v-img id="developer-img" class="mx-auto rounded-circle mb-3" contain=true :src="require('@/assets/images/userB.jpg')" max-width="10rem" max-height="10rem" alt="Logo"/>
                       <!-- <v-img class="mx-auto rounded-circle" :src="require('@/assets/images/userB.jpg')"></v-img> -->
                       <h5 id="developer-name">KANG MIN GU</h5>
                     </a>
@@ -29,7 +30,8 @@
 
                   <div class="team-member col-6">
                     <a href="https://github.com/limgeonho">
-                      <img id="developer-img" class="mx-auto rounded-circle mb-3" src="@/assets/images/userA.jpg" alt="limgeonho"/>
+                      <!-- <img id="developer-img" class="mx-auto rounded-circle mb-3" src="@/assets/images/userA.jpg" alt="limgeonho"/> -->
+                      <v-img id="developer-img" class="mx-auto rounded-circle mb-3" contain=true :src="require('@/assets/images/userA.jpg')" max-width="10rem" max-height="10rem" alt="Logo"/>
                       <h5 id="developer-name">LIM GEON HO</h5>
                     </a>
                   </div> 
@@ -79,7 +81,6 @@ export default {
         //headers: this.setToken(),
       })
       .then((res) => {
-        console.log(res.data)
         //window.open(res.data)
         window.location.href = res.data  // 결제 화면 전환        
       })
@@ -111,8 +112,9 @@ export default {
 }
 
 #developer-img {
-  height: 10rem;
-  width: 10rem;
+
+  /*height: 10rem;*/
+  /*width: 10rem;*/
   border: solid 2px white;
 }
 

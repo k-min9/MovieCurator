@@ -6,7 +6,7 @@
       </div>
 
       <!-- MovieCard2 반응형 배치(반복문) / row-cols-md-5 갯수-->
-      <div class="movie-list row row-cols-1 row-cols-md-5 gy-3">
+      <div class="movie-list row row-cols-2 row-cols-md-5 gy-3">
         <MovieCard2 id="poster"
           v-for="(movie, idx) in searchedMovies"
           :key="idx"
@@ -74,8 +74,6 @@ export default {
         headers: this.setToken()
       })
       .then((res)=>{
-        console.log('search')
-        console.log(res.data)
         this.searchedMovies = res.data
       })
     },

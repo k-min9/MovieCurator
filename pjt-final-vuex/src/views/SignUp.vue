@@ -42,19 +42,22 @@ export default {
           swal.fire ({
             icon: 'error',
             title: '가입 실패',
-            text: '유저 이름을 입력해주세요.'
+            text: '유저 이름을 입력해주세요.',
+            scrollbarPadding: false
         })
         } else if (!this.credentials.password) {
           swal.fire ({
             icon: 'error',
             title: '가입 실패',
-            text: '비밀번호를 입력해주세요.'
+            text: '비밀번호를 입력해주세요.',
+            scrollbarPadding: false
         })
         } else if (this.credentials.password != this.credentials.passwordConfirmation) {
           swal.fire ({
             icon: 'error',
             title: '가입 실패',
-            text: '비밀번호가 일치하지 않습니다.'
+            text: '비밀번호가 일치하지 않습니다.',
+            scrollbarPadding: false
         })
         } else {
         const contents = {
@@ -76,12 +79,11 @@ export default {
           }              
         )
         .catch(err =>{
-          console.log(err.response)
           swal.fire ({
               icon: 'error',
               title: '가입 실패',
-              text: err.response.data.error
-              // text: '가입 실패'
+              text: err.response.data.error,
+              scrollbarPadding: false
               })      
           })
         }
