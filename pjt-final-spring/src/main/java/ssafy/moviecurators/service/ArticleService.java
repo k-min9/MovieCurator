@@ -30,7 +30,7 @@ public class ArticleService {
     public List<Article> articleHome() {
         // 1week
         OffsetDateTime end = OffsetDateTime.now();
-        OffsetDateTime start = end.minusDays(7);
+        OffsetDateTime start = end.minusDays(90);
 
         return articleRepository.findTop6ByCreatedBetweenOrderByPointsDesc(start, end);
     }
@@ -80,6 +80,7 @@ public class ArticleService {
         likes.setArticle(article);
         likes.setUser(userRepository.getById(userId));
         likesRepository.save(likes);
+        
 
 
     }
