@@ -22,8 +22,8 @@ public class KakaoPayService {
 
     private static final String HOST = "https://kapi.kakao.com";
     // 카카오페이 내 어플리케이션 플랫폼에서 주소 관리
-//    private static final String FRONTSERVER = "https://moviecurators-spring.netlify.app";
-    private static final String FRONTSERVER = "http://localhost:8081";
+    private static final String FRONTSERVER = "https://moviecurators-spring.netlify.app";
+//    private static final String FRONTSERVER = "http://localhost:8081";
 
     @Value("${key.kakao.admin}")
     String ADMIN_KEY;
