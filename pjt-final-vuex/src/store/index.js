@@ -10,8 +10,6 @@ import SERVER from '@/api/server'
 import googleApi from '@/api/google'
 
 
-//const SERVER_URL = 'http://127.0.0.1:8000/'
-
 Vue.use(Vuex)
 
 export default new Vuex.Store({

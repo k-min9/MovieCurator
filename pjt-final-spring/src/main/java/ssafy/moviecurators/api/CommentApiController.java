@@ -7,8 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ssafy.moviecurators.domain.movies.Comment;
+import ssafy.moviecurators.domain.movies.Movie;
 import ssafy.moviecurators.dto.CommentDto;
 import ssafy.moviecurators.dto.error.ErrorResponse;
+import ssafy.moviecurators.dto.simple.SimpleMovieDto;
 import ssafy.moviecurators.service.CommentService;
 import ssafy.moviecurators.service.JwtTokenProvider;
 
@@ -93,7 +95,7 @@ public class CommentApiController {
     }
 
     @DeleteMapping("/movies/{articleId}/comments/")
-    public ResponseEntity articleDetailDelete(@PathVariable("articleId") Long articleId,
+    public ResponseEntity commentDetailDelete(@PathVariable("articleId") Long articleId,
                                                     @RequestBody Map<String, String> obj,
                                                     HttpServletRequest request) {
 
@@ -107,11 +109,19 @@ public class CommentApiController {
 
         Long commentId = Long.parseLong((obj.get("commentId")));
 
-        commentService.commentDetailDelete(commentId);
+        // 삭제하기
+        try {
+            commentService.commentDetailDelete(userId, commentId);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        }
+        // 삭제 권한 없음
+        catch (IllegalStateException e) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorResponse(messageSource.getMessage("error.authorization", null, LocaleContextHolder.getLocale())));
+        }
+
+
     }
-
-
-
 }

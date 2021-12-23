@@ -86,4 +86,11 @@ public class UserService {
     public List<User> curatorSearch(String searchKeyword) {
         return userRepository.findTop6ByNicknameContainingOrUsernameContainingIgnoreCase(searchKeyword, searchKeyword);
     }
+
+    @Transactional
+    public void rankUpPremium(Long userId) {
+        // 현재 설정 - 0 : 일반 유저 / 그 외 : 프리미엄
+        User user = userRepository.getById(userId);
+        user.setExp(user.getExp()+1);
+    }
 }

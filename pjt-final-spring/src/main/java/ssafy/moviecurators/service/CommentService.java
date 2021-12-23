@@ -39,7 +39,13 @@ public class CommentService {
     }
 
     @Transactional
-    public void commentDetailDelete(Long commentId) {
-        commentRepository.delete(commentRepository.getById(commentId));
+    public void commentDetailDelete(Long userId, Long commentId) {
+        Comment comment = commentRepository.getById(commentId);
+        // 평가 작성자 내지 댓글 작성자가 삭제 가능
+        if (comment.getUser().getId() == userId || comment.getArticle().getUser().getId() == userId) {
+            commentRepository.delete(comment);
+        } else {
+            throw new IllegalStateException("삭제 권한이 없습니다.");
+        }
     }
 }

@@ -14,11 +14,20 @@ import SERVER from '@/api/server'
 export default {
   name: 'KakaoPaySuccess',
   methods: {
+    // 토큰
+    setToken() {
+      const token = localStorage.getItem('jwt')
+      const config = {
+        Authorization: `JWT ${token}`
+      }
+      return config
+    },
     // 결제 성공시 정보 받아오기
     kakaoPayRequest: function (pg_token){
       // 결제 내용 저장
     axios({
         method: 'POST',
+        headers: this.setToken(),
         //url: `http://127.0.0.1:8080/kakaoPay/success/`,
         url: SERVER.URL + '/kakaoPay/success/',
         params: {

@@ -745,7 +745,7 @@ export default {
           swal.fire ({
             icon: 'error',
             title: '댓글 삭제 실패',
-            text: err.response.data.Unauthorized,
+            text: err.response.data.error,
             scrollbarPadding: false
           })
         })        
