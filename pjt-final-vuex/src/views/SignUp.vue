@@ -74,6 +74,12 @@ export default {
         })
         .then(
           () => {
+            swal.fire ({
+              icon: 'success',
+              title: '회원 가입 성공',
+              text: 'Movie Curators에 오신 것을 환영합니다!',
+              scrollbarPadding: false
+            })
             this.$store.dispatch('login', this.credentials)
             this.$store.dispatch('getUserInfo', this.credentials.username)
           }              

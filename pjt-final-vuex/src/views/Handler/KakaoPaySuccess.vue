@@ -33,16 +33,13 @@ export default {
         params: {
           pgToken: pg_token,
         },
-        //headers: this.setToken(),
       })
       .then((res) => {
-        // console.log('PaySuccess')
-        // console.log(res.data)
         swal.fire ({
           icon: 'success',
           title: '후원 감사합니다.',
-          //text: '서버가 혼잡합니다. 다시 시도해 주세요.'
-          text: res.data.item_name + '회원으로 전환되었습니다.'
+          text: res.data.item_name + '회원으로 전환되었습니다.',
+          scrollbarPadding: false
         })
         router.push('/') 
       })
@@ -50,15 +47,13 @@ export default {
         swal.fire ({
           icon: 'error',
           title: '결제 실패',
-          //text: '서버가 혼잡합니다. 다시 시도해 주세요.'
-          text: pg_token
+          text: '서버가 혼잡합니다. 다시 시도해 주세요.'
+          //text: pg_token
         })
       })
     },
   },
   created() {
-    console.log('Success')
-    console.log(this.$route.query.pg_token)
     this.kakaoPayRequest(this.$route.query.pg_token)
   }
 }

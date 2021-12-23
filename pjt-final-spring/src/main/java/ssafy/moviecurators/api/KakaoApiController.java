@@ -6,6 +6,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,13 +45,17 @@ public class KakaoApiController {
                                           HttpServletRequest request) {
 
         String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
-        if(!jwtTokenProvider.validateToken(token)) {
+        Long userId;
+        // 골 때리는 반환값 "null"
+        if (token.equals("null")) {
+            userId = -1L;
+        } else if (!jwtTokenProvider.validateToken(token)) {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
                     .body(new ErrorResponse(messageSource.getMessage("error.valid.jwt", null, LocaleContextHolder.getLocale())));
+        } else {
+            userId = jwtTokenProvider.getUserIdFromJwt(token);
         }
-        Long userId = jwtTokenProvider.getUserIdFromJwt(token);
-
 
         try {
             KakaoPayApprovalVO kakaoPayApprovalVO = kakaoPayService.kakaoPaySuccess(pg_token, userId);

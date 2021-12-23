@@ -114,7 +114,9 @@ public class KakaoPayService {
         try {
             kakaoPayApprovalVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/approve"), body, KakaoPayApprovalVO.class);
 //            log.info("카카오 성공" + kakaoPayApprovalVO);
-            userService.rankUpPremium(userId);
+            if (userId != -1L) {
+                userService.rankUpPremium(userId);
+            }
             System.out.println("kakaoPayApprovalVO = " + kakaoPayApprovalVO);
 
             return kakaoPayApprovalVO;
