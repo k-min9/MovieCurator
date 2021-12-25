@@ -164,7 +164,7 @@
 
 #### 전처리(00_Movie DB Maker)
 
-폴더 내의 00.movie_api.py와 01.ML_recommend.py를 실행.
+pjt-final-sub 폴더의 00.Movie DB Maker 내의 00.movie_api.py와 01.ML_recommend.py를 실행.
 
 최종 생성된 tmdb2.json을 back(pjt-final-drf)의 movies\fixtures폴더 내로 이동
 
