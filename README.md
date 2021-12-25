@@ -6,7 +6,7 @@
 
 (위 사진은 차후 삼성전자 고용노동부 직인이 찍힌 상장으로 변경 예정)
 
-- 배포1 : https://moviecurators-spring.netlify.app/ (Back : Spring Server + AWS EC2 + RDS + Google Cloud Storage)
+- 배포1 : https://moviecurators.com (Back : Spring Server + AWS EC2 + RDS + Google Cloud Storage)
 - 배포2 : https://moviecurators.netlify.app/ (Back : Django Server + Heroku)
 
 * 자세한 구현과 설명 기술적 정보 제공을 위해 별도의 산출물 외에도 PPT, DOCS가 제공되어있습니다.
