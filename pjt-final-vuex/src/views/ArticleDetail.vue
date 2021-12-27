@@ -113,7 +113,7 @@
 
           <!-- 글 입력 폼 -->
           <div class="article-form-input-box">
-            <v-row @keyup.enter="createArticle">
+            <v-row>
               <v-col offset="1" class="col-10">
                 
                 <!-- 별 -->

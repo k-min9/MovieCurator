@@ -26,7 +26,7 @@
 
             <!-- 글 입력 폼 -->
             <div v-if="!isArticleWriten" class="article-form-input-box">
-              <v-row @keyup.enter="createArticle">
+              <v-row>
                 <v-col offset="1" class="col-10">
 
                   <div class="article-form-star-box">
@@ -57,6 +57,7 @@
                     label="글 내용을 입력하세요"
                     v-model="articleContent"
                     color="white"
+                    auto-grow
                   ></v-textarea>
 
                   <!-- 버튼 -->

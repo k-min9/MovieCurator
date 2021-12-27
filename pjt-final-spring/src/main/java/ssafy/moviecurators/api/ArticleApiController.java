@@ -80,6 +80,13 @@ public class ArticleApiController {
         return ResponseEntity.ok().body(new ArticleDto(article));
     }
 
+    /**
+     * 해당 함수는 Post~~
+     * @param movieId 영화의 고유 아이디를 의미합니다.
+     * @param article
+     * @param request
+     * @return
+     */
     @PostMapping("/movies/{movieId}/articles/")
     public ResponseEntity articleDetailPost(@PathVariable("movieId") Long movieId,
                                         @RequestBody Article article,
