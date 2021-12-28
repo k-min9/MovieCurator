@@ -9,10 +9,13 @@ import ssafy.moviecurators.domain.accounts.User;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
+/**
+ * Likes Entity
+ */
 @Entity
-@Table(name = "movies_likes")  // Django식 네이밍
-@Getter @Setter  // setter 나중에 이동
-@NoArgsConstructor//(access = AccessLevel.PROTECTED)
+@Table(name = "movies_likes")
+@Getter @Setter
+@NoArgsConstructor
 public class Likes {
 
     @Id @GeneratedValue
@@ -24,7 +27,6 @@ public class Likes {
     @Column(columnDefinition = "TEXT")
     private String backdrop_path;
 
-    //연결
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="article_id")
     private Article article;

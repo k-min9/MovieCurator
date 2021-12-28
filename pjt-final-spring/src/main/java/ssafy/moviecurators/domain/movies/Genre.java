@@ -10,9 +10,12 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Genre Entity
+ */
 @Entity
-@Table(name = "movies_genre")  // Django식 네이밍
-@Getter @Setter  // setter 나중에 이동
+@Table(name = "movies_genre")
+@Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Genre {
 
@@ -21,9 +24,6 @@ public class Genre {
 
     @Size(max=50)
     private String name;
-
-//    @ManyToMany(mappedBy = "genre_ids")
-//    private List<Movie> movies = new ArrayList<>();
 
     @OneToMany(mappedBy = "genre")
     private List<MovieGenre> movieGenres = new ArrayList<>();

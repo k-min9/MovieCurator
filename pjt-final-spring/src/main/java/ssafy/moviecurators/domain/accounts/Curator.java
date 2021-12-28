@@ -7,10 +7,13 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+/**
+ * Curator Entity
+ */
 @Entity
-@Table(name = "accounts_curator")  // Django식 네이밍
+@Table(name = "accounts_curator")
 @Getter @Setter
-@NoArgsConstructor//(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class Curator {
 
     @Id @GeneratedValue

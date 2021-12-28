@@ -9,6 +9,9 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
+/**
+ * 영화 관련 DTO
+ */
 @Data
 public class MovieDto {
 
@@ -23,8 +26,6 @@ public class MovieDto {
     private Integer vote_count;
     private Double vote_average;
     private List<Integer> movie_reference_overview;
-
-    // 연결
     private List<SimpleArticleDto> articles;
 
     public MovieDto(Movie movie) {
@@ -40,7 +41,7 @@ public class MovieDto {
         this.vote_average = movie.getVoteAverage();
         this.movie_reference_overview = movie.getMovie_reference_overview();
 
-        this.articles = movie.getArticles() // 여기서 끝낼 경우 프록시로 빈값 뜰 줄 알았지만, 무한 루프
+        this.articles = movie.getArticles()
                 .stream()
                 .map(article -> new SimpleArticleDto(article))
                 .collect(toList());

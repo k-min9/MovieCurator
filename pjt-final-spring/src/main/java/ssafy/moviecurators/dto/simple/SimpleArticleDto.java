@@ -5,6 +5,9 @@ import ssafy.moviecurators.domain.movies.Article;
 
 import java.time.OffsetDateTime;
 
+/**
+ * 평가 관련 DTO
+ */
 @Data
 public class SimpleArticleDto {
 

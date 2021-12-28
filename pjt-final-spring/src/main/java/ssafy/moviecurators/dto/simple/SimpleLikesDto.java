@@ -3,6 +3,9 @@ package ssafy.moviecurators.dto.simple;
 import lombok.Data;
 import ssafy.moviecurators.domain.movies.Likes;
 
+/**
+ * 좋아요 관련 DTO
+ */
 @Data
 public class SimpleLikesDto {
 

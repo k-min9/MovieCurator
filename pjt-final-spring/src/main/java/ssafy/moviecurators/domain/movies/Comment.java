@@ -9,9 +9,12 @@ import ssafy.moviecurators.domain.accounts.User;
 import javax.persistence.*;
 import java.time.OffsetDateTime;
 
+/**
+ * Comment Entity
+ */
 @Entity
-@Table(name = "movies_comment")  // Django식 네이밍
-@Getter @Setter  // setter 나중에 이동
+@Table(name = "movies_comment")
+@Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Comment {
 
@@ -29,7 +32,6 @@ public class Comment {
     @Column(name = "created_at", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private OffsetDateTime created;
 
-    //https://stackoverflow.com/questions/67870747/spring-boot-entity-how-to-add-createddate-utc-timezone-aware-lastmodified
     @PrePersist
     private void beforeSaving() {
         created = OffsetDateTime.now();
@@ -44,7 +46,6 @@ public class Comment {
         updated = OffsetDateTime.now();
     }
 
-    // 연결
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="article_id")
     private Article article;

@@ -8,9 +8,12 @@ import ssafy.moviecurators.domain.accounts.User;
 
 import javax.persistence.*;
 
+/**
+ * MovieGenre Entity
+ */
 @Entity
-@Table(name = "movies_movie_genre_ids")  // Django식 네이밍
-@Getter @Setter  // setter 나중에 이동
+@Table(name = "movies_movie_genre_ids")
+@Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MovieGenre {
 

@@ -5,6 +5,9 @@ import ssafy.moviecurators.domain.movies.Comment;
 
 import java.time.OffsetDateTime;
 
+/**
+ * 댓글 관련 DTO
+ */
 @Data
 public class SimpleCommentDto {
 

@@ -31,11 +31,6 @@ public class HomeApiController {
     @GetMapping("/movies/")
     public ResponseEntity<List<MovieDto>> home() {
         List<Movie> movies = movieService.homeMovie();
-//        장고는 이 부분 애초에 작성을 안 함. 이거 작동 안 할 정도면 난리 난거긴 함. 그럴 경우 인기 상위 12개 출력
-//        if(movies.isEmpty()){
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-//        }
-
         List<MovieDto> result = movies.stream()
                 .map(movie -> new MovieDto(movie))
                 .collect(toList());

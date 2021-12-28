@@ -10,14 +10,18 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class CorsConfig {
 
+    /**
+     * CORS 설정, 허락된 URL, 허락된 Origin
+     * @return
+     */
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
 
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")  // 허락 URL 패턴
-                        .allowedOrigins("*")  // 허락 Origin
+                registry.addMapping("/**")
+                        .allowedOrigins("*")
                 .allowedMethods(
                         HttpMethod.GET.name(),
                         HttpMethod.HEAD.name(),

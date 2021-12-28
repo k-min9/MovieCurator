@@ -18,16 +18,6 @@ public class GCSApiController {
 
     private final FileService fileService;
 
-    /*
-     * GCS 파일 다운로드
-     * 요청 JSON 예시
-     * {
-     *     "bucketName" : "moviecurator-profile",  // 버킷 이름
-     *     "downloadFileName" : "1.jpg",  // 버킷 속 파일 이름
-     *     "localFileLocation" : "download/3.jpg"  // 저장위치와 저장될 파일 이름
-     * }
-     * */
-
     /**
      * Storage(GCS)에서 사진을 다운로드[POST]
      * @param downloadReqDto GCS에서 사진을 JSON형태로 받아옴
@@ -54,7 +44,6 @@ public class GCSApiController {
         return ResponseEntity.ok(fileFromGCS.toString());
     }
 
-    // DTO는 로직 없으니 @Data 편하게 사용, static 필수
     @Data
     static class DownloadReqDto {
         private String bucketName;

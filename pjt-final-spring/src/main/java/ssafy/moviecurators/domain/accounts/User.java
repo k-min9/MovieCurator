@@ -20,11 +20,14 @@ import java.time.OffsetDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * User Entity
+ */
 @Entity
-@Table(name = "accounts_user")  // Django식 네이밍
+@Table(name = "accounts_user")
 @Builder
 @Getter @Setter
-@NoArgsConstructor//(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 public class User implements UserDetails {
 
@@ -59,11 +62,9 @@ public class User implements UserDetails {
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private OffsetDateTime date_joined;
 
-    //https://stackoverflow.com/questions/67870747/spring-boot-entity-how-to-add-createddate-utc-timezone-aware-lastmodified
     @PrePersist
     private void beforeSaving() {
         date_joined = OffsetDateTime.now();
-        //createdBy = Thread.currentThread().getName(); 필요하다면 추가
     }
 
     @Column(columnDefinition = "TEXT")
@@ -78,7 +79,6 @@ public class User implements UserDetails {
     private Integer mileage = 0;
     private Integer exp = 0;
     
-    // 연결
     @OneToMany(mappedBy = "toUser")
     private List<Curator> to_user = new ArrayList<>();
 
@@ -94,7 +94,6 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Likes> likes = new ArrayList<>();
 
-    // Security UserDetail 관련
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
@@ -131,14 +130,12 @@ public class User implements UserDetails {
         return true;
     }
 
-    // 생성자
     public User(String username, String password, String nickname) {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
     }
 
-    // 패스워드 해싱
     @Transactional
     public void encodePassword(PasswordEncoder passwordEncoder){
         password = passwordEncoder.encode(password);

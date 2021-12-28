@@ -8,6 +8,9 @@ import ssafy.moviecurators.domain.accounts.User;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * 유저 관련 Repository, JpaRepository상속
+ */
 public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findOneByUsername(String username);

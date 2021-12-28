@@ -10,9 +10,11 @@ import ssafy.moviecurators.domain.movies.Likes;
 
 import java.util.List;
 
+/**
+ * 좋아요 관련 Repository, JpaRepository상속
+ */
 public interface LikesRepository extends JpaRepository<Likes, Long> {
 
-    // 신청자의 좋아요
     @Query("select l from Likes l " +
             "join fetch l.article a " +
             "join fetch l.user u " +

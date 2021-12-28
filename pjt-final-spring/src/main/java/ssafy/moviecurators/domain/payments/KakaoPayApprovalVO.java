@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * 카카오페이 승인을 위한 기본 VO
+ */
 @Data
 public class KakaoPayApprovalVO {
 
@@ -16,11 +19,17 @@ public class KakaoPayApprovalVO {
     private Date created_at, approved_at;
 }
 
+/**
+ * 카카오페이 관련 총액, 세금 등
+ */
 @Data
 class AmountVO {
     private Integer total, tax_free, vat, point, discount;
 }
 
+/**
+ * 카카오페이 카드정보
+ */
 @Data
 class CardVO {
     private String purchase_corp, purchase_corp_code;

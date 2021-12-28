@@ -2,10 +2,12 @@ package ssafy.moviecurators.dto.error;
 
 import lombok.Data;
 
+/**
+ * 에러 메세지 관련
+ */
 @Data
 public class ErrorResponse {
 
-    // 장고와 형태 일치. 메시지 내용
     private String error;
 
     public ErrorResponse(String errorMessage) {

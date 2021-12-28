@@ -12,12 +12,17 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * 큐레이터(유저) 관련 Repository, JpaRepository 상속
+ */
 public interface CuratorRepository extends JpaRepository<Curator, Long> {
 
     @Query("select c from Curator c where c.toUser.id = :toUserId and c.fromUser.id = :fromUserId")
     Curator findCurator(@Param("toUserId") Long toUserId, @Param("fromUserId") Long fromUserId);
 
-    // 해당 지원자가 후원하는 후원자 최대 여섯
+    /**
+     * 해당 지원자가 후원하는 후원자 최대 6명
+     */
     List<Curator> findTop6ByFromUserOrderByScoreDesc(User fromUser);
 
 }

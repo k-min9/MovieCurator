@@ -118,7 +118,7 @@ public class MovieApiController {
 
         return ResponseEntity.ok().body(result);
     }
-    
+
     /**
      * 좋아요 한 평가들 가져오기[GET]
      * @param request

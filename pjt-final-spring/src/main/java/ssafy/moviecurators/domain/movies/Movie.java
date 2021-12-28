@@ -14,15 +14,17 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Movie Entity
+ */
 @Entity
-@Table(name = "movies_movie")  // Django식 네이밍
-@Getter @Setter  // setter 나중에 이동
+@Table(name = "movies_movie")
+@Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class Movie {
 
     @Id @GeneratedValue
-    //@Column(name = "movie_id")
     private Long id;
 
     @Size(max=200)
@@ -56,21 +58,10 @@ public class Movie {
     private List<Integer> movie_reference_overview;
 
 
-    // 연결
     @OneToMany(mappedBy = "movie")
     private List<Article> articles = new ArrayList<>();
 
     @OneToMany(mappedBy = "movie")
     private List<MovieGenre> movieGenres = new ArrayList<>();
-
-    // 예시용 다대다, 실무 금지!(일단 중간 테이블에 넣을 자료는 없음)
-    // 실제와는 다르다. 이 부분은 상담? 필요?
-//    @ManyToMany
-//    @JoinTable(name = "movies_movie_genre_ids2",
-//        joinColumns = @JoinColumn(name= "movie_id"),
-//        inverseJoinColumns = @JoinColumn(name="genre_id"))
-//    private List<Genre> genre_ids = new ArrayList<>();
-
-
 
 }

@@ -10,6 +10,10 @@ import java.nio.file.Paths;
 @Configuration
 public class ImageConfig implements WebMvcConfigurer {
 
+    /**
+     * 이미지를 관리하는 config
+     * @param registry
+     */
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         String dirName = "media/profile";
@@ -18,7 +22,6 @@ public class ImageConfig implements WebMvcConfigurer {
 
         if (dirName.startsWith("../")) dirName = dirName.replace("../", "");
 
-        // 대충 이런 느낌 registry.addResourceHandler("/media/profile/**").addResourceLocations("file:media/profile/");
         registry.addResourceHandler("/" + dirName + "/**").addResourceLocations("file:/"+ uploadPath + "/");
     }
 }

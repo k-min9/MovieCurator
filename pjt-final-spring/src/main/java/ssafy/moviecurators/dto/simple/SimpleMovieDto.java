@@ -6,6 +6,9 @@ import ssafy.moviecurators.domain.movies.Movie;
 import java.sql.Date;
 import java.util.List;
 
+/**
+ * 영화 관련 DTO
+ */
 @Data
 public class SimpleMovieDto {
 

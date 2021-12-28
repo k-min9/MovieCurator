@@ -93,7 +93,6 @@ public class CommentApiController {
         }
         Long userId = jwtTokenProvider.getUserIdFromJwt(token);
 
-        // 애초에 Map<String, String> 안쓰고 Obj 사용해서 더 복잡해짐
         Long commentId = Long.parseLong(String.valueOf(obj.get("commentId")));
         String newContent = String.valueOf(obj.get("content"));
 

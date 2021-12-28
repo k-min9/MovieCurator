@@ -25,6 +25,9 @@ import ssafy.moviecurators.service.JwtTokenProvider;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtTokenProvider jwtTokenProvider;
+    @Autowired
+    private final JwtAuthenticationEntryPoint unauthorizedHandler;
+
 
     @Bean
     @Override
@@ -32,36 +35,33 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//        web.ignoring().antMatchers("/js/**","/css/**","/images/**","/font/**","/html/**");
-//    }
-
-    @Autowired
-    private final JwtAuthenticationEntryPoint unauthorizedHandler;
-
+    /**
+     * Security config, REST, CORS 설정
+     * @param http
+     * @throws Exception
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .httpBasic().disable()  // rest api니까 기본설정 없애기
-            .cors().and()  // cors 무력화, 차후 고려
+            .httpBasic().disable()
+            .cors().and()
             .csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
                 .antMatchers("/**").permitAll()
-//            .and()
-//            .formLogin().disable().headers().frameOptions().disable()
             .and()
             .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
                     UsernamePasswordAuthenticationFilter.class);
     }
 
-    // 비밀번호 암호화
+    /**
+     * 비밀번호 암호화
+     * @return
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        //return new BCryptPasswordEncoder();
     }
 
 }

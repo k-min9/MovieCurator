@@ -10,6 +10,9 @@ import ssafy.moviecurators.dto.simple.SimpleUserDto;
 import java.time.OffsetDateTime;
 import java.util.List;
 
+/**
+ * 평가 관련 DTO
+ */
 @Data
 public class ArticleDto {
 
@@ -21,7 +24,6 @@ public class ArticleDto {
     private OffsetDateTime created_at;
     private OffsetDateTime updated_at;
 
-    // 연결
     private SimpleMovieDto movie;
     private SimpleUserDto user;
     private List<SimpleCommentDto> comments;
@@ -36,13 +38,14 @@ public class ArticleDto {
         this.created_at = article.getCreated();
         this.updated_at = article.getUpdated();
 
-        // 연결
         this.movie = new SimpleMovieDto(article.getMovie());
         this.user = new SimpleUserDto(article.getUser());
-        // 구현은 해 뒀음. 필요하면 사용
-//        this.comments = article.getComments()
-//                .stream().map(comment -> new SimpleCommentDto(comment)).collect(Collectors.toList());
-//        this.likes = article.getLikes()
-//                .stream().map(likes -> new SimpleLikesDto(likes)).collect(Collectors.toList());
+
+        /*
+        this.comments = article.getComments()
+                .stream().map(comment -> new SimpleCommentDto(comment)).collect(Collectors.toList());
+        this.likes = article.getLikes()
+                .stream().map(likes -> new SimpleLikesDto(likes)).collect(Collectors.toList());
+         */
     }
 }
