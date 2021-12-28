@@ -35,8 +35,10 @@ public class MovieApiController {
     private final MessageSource messageSource;
 
     /**
-     * 단일 영화 가져오기
-     * */
+     * 단일 영화 가져오기[GET]
+     * @param id 상세보기로 조회하고 싶은 영화 id
+     * @return 조회한 단일영화의 세부내용을 http response body에 넣어서 보냄
+     */
     @GetMapping("/movies/{id}/")
     public ResponseEntity<SimpleMovieDto> getMovie(@PathVariable("id") Long id) {
         Movie movie = movieRepository.getById(id);
@@ -48,8 +50,10 @@ public class MovieApiController {
     }
 
     /**
-     * 추천 영화 가져오기
-     * */
+     * 추천 영화 5편 가져오기[GET]
+     * @param id 상세보기로 조회되고 있는 영화 id
+     * @return 해당 영화에 추천되는 영화 5편을 http response body에 넣어서 보냄
+     */
     @GetMapping("/movies/{id}/recommend/")
     public ResponseEntity<List<SimpleMovieDto>> getMoviesRecommend(@PathVariable("id") Long id) {
         try {
@@ -68,8 +72,10 @@ public class MovieApiController {
     }
 
     /**
-     * 장르별 영화가져오기
-     **/
+     * 장르별 영화가져오기[GET]
+     * @param request
+     * @return 사용자가 선택한 장르의 영화를 DB에서 http response body에 넣어서 보냄
+     */
     @GetMapping("/movies/list/")
     public ResponseEntity<List<MovieDto>> movieList(HttpServletRequest request) {
 
@@ -94,8 +100,10 @@ public class MovieApiController {
     }
 
     /**
-     * 영화 검색
-     **/
+     * 영화 검색[GET]
+     * @param request
+     * @return 사용자가 검색한 제목(한 / 영)의 영화를 조회해서 http response body에 넣어서 보냄
+     */
     @GetMapping("/movies/search/")
     public ResponseEntity<List<MovieDto>> movieSearch(HttpServletRequest request) {
         String searchKeyword = request.getParameter("searchKeyword");
@@ -110,10 +118,12 @@ public class MovieApiController {
 
         return ResponseEntity.ok().body(result);
     }
-
+    
     /**
-     * 좋아요 한 평가들 가져오기
-     * */
+     * 좋아요 한 평가들 가져오기[GET]
+     * @param request
+     * @return 헤당 영화에 좋아요를 받은 영화들을 조회해서 http response body에 넣어서 보냄
+     */
     @GetMapping("/movies/likes/")
     public ResponseEntity likesList(HttpServletRequest request) {
 

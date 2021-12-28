@@ -18,7 +18,7 @@ public class GCSApiController {
 
     private final FileService fileService;
 
-    /**
+    /*
      * GCS 파일 다운로드
      * 요청 JSON 예시
      * {
@@ -28,6 +28,11 @@ public class GCSApiController {
      * }
      * */
 
+    /**
+     * Storage(GCS)에서 사진을 다운로드[POST]
+     * @param downloadReqDto GCS에서 사진을 JSON형태로 받아옴
+     * @return
+     */
     @PostMapping("/gcs/download")
     public ResponseEntity localDownloadFromStorage(@RequestBody DownloadReqDto downloadReqDto){
 
@@ -37,6 +42,11 @@ public class GCSApiController {
         return ResponseEntity.ok(fileFromGCS.toString());
     }
 
+    /**
+     * Storage(GCS)에 사진을 업로드[POST]
+     * @return 사진을 GCS에 JSON형태로 http response body에 넣어서 보냄
+     * @throws IOException
+     */
     @PostMapping("/gcs/upload")
     public ResponseEntity localUploadFromStorage() throws IOException {
 

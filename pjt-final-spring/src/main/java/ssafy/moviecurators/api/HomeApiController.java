@@ -24,6 +24,10 @@ public class HomeApiController {
     private final MovieService movieService;
     private final ArticleService articleService;
 
+    /**
+     * 메인 페이지(home)에 정해진 개수 만큼 영화를 가져오기[GET]
+     * @return 기본적으로 조회된 영화들을 http response body에 넣어서 보냄
+     */
     @GetMapping("/movies/")
     public ResponseEntity<List<MovieDto>> home() {
         List<Movie> movies = movieService.homeMovie();
@@ -40,8 +44,12 @@ public class HomeApiController {
     }
 
     /**
-     * home에 높은 점수의 상위 평가들 가져오기
+     *
      **/
+    /**
+     * home에 높은 점수의 상위 평가들 가져오기[GET]
+     * @return 상위에 랭크된 평가들을 조회하고 http response body에 넣어서 보냄
+     */
     @GetMapping("/movies/articles/home/")
     public ResponseEntity<List<ArticleDto>> articleHome() {
         List<Article> movies = articleService.articleHome();

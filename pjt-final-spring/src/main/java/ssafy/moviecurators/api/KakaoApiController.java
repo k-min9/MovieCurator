@@ -32,6 +32,10 @@ public class KakaoApiController {
     private final JwtTokenProvider jwtTokenProvider;
     private final MessageSource messageSource;
 
+    /**
+     * 카카오페이 api에 필요한 다양한 값들을 조회[GET]
+     * @return api사용에 필요한 값들을 http response body에 넣어서 보냄
+     */
     @GetMapping("/kakaoPay/")
     public String kakaoPaymentReady() {
 
@@ -40,13 +44,18 @@ public class KakaoApiController {
         return result;
     }
 
+    /**
+     * 카카오페이 결제 기능[POST]
+     * @param pg_token 카카오로부터 콜백으로 받는 토큰
+     * @param request
+     * @return 결제가 성공했을 경우 임시로 결제된 금액과 관련내용을 http response body에 넣어서 보냄
+     */
     @PostMapping("/kakaoPay/success/")
     public ResponseEntity kakaoPaySuccess(@RequestParam("pgToken") String pg_token,
                                           HttpServletRequest request) {
 
         String token = request.getHeader("Authorization").replaceFirst("JWT ", "");
         Long userId;
-        // 골 때리는 반환값 "null"
         if (token.equals("null")) {
             userId = -1L;
         } else if (!jwtTokenProvider.validateToken(token)) {
