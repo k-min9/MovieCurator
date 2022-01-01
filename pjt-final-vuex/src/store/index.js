@@ -26,6 +26,7 @@ export default new Vuex.Store({
     username: null,
     nickname: null,
     mileage: null,
+    userExp: 0,
     image: null,
     introduction: null,
     // 작성 평가, 댓글 작성수 관련 (이벤트 등에 활용 가능)
@@ -70,6 +71,7 @@ export default new Vuex.Store({
       state.nickname = null
       state.introduction = null
       state.mileage = null
+      state.userExp = 0
       state.image = null
       state.token = null
       state.followers = null
@@ -88,6 +90,7 @@ export default new Vuex.Store({
       state.userId = res.id
       state.nickname = res.nickname
       state.mileage = res.mileage
+      state.userExp = res.exp
       state.introduction = res.introduction
       state.following = res.following
       state.followers = res.followers

@@ -26,7 +26,12 @@
         <!-- 로그인 / 소셜로그인/ 로그아웃 상태 -->
         <ul class="navbar-nav">
           <li v-if="isLogin" class="nav-item-right"> 
-            <router-link class="nav-link" :to="{ name: 'Profile', params: {id:`${this.$store.state.userId}`}}">{{this.$store.state.nickname}}'s 프로필</router-link> <!-- 임시 위치 -->
+          <span v-if="this.$store.state.userExp === 0" >
+            <router-link class="nav-link" :to="{ name: 'Profile', params: {id:`${this.$store.state.userId}`}}">{{this.$store.state.nickname}}'s 프로필</router-link>
+          </span>
+          <span v-else> 
+            <router-link class="nav-link badge-premium" :to="{ name: 'Profile', params: {id:`${this.$store.state.userId}`}}"><i class="fas fa-crown mx-2 yellow"></i>{{this.$store.state.nickname}}'s 프로필&nbsp;&nbsp;</router-link>
+          </span>
           </li>
           <li v-if="!isLogin && !isSocialLogin" class="nav-item-right">
             <router-link class="nav-link" :to="{ name: 'Login' }">로그인</router-link>
@@ -145,5 +150,21 @@ export default {
   font-size: 7px;
 }
 
+
+/* 프리미엄 유저 */
+.badge-premium {
+  color: #fff !important;
+  background-color: #980000 !important; 
+  /* background-color: red; */
+
+  padding-right: 0.6em;
+  padding-left: 0.6em;
+  border-radius: 10rem;
+
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); }
+
+.yellow {
+  color: yellow !important;
+}
 
 </style>

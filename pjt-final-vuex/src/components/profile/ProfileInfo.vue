@@ -12,6 +12,9 @@
       </div>
 
       <div class="profile-card__cnt">
+        <span v-if="this.$store.state.userExp !== 0" >
+          <i class="fas fa-crown mx-2 premium"> Premium</i>
+        </span>
         <div v-if="nickname !== ''">
           <div class="profile-card__name">{{ nickname }} 님</div>
         </div>
@@ -240,7 +243,8 @@ a, a:hover {
     position: relative;
     z-index: 4;
     box-shadow: 0px 5px 50px 0px rgb(108, 68, 252), 0px 0px 0px 7px rgba(107, 74, 255, 0.5);
-
+    // box-shadow: 0px 5px 50px 0px rgb(250, 237, 125), 0px 0px 0px 7px rgba(229, 216, 92, 0.5);
+    
     @media screen and (max-width: 576px) {
       width: 120px;
       height: 120px;
@@ -494,6 +498,13 @@ a, a:hover {
     transition: all .3s;
   }
 
+}
+
+.premium {
+  color: red;
+  font-weight: 700;
+  font-size: 24px;
+  margin-bottom: 15px;
 }
 
 </style>
