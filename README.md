@@ -2,9 +2,7 @@
 
 ### - SSAFY 1학기 최우수 프로젝트
 
-![최우수프로젝트수상자2](README.assets/최우수프로젝트수상자2.jpg)
-
-(위 사진은 차후 삼성전자 고용노동부 직인이 찍힌 상장으로 변경 예정)
+![prize2](README.assets/prize2.jpg)
 
 - 배포1 : https://moviecurators.com (Back : Spring Server + AWS EC2 + RDS + Google Cloud Storage)
 - 배포2 : https://moviecurators.netlify.app/ (Back : Django Server + Heroku)
