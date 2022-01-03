@@ -45,6 +45,9 @@ dependencies {
 	//JWT 토큰
 	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 
+	// Mail
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
 }
 
 test {

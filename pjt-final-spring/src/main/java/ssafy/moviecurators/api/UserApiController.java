@@ -24,6 +24,7 @@ import ssafy.moviecurators.service.JwtTokenProvider;
 import ssafy.moviecurators.domain.accounts.User;
 import ssafy.moviecurators.dto.UserProfileDto;
 import ssafy.moviecurators.repository.UserRepository;
+import ssafy.moviecurators.service.MailService;
 import ssafy.moviecurators.service.UserService;
 
 import javax.imageio.ImageIO;
@@ -51,6 +52,7 @@ public class UserApiController {
     private final JwtTokenProvider jwtTokenProvider;
     private final MessageSource messageSource;
     private final PasswordEncoder passwordEncoder;
+    private final MailService mailService;
 
 
     /**
@@ -186,6 +188,7 @@ public class UserApiController {
         Integer mileageChange = Integer.parseInt(obj.get("mileage"));
 
         userService.donate(to_userId, from_userId, mileageChange);
+        mailService.sendMail(to_userId, from_userId, mileageChange);
 
         return ResponseEntity.ok().body(null);
     }
