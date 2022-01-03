@@ -7,9 +7,8 @@
 - 배포1 : https://moviecurators.com (Back : Spring Server + AWS EC2 + RDS + Google Cloud Storage)
 - 배포2 : https://moviecurators.netlify.app/ (Back : Django Server + Heroku)
 
-* 자세한 구현과 설명 기술적 정보 제공을 위해 별도의 산출물 외에도 PPT, DOCS가 제공되어있습니다.
-
-[기술서 Docs](pjt-final-sub/01.기술서)
+* 자세한 구현과 설명 기술적 정보 제공을 위해 별도의 산출물 외에도 PPT, DOCX가 제공되어있습니다.
+* [PPT와 Docx로 이동](pjt-final-sub)
 
 ## 0. 개요
 
