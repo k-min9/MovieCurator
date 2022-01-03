@@ -12,23 +12,13 @@ import ssafy.moviecurators.repository.UserRepository;
 @RequiredArgsConstructor
 public class MailService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
     private JavaMailSender mailSender;
     private static final String FROM_ADDRESS = "movie_curators";
-//    private static final String CONTENT = "축하합니다!! \n 후원을 받았습니다!! \n 감사합니다.";
-//    private static final String TITLE = "[movie_curators 알림] 후원을 받았습니다.";
-//
-//    public void mailSend(MailDto mailDto) {
-//
-//        SimpleMailMessage message = new SimpleMailMessage();
-//        message.setTo(mailDto.getAddress());
-//        message.setFrom(MailService.FROM_ADDRESS);
-//        message.setSubject(MailService.TITLE);
-//        message.setText(MailService.CONTENT);
-//        mailSender.send(message);
-//    }
 
     public void sendMail(Long to_userId, Long from_userId, Integer mileageChange) {
+
         User from_user = userRepository.getById(from_userId);
         String title = "[Movie Curators] 후원을 받았습니다.";
         String content = "축하합니다!! \n " +
