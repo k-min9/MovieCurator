@@ -9,7 +9,7 @@
 
 * 자세한 구현과 설명 기술적 정보 제공을 위해 별도의 산출물 외에도 PPT, DOCS가 제공되어있습니다.
 
-[시스템 기술서](pjt-final-sub/01.기술서/01. Movie Curators 시스템 기술서.docx)
+[기술서 Docs](pjt-final-sub/01.기술서)
 
 ## 0. 개요
 
