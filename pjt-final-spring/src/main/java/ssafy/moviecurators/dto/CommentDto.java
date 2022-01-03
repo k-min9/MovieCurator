@@ -28,9 +28,9 @@ public class CommentDto {
         this.created_at = comment.getCreated();
         this.updated_at = comment.getUpdated();
 
-        /*
-        this.article = new SimpleArticleDto(comment.getArticle());
+
+//        this.article = new SimpleArticleDto(comment.getArticle());
         this.user = new SimpleUserDto(comment.getUser());
-         */
+
     }
 }
