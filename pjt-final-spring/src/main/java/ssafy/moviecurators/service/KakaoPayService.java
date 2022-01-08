@@ -72,8 +72,6 @@ public class KakaoPayService {
         try {
             kakaoPayReadyVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/ready"), body, KakaoPayReadyVO.class);
 
-//            log.info("받은 정보 : " + kakaoPayReadyVO);
-
             return kakaoPayReadyVO.getNext_redirect_pc_url();
 
         } catch (RestClientException e) {
@@ -90,8 +88,6 @@ public class KakaoPayService {
     public KakaoPayApprovalVO kakaoPaySuccess(String pg_token, Long userId) {
 
         RestTemplate restTemplate = new RestTemplate();
-
-//        log.info("기존 정보 : " + kakaoPayReadyVO);
 
         // 서버로 요청할 Header
         HttpHeaders headers = new HttpHeaders();
@@ -113,7 +109,6 @@ public class KakaoPayService {
 
         try {
             kakaoPayApprovalVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/approve"), body, KakaoPayApprovalVO.class);
-//            log.info("카카오 성공" + kakaoPayApprovalVO);
             if (userId != -1L) {
                 userService.rankUpPremium(userId);
             }

@@ -1,9 +1,9 @@
 export default {
   //URL: 'https://moviecurators.herokuapp.com',
   // URL: 'http://moviecurators-env.eba-jnawskzd.ap-northeast-2.elasticbeanstalk.com',  // http
-  // URL: 'https://www.moviecurators.cf',  //https,
+  URL: 'https://www.moviecurators.cf',  //https,
   // URL:'http://127.0.0.1:8000',  // drf
-  URL: 'http://127.0.0.1:8080',  // spring
+  // URL: 'http://127.0.0.1:8080',  // spring
 
   URLFront: 'https://moviecurators-spring.netlify.app', // Front SERVER for callback
 

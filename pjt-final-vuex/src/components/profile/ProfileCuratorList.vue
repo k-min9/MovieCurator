@@ -36,7 +36,6 @@ export default {
     return {
       curators: [],
       // 이미지 주소 조합용
-      //SERVER_URL: 'http://127.0.0.1:8000',
       SERVER_URL: SERVER.ROUTES.image
     }
   },
@@ -70,9 +69,7 @@ export default {
 
 <style scoped>
 #profile-curator-main {
-  /*position: absolute;*/
   color: white;
-  /*background-color: powderblue;*/
   padding: 10px;
   left: 2.5rem;
   top: 12rem;

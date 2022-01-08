@@ -18,8 +18,8 @@ import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @Service
-@Transactional(readOnly = true)  // 기본적으로 트랜잭션 안에서만 데이터 변경하게 설정(그만큼 최적화 되어 읽는게 빨라짐)
-@RequiredArgsConstructor  // 생성자 주입 처리
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class MovieService {
 
     private final MovieRepository movieRepository;
@@ -52,7 +52,7 @@ public class MovieService {
             throw new IllegalStateException("대상 영화가 없습니다.");
         }
 
-        // jsonb -> List<Integer> -> List<Long>
+        // 이슈 : jsonb -> List<Integer> -> List<Long>
         List<Long> recommendIds = movie.getMovie_reference_overview()
                 .stream().mapToLong(Integer::longValue).boxed().collect(toList());
 

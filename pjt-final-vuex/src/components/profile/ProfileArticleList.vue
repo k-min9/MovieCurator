@@ -113,7 +113,6 @@ export default {
     return {
       Likes: [],
       // 이미지 주소 조합용
-      //SERVER_URL: 'http://127.0.0.1:8000',
       SERVER_URL: SERVER.ROUTES.image
     }
   },
@@ -147,9 +146,7 @@ export default {
 
 <style scoped>
 #profile-article-main {
-  /*position: absolute;*/
   color: white;
-  /*background-color: powderblue;*/
   padding: 10px;
   left: 2.5rem;
   top: 12rem;
@@ -159,7 +156,6 @@ export default {
  .bg-image {
    background-repeat: no-repeat;
    background-position: top;
-   /* background-attachment: fixed; */
    background-size: 100% 100%;
  }
 

@@ -37,11 +37,6 @@ export default {
       'movies'
     ])
   },
-  // HomeReference Movie에서 한 번 나가서 두번 요청 감
-  // created() {
-  //   this.$store.dispatch('getMovies', this.setToken())
-  // }
-
 }
 </script>
 

@@ -10,10 +10,13 @@ import axios from 'axios'
 import swal from 'sweetalert2'
 import router from '@/router'
 import SERVER from '@/api/server'
+import { mapMutations } from 'vuex'
 
 export default {
   name: 'KakaoPaySuccess',
   methods: {
+    // state 프리미엄 갱신
+    ...mapMutations(['SET_PREMIUM']),
     // 토큰
     setToken() {
       const token = localStorage.getItem('jwt')
@@ -35,6 +38,7 @@ export default {
         },
       })
       .then((res) => {
+        this.SET_PREMIUM()
         swal.fire ({
           icon: 'success',
           title: '후원 감사합니다.',

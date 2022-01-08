@@ -26,7 +26,7 @@ public class MailService {
                 "Movie Curators를 이용해 주셔서 감사합니다.";
 
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo("mingu4969@naver.com");
+        message.setTo("받을 메일을 입력해주세요 ex- aaa@gmail.com");
         message.setFrom(MailService.FROM_ADDRESS);
         message.setSubject(title);
         message.setText(content);

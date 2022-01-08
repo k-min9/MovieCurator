@@ -6,7 +6,7 @@
   <movie-detail-recommend :movie="movie"></movie-detail-recommend>
   <movie-detail-article-form :movie="movie"></movie-detail-article-form>
   <div>
-    <img :src="imgSrc2" class="backdrop-bg img-fluid d-none d-md-block" alt="메인 포스터"><!--:style="{ width: windowWidth }">-->
+    <img :src="imgSrc2" class="backdrop-bg img-fluid d-none d-md-block" alt="메인 포스터">
   </div>
 
 </div>
@@ -25,12 +25,6 @@ export default {
     MovieDetailRecommend,
     MovieDetailArticleForm,
   },
-  // data: function () {
-  //   return {
-  //     // 현재, 직접 사용은 안함
-  //     id : this.$route.params.id,
-  //   }
-  // },
   methods: {
     setToken() {
       const token = localStorage.getItem('jwt')

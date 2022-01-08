@@ -26,8 +26,8 @@ import java.util.UUID;
 
 @Slf4j
 @Service
-@Transactional(readOnly = true)  // 기본적으로 트랜잭션 안에서만 데이터 변경하게 설정(그만큼 최적화 되어 읽는게 빨라짐)
-@RequiredArgsConstructor  // 생성자 주입 처리
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class FileService {
 
     // GCS의 key.json 파일 내용이 등록되어서 주입됨
@@ -124,7 +124,7 @@ public class FileService {
         blob.downloadTo(Paths.get(localFileLocation));
         return blob;
 
-        // 현재 GCS json 파일명을 못 읽어서 storage에 주입이 안된는 버그 발생시, 아래와 같은 수동 생성 필요
+        //GCS 버전 업이 느림에 따라서 발생할 수 있는 이슈에 대한 수정 코드를 남겨 둡니다.
 //        try {
 //            String keyFileName = "moviecurator-profile-142d5790645e";
 //            String keyFileName = "credentials.json";

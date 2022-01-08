@@ -425,10 +425,6 @@ a:link {
 
 /*=========================================== review-form ===========================================*/
 
-/* .review-writer {
-  display: inline-block;
-} */
-
 .review-form-star-box {
   display: inline-block;
   position: absolute;

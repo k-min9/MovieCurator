@@ -95,7 +95,6 @@ export default {
       })
       .then((res)=>{
         this.searchedCurators = res.data
-        //this.$forceUpdate()
         this.componentKey += 1
       })
     },

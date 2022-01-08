@@ -149,7 +149,6 @@ export default {
     },
     buyMileage: function() {
       const mileageAdd = 1500
-      //const mileageAdd = 500 + Math.floor(Math.random() * 500) // 500~1000랜덤 마일리지 하고 싶어지면 이거
       this.$store.dispatch('changeMileage', mileageAdd)
     }
   },
@@ -243,7 +242,6 @@ a, a:hover {
     position: relative;
     z-index: 4;
     box-shadow: 0px 5px 50px 0px rgb(108, 68, 252), 0px 0px 0px 7px rgba(107, 74, 255, 0.5);
-    // box-shadow: 0px 5px 50px 0px rgb(250, 237, 125), 0px 0px 0px 7px rgba(229, 216, 92, 0.5);
     
     @media screen and (max-width: 576px) {
       width: 120px;
@@ -282,7 +280,6 @@ a, a:hover {
     margin-bottom: 15px;
 
     strong {
-      //color: #ff2846;
       font-weight: 700;
     }
 
@@ -299,7 +296,6 @@ a, a:hover {
       display: inline-flex;
       font-size: 27px;
       margin-right: 10px;
-      //color: #6944ff;
     }
 
   }
@@ -325,7 +321,6 @@ a, a:hover {
     &__title {
       font-weight: 700;
       font-size: 27px;
-      //color: #6944ff;
       color: #324e63;
     }
 

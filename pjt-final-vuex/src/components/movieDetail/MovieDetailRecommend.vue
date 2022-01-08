@@ -74,12 +74,8 @@ export default {
 }
 
 .movie-detail-recommend-list {
-  /* display: flex;
-  justify-content: center;
-  padding-bottom: 2rem; */
   box-sizing: border-box;
   height: 100%;
-  /* padding: 0% 0%; */
 }
 
 
@@ -95,7 +91,6 @@ export default {
 .movie-detail-recommend-item {
   position: relative;
   display: block;
-  /* flex: 1 1 0px; */
   transition: transform 700ms;
   border-radius: 4px;
   box-shadow: 3px 3px 3px rgb(7, 7, 7);

@@ -52,7 +52,6 @@ import SERVER from '@/api/server'
 export default {
   name: 'MovieList',  
   components: {
-    //MovieListSelected,
     MovieCard2,
   },
   data: function() {

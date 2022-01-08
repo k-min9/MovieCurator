@@ -63,6 +63,9 @@ export default new Vuex.Store({
       state.username = credentials.username
       state.isLogin = true
     },
+    SET_PREMIUM(state) {
+      state.userExp = 1
+    },
     LOGOUT(state) {
       state.isLogin = false
       state.userId = null

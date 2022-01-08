@@ -1,6 +1,6 @@
 <template>
 <div class="signUpMain">
-  <div class="container">   <!-- @keyup.enter="signup" -->
+  <div class="container">
       <div class="row">
           <div class="col-md-12">
               <div>

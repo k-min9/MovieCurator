@@ -3,7 +3,7 @@
 
   <!-- 배경사진 -->
   <div class="col-md-6 mb-4">
-    <img :src="imgSrc2" class="backdrop-bg-1 img-fluid d-none d-md-block" alt="메인 포스터" >  <!--:style="{ width: windowWidth }"  -->
+    <img :src="imgSrc2" class="backdrop-bg-1 img-fluid d-none d-md-block" alt="메인 포스터" >
   </div>
   <div class="article-detail-index">  
   <div class="article-detail-form-info">
@@ -180,7 +180,7 @@
       <div class="row">
           <div class="col-12">
               <div v-if="isLogin" class="post-content">
-                <div class="post-container"> <!-- article-comment-form 넣으려면 여기-->
+                <div class="post-container">
                   <div class="post-detail">
                     <div class="post-comment">
                       <div v-if="image === null">
@@ -189,7 +189,7 @@
                       <div v-else>
                         <img class="profile-photo-sm" :src="image" alt="">
                       </div>
-                      <!--<input type="text" class="form-control" placeholder="Post a comment">-->
+
                       <input 
                         class="form-control" 
                         placeholder="댓글을 작성해 주세요. (50자 이내)"  
@@ -374,7 +374,6 @@ export default {
       // 사용자의 현 평가 좋아요 여부
       isLike: false,
       // 이미지 주소 조합용
-      //SERVER_URL: 'http://127.0.0.1:8000'
       SERVER_URL: SERVER.ROUTES.image
     }
   },
